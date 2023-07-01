@@ -38,6 +38,8 @@ class LeadFactory extends Factory
             'type' => fake()->numberBetween(1,3),
             'assign_to' => fake()->numberBetween(2,4),
             'created_by' => fake()->numberBetween(1,4),
+            'created_at' => fake()->dateTimeThisYear(),
+            'updated_at' => fake()->dateTimeThisMonth(),
         ];
     }
 }

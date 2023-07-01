@@ -1,8 +1,9 @@
 <?php
+use Carbon\Carbon;
 
-function generateAvatar()
+function getDateFormat($dateTime, $format = 'YYYY-MM-DD, h:mm a', $timezone = 'UTC')
 {
-    $avatar = new LasseRafn\InitialAvatarGenerator\InitialAvatar();
-    $image = $avatar->name('Albert Magnum')->generate();
-    return $image;
+    $date = Carbon::createFromFormat('Y-m-d H:i:s', $dateTime, 'UTC');
+    $newDate = $date->setTimezone($timezone);
+    return $newDate->isoFormat($format);
 }

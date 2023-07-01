@@ -16,4 +16,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', Dashboard::class)->name('dashboard');
-Route::get('/leads', FreshLeads::class)->name('freshleads');
+Route::get('/recent-leads', FreshLeads::class)->name('freshleads');

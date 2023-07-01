@@ -2,6 +2,7 @@
 //    File export                              //
 //=============================================//
 $("#leads").DataTable({
+  order: [[1, 'desc']],
   fixedColumns: true,
   dom: "Bfrtip",
   buttons: ["copy", "csv", "excel", "pdf", "print"],

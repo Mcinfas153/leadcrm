@@ -28,7 +28,7 @@
        <!-- Owl Carousel  -->
       <link rel="stylesheet" href="{{ asset('dist/libs/owl.carousel/dist/assets/owl.carousel.min.css') }}">
     @endif
-    @if ($title == 'fresh leads')
+    @if ($title == 'fresh recent leads')
     <!-- datatable  Js -->
     <link rel="stylesheet" href="../../dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
     @endif
@@ -37,6 +37,7 @@
     <!-- --------------------------------------------------- -->
     
     <link  id="themeColors"  rel="stylesheet" href="{{ asset('dist/css/style.min.css') }}" />
+    <link  id="themeColors"  rel="stylesheet" href="{{ asset('dist/css/custom.css') }}" />
     @livewireStyles
   </head>
 
@@ -118,7 +119,7 @@
     <script src="{{ asset('dist/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
     @endif
-    @if ($title == 'fresh leads')
+    @if ($title == 'fresh recent leads')
     <script src="{{ asset('dist/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js') }}"></script>
