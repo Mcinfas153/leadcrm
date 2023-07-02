@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Livewire\Pages\Dashboard;
+use App\Http\Livewire\Pages\ForgotPasswordPage;
 use App\Http\Livewire\Pages\FreshLeads;
+use App\Http\Livewire\Pages\LoginPage;
+use App\Http\Livewire\Pages\RegisterPage;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,3 +20,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', Dashboard::class)->name('dashboard');
 Route::get('/recent-leads', FreshLeads::class)->name('freshleads');
+Route::get('/login', LoginPage::class)->name('login');
+Route::get('/register', RegisterPage::class)->name('register');
+Route::get('/forgot-password', ForgotPasswordPage::class)->name('forgot-password');
