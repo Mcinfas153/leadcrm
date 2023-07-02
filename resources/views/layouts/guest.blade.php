@@ -17,6 +17,7 @@
     <!-- Core Css -->
     <link id="themeColors" rel="stylesheet" href="{{ asset('dist/css/style.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('dist/css/style.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('dist/css/custom.css') }}" />
     @livewireStyles
 </head>
 <body>
@@ -27,10 +28,13 @@
         </div>
     </div>
 
+    <livewire:components.alart-box/>
+
     <!-- Import Js Files -->
     <script src="{{ asset('dist/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('dist/libs/simplebar/dist/simplebar.min.js') }}"></script>
     <script src="{{ asset('dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('dist/js/plugins/sweet-alert.min.js') }}"></script>
 
     <!-- core files -->
     <script src="{{ asset('dist/js/app.min.js') }}"></script>
@@ -39,6 +43,28 @@
     <script src="{{ asset('dist/js/sidebarmenu.js') }}"></script>
 
     <script src="{{ asset('dist/js/custom.js') }}"></script>
+    <script>
+        window.addEventListener('pushToast', event => {
+            //alert('Name updated to: ' + event.detail.newName);
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                //background: 'green',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: event.detail.icon,
+                title: event.detail.title
+            })
+        })
+        </script>
     @livewireScripts
 </body>
 </html>

@@ -46,35 +46,19 @@
     <div class="preloader">
       <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico" alt="loader" class="lds-ripple img-fluid" />
     </div>
-    <!-- --------------------------------------------------- -->
-    <!-- Body Wrapper -->
-    <!-- --------------------------------------------------- -->
+    
+    <livewire:components.alart-box/>
+
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
-      <!-- --------------------------------------------------- -->
-      <!-- Sidebar -->
-      <!-- --------------------------------------------------- -->
+      
       <livewire:components.sidebar/>
 
-      <!-- --------------------------------------------------- -->
-      <!-- Main Wrapper -->
-      <!-- --------------------------------------------------- -->
       <div class="body-wrapper">
-        <!-- --------------------------------------------------- -->
-        <!-- Header Start -->
-        <!-- --------------------------------------------------- -->
+        
         <livewire:components.header/>
-        <!-- --------------------------------------------------- -->
-        <!-- Header End -->
-        <!-- --------------------------------------------------- -->
         
-          <!-- --------------------------------------------------- -->
-          <!-- Badge Start -->
-          <!-- --------------------------------------------------- -->
           {{ $slot }}
-          <!-- --------------------------------------------------- -->
-          <!-- Badge End -->
-          <!-- --------------------------------------------------- -->
-        
+                 
       </div>
     </div>
   
@@ -101,6 +85,7 @@
     <script src="{{ asset('dist/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('dist/libs/simplebar/dist/simplebar.min.js') }}"></script>
     <script src="{{ asset('dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('dist/js/plugins/sweet-alert.min.js') }}"></script>
 
     <!-- ---------------------------------------------- -->
     <!-- core files -->
@@ -132,6 +117,28 @@
     <script src="{{ asset('dist/js/pages/leads-page.js') }}"></script>
     @endif
     
+    <script>
+      window.addEventListener('pushToast', event => {
+          //alert('Name updated to: ' + event.detail.newName);
+          const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              //background: 'green',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+          })
+
+          Toast.fire({
+              icon: event.detail.icon,
+              title: event.detail.title
+          })
+      })
+      </script>
     @livewireScripts
   </body>
 
