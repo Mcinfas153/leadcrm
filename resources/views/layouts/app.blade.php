@@ -5,7 +5,7 @@
     <!-- --------------------------------------------------- -->
     <!-- Title -->
     <!-- --------------------------------------------------- -->
-    <title>Lead CRM | {{ ucfirst($title) }}</title>
+    <title>Lead CRM | {{ Str::of($title)->title() }}</title>
 
     <!-- --------------------------------------------------- -->
     <!-- Required Meta Tag -->
@@ -67,17 +67,7 @@
     <livewire:components.mobile-navbar/>
 
     <!--  Search Bar -->
-    <livewire:components.search-bar/>
-
-    <!-- --------------------------------------------------- -->
-    <!-- Customizer -->
-    <!-- --------------------------------------------------- -->
-    
-   <button class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-    <i class="ti ti-settings fs-7" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Settings"></i>
-  </button>
-  
-  <livewire:components.theme-customizer/>
+    <livewire:components.search-bar/>    
 
     <!-- ---------------------------------------------- -->
     <!-- Import Js Files -->

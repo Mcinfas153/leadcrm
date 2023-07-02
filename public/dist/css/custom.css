@@ -2,6 +2,26 @@
 .sidebar-nav ul .sidebar-item.selected > .sidebar-link.active,
 .sidebar-nav ul .sidebar-item > .sidebar-link.active {
     background-color: #052f5f;
+    color: #f1a208 !important;
+}
+.sidebar-nav ul .sidebar-item .first-level .sidebar-item .sidebar-link:hover {
+    background-color: transparent;
+    color: #f1a208;
+}
+.sidebar-nav ul .sidebar-item .first-level .sidebar-item .sidebar-link.active {
+    background-color: transparent !important;
+    color: #f1a208 !important;
+}
+.sidebar-nav ul .sidebar-item .sidebar-link:hover {
+    background-color: #052f5f;
+    color: #f1a208;
+}
+.sidebar-nav ul .sidebar-item .sidebar-link:hover.has-arrow::after {
+    border-color: #f1a208;
+}
+.bg-light-primary {
+    background-color: #06a77d !important;
+    color: white;
 }
 .btn {
     padding: 6px 20px;
@@ -14,6 +34,14 @@
     --bs-btn-hover-color: #fff;
     --bs-btn-hover-bg: #f1a208;
     --bs-btn-hover-border-color: #f1a208;
+}
+.btn-outline-primary {
+    border-color: #052f5f;
+    color: #052f5f;
+}
+.btn-outline-primary:hover {
+    background-color: #052f5f;
+    color: white;
 }
 .table-responsive
     .dataTables_wrapper

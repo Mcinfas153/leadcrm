@@ -10,7 +10,7 @@
             <div class="table-responsive">
                 <table
                   id="leads"
-                  class="table border table-striped table-bordered display text-nowrap"
+                  class="table border table-striped display text-nowrap"
                 >
                   <thead>
                     <!-- start row -->

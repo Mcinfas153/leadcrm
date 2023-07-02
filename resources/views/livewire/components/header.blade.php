@@ -172,45 +172,7 @@
                 <i class="ti ti-align-justified fs-7"></i>
               </a>
               <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
-                <li class="nav-item dropdown">
-                  <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/svgs/icon-flag-en.svg" alt="" class="rounded-circle object-fit-cover round-20">
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
-                    <div class="message-body" data-simplebar>
-                      <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
-                        <div class="position-relative">
-                          <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/svgs/icon-flag-en.svg" alt="" class="rounded-circle object-fit-cover round-20">
-                        </div>
-                        <p class="mb-0 fs-3">English (UK)</p>
-                      </a>
-                      <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
-                        <div class="position-relative">
-                          <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/svgs/icon-flag-cn.svg" alt="" class="rounded-circle object-fit-cover round-20">
-                        </div>
-                        <p class="mb-0 fs-3">中国人 (Chinese)</p>
-                      </a>
-                      <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
-                        <div class="position-relative">
-                          <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/svgs/icon-flag-fr.svg" alt="" class="rounded-circle object-fit-cover round-20">
-                        </div>
-                        <p class="mb-0 fs-3">français (French)</p>
-                      </a>
-                      <a href="javascript:void(0)" class="d-flex align-items-center gap-2 py-3 px-4 dropdown-item">
-                        <div class="position-relative">
-                          <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/svgs/icon-flag-sa.svg" alt="" class="rounded-circle object-fit-cover round-20">
-                        </div>
-                        <p class="mb-0 fs-3">عربي (Arabic)</p>
-                      </a>
-                    </div>
-                  </div>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link notify-badge nav-icon-hover" href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                      <i class="ti ti-basket"></i>
-                      <span class="badge rounded-pill bg-danger fs-2">2</span>                   
-                  </a>
-                </li>
+                
                 <li class="nav-item dropdown">
                   <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="ti ti-bell-ringing"></i>
@@ -298,10 +260,10 @@
                       <div class="d-flex align-items-center py-9 mx-7 border-bottom">
                         <img src="../../dist/images/profile/user-1.jpg" class="rounded-circle" width="80" height="80" alt="" />
                         <div class="ms-3">
-                          <h5 class="mb-1 fs-3">Mathew Anderson</h5>
-                          <span class="mb-1 d-block text-dark">Designer</span>
-                          <p class="mb-0 d-flex text-dark align-items-center gap-2">
-                            <i class="ti ti-mail fs-4"></i> info@modernize.com
+                          <h5 class="mb-1 fs-3">{{ Auth::user()->name }}</h5>
+                          <span class="mb-1 d-block text-dark">{{ Auth::user()->designation ?? "System User" }}</span>
+                          <p class="mb-0 d-flex text-dark align-items-center gap-2" title="{{ Auth::user()->email }}">
+                            <i class="ti ti-mail fs-4"></i> {{ Str::limit(Auth::user()->email, 20) }}
                           </p>
                         </div>
                       </div>
@@ -348,7 +310,7 @@
                             </div>
                           </div>
                         </div>
-                        <a href="authentication-login.html" class="btn btn-outline-primary">Log Out</a>
+                        <a wire:click="userLogout" class="btn btn-outline-primary">Log Out</a>
                       </div>
                     </div>
                   </div>

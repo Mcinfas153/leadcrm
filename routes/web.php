@@ -17,9 +17,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::middleware(['loggedUser'])->group(function () {
+    Route::get('/', Dashboard::class)->name('dashboard');
+    Route::get('/recent-leads', FreshLeads::class)->name('freshleads');
+});
 
-Route::get('/', Dashboard::class)->name('dashboard');
-Route::get('/recent-leads', FreshLeads::class)->name('freshleads');
-Route::get('/login', LoginPage::class)->name('login');
-Route::get('/register', RegisterPage::class)->name('register');
-Route::get('/forgot-password', ForgotPasswordPage::class)->name('forgot-password');
+Route::middleware(['guestUser'])->group(function () {
+    Route::get('/login', LoginPage::class)->name('login');
+    Route::get('/register', RegisterPage::class)->name('register');
+    Route::get('/forgot-password', ForgotPasswordPage::class)->name('forgot-password');
+});
+
