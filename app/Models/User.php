@@ -43,7 +43,18 @@ class User extends Authenticatable
     {
         return Attribute::make(
             get: fn ($value) => Str::of($value)->title(),
+            set: fn ($value) => strtolower($value),
         );
+    }
+
+    public function organization()
+    {
+        return $this->hasOne(Organization::class,'created_by');
+    }
+
+    public function role()
+    {
+        return $this->hasOne(UserRole::class, 'id', 'user_role');
     }
 
 }

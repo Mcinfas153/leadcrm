@@ -261,7 +261,7 @@
                         <img src="../../dist/images/profile/user-1.jpg" class="rounded-circle" width="80" height="80" alt="" />
                         <div class="ms-3">
                           <h5 class="mb-1 fs-3">{{ Auth::user()->name }}</h5>
-                          <span class="mb-1 d-block text-dark">{{ Auth::user()->designation ?? "System User" }}</span>
+                          <span class="mb-1 d-block text-dark">{{ Auth::user()->organization->name ?? Auth::user()->role->name }}</span>
                           <p class="mb-0 d-flex text-dark align-items-center gap-2" title="{{ Auth::user()->email }}">
                             <i class="ti ti-mail fs-4"></i> {{ Str::limit(Auth::user()->email, 20) }}
                           </p>

@@ -17,7 +17,7 @@ class EnsureUserIsNotLoggedIn
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()){
+        if(Auth::check()){
             return redirect()->route('dashboard');
         }
 

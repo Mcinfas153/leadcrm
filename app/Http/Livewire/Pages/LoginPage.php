@@ -56,6 +56,6 @@ class LoginPage extends Component
           
             //dd($e->getMessage());
 
-          }
+        }
     }
 }
