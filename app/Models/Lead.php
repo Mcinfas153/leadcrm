@@ -10,10 +10,4 @@ class Lead extends Model
 {
     use HasFactory;
 
-    protected function createdAt(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => strtolower($value),
-        );
-    }
 }

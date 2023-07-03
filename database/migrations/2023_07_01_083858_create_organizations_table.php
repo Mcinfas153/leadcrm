@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
+            $table->string('auth_code');
+            $table->string('timezone')->nullable();
             $table->boolean('is_active')->default(1);
             $table->string('logo')->nullable();
             $table->foreignId('created_by');

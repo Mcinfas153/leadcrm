@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +18,7 @@ class OrganizationSeeder extends Seeder
         DB::table('organizations')->truncate();
 
         DB::table('organizations')->insert([
-            ['name' => 'lead media production', 'created_by' => 2]
+            ['name' => 'lead media production','auth_code' => Str::random(16), 'created_by' => 2]
         ]);
     }
 }
