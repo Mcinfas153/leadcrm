@@ -13,12 +13,13 @@ class AllLeads extends Component
 
     public $leadId;
     public $statusId;
+    public $userId;
 
     use WithPagination;
  
     protected $paginationTheme = 'bootstrap';
 
-    protected $listeners = ['leadIdSelect' => 'leadIdSelect'];
+    protected $listeners = ['leadIdSelect' => 'leadIdSelect', 'leadAgentIdSelect' => 'leadAgentIdSelect'];
 
     public function render()
     {
@@ -53,15 +54,23 @@ class AllLeads extends Component
 
         return view('livewire.pages.all-leads',[
             'lead_status' => DB::table('lead_statuses')->where('is_active', 1)->get(),
+            'users' => DB::table('users')->where(['business_id' => Auth::user()->business_id, 'is_active' => 1])->get(),
             'leads' =>  $leads,
         ])->layout('layouts.app',[
             'title' => 'all leads'
         ]);
     }
 
-    public function leadIdSelect($leadId)
+    public function leadIdSelect($leadId, $statusId)
     {
         $this->leadId = $leadId;
+        $this->statusId = $statusId;
+    }
+
+    public function leadAgentIdSelect($leadId, $agentId)
+    {
+        $this->leadId = $leadId;
+        $this->userId = $agentId;
     }
 
     public function changeLeadStatus()
@@ -79,6 +88,32 @@ class AllLeads extends Component
             DB::commit();
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LEAD_STATUS_CHANGE_SUCCESS')]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+        }
+
+    }
+
+    public function changeAgent()
+    {
+        $this->dispatchBrowserEvent('modalClose');
+
+        DB::beginTransaction();
+
+        try {
+
+            DB::table('leads')
+              ->where('id', $this->leadId)
+              ->update(['assign_to' => $this->userId]);
+
+            DB::commit();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.USER_ASSIGN_CHANGE_SUCCESS')]);
 
         } catch (\Exception $e) {
 

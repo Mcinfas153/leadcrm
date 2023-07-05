@@ -14,6 +14,9 @@
                     <h2 class="mb-5 fs-7 fw-bolder">Welcome to {{ config('custom.APP_NAME') }}</h2>
                     
                     <form wire:submit.prevent="registerUser">
+                        <div wire:loading wire:target="registerUser">
+                            <livewire:components.progress-loader/>
+                        </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Name *</label>
                             <input type="text" class="form-control" wire:model.defer="userName">

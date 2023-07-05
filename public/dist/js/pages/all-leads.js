@@ -1,51 +1,17 @@
-const myModal = new bootstrap.Modal(document.getElementById('status-change-modal'))
-$(function () {
-    var table = $('.data-table').DataTable({
-        order: [[1, 'desc']],
-        fixedColumns: true,
-        processing: true,
-        serverSide: true,
-        ajax: getAllLeadsRoute,
-        columns: [
-            { data: 'fullname', name: 'fullname' },
-            { data: 'created_at', name: 'created_at' },
-            { data: 'phone', name: 'phone' },
-            { data: 'email', name: 'email' },
-            { data: 'lead_status', name: 'lead_status' },
-            { data: 'campaign_name', name: 'campaign_name' },
-            { data: 'assign_user', name: 'assign_user' },
-            { data: 'action', name: 'action' },
-        ]
-    });
-});
+const statusModal = new bootstrap.Modal(document.getElementById('status-change-modal'))
+const agentModal = new bootstrap.Modal(document.getElementById('agent-change-modal'))
 
-window.addEventListener('tableReload', event => {
-    $(function () {
-        var table = $('.data-table').DataTable({
-            order: [[1, 'desc']],
-            fixedColumns: true,
-            processing: true,
-            serverSide: true,
-            ajax: getAllLeadsRoute,
-            columns: [
-                { data: 'fullname', name: 'fullname' },
-                { data: 'created_at', name: 'created_at' },
-                { data: 'phone', name: 'phone' },
-                { data: 'email', name: 'email' },
-                { data: 'lead_status', name: 'lead_status' },
-                { data: 'campaign_name', name: 'campaign_name' },
-                { data: 'assign_user', name: 'assign_user' },
-                { data: 'action', name: 'action' },
-            ]
-        });
-    });
-})
+function changeStatus(leadId, statusId) {
+    statusModal.show()
+    Livewire.emit('leadIdSelect', leadId, statusId)
+}
 
-function changeStatus(leadId) {
-    myModal.show()
-    Livewire.emit('leadIdSelect', leadId)
+function changeAgent(leadId, agentId) {
+    agentModal.show()
+    Livewire.emit('leadAgentIdSelect', leadId, agentId)
 }
 
 window.addEventListener('modalClose', event => {
-    myModal.hide()
+    statusModal.hide()
+    agentModal.hide()
 });
