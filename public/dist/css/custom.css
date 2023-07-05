@@ -72,7 +72,11 @@ a:hover {
 .form-control:focus {
     border-color: #f1a208;
 }
-
+.tscroll table td:first-child {
+    position: sticky;
+    left: 0;
+    background-color: #f8f9f9;
+}
 /* progress loader */
 .loader-wrapper {
     position: fixed;

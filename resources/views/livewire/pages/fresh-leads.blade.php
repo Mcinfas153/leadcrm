@@ -2,9 +2,7 @@
     <livewire:components.navigator title="fresh leads"/>
     <div class="row">
         <div class="col-12">
-          <!-- ---------------------
-                      start File export
-                  ---------------- -->
+          
           <div class="card">
             <div class="card-body">
             <div class="table-responsive">
@@ -43,8 +41,8 @@
                   <tfoot>
                     <!-- start row -->
                     <tr>
-                      <th>#</th>
                       <th>Name</th>
+                      <th>Date</th>
                       <th>Phone</th>
                       <th>Email</th>
                       <th>Status</th>
@@ -58,9 +56,7 @@
               </div>
             </div>
           </div>
-          <!-- ---------------------
-                      end File export
-                  ---------------- -->
+          
         </div>
       </div>
 </div>

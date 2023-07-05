@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('timezone')->nullable();
             $table->boolean('is_active')->default(1);
             $table->string('logo')->nullable();
+            $table->boolean('fee_waived')->default(0);
             $table->foreignId('created_by');
             $table->timestamps();
         });

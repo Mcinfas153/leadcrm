@@ -62,11 +62,16 @@ class RegisterPage extends Component
                 'user_role' => config('custom.USER_ADMIN_ROLE')
             ]);
 
-            Organization::create([
+            $business = Organization::create([
                 'name' => $this->businessName,
                 'auth_code' => Str::random(16),
                 'created_by' => $user->id
             ]);
+
+            DB::table('users')
+              ->where('id', $user->id)
+              ->update(['business_id' => $business->id]);
+
            
             DB::commit();
 

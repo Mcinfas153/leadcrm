@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\LeadController;
+use App\Http\Livewire\Pages\AllLeads;
 use App\Http\Livewire\Pages\Dashboard;
 use App\Http\Livewire\Pages\ForgotPasswordPage;
 use App\Http\Livewire\Pages\FreshLeads;
+use App\Http\Livewire\Pages\Leads;
 use App\Http\Livewire\Pages\LoginPage;
 use App\Http\Livewire\Pages\RegisterPage;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['loggedUser'])->group(function () {
     Route::get('/', Dashboard::class)->name('dashboard');
     Route::get('/recent-leads', FreshLeads::class)->name('freshleads');
+    Route::get('/leads', AllLeads::class)->name('leads');
+    //Route::get('/all-leads', [LeadController::class, 'getAllLeads'])->name('all.leads');
 });
 
 Route::middleware(['guestUser'])->group(function () {

@@ -43,7 +43,7 @@ class LoginPage extends Component
                 return redirect('/')->with([
                     'status' => 'success',
                     'icon' => 'success',
-                    'title' => config('message.USER_LOGIN_SUCCESS') 
+                    'title' => config('message.USER_LOGIN_SUCCESS'). Auth::user()->name,
                 ]);;
                             
             }

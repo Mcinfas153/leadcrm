@@ -28,10 +28,12 @@
        <!-- Owl Carousel  -->
       <link rel="stylesheet" href="{{ asset('dist/libs/owl.carousel/dist/assets/owl.carousel.min.css') }}">
     @endif
-    @if ($title == 'fresh recent leads')
+
+    @if ($title == 'fresh recent leads' || $title == 'all leads')
     <!-- datatable  Js -->
-    <link rel="stylesheet" href="../../dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="{{ asset('dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
     @endif
+    
     <!-- --------------------------------------------------- -->
     <!-- Core Css -->
     <!-- --------------------------------------------------- -->
@@ -94,6 +96,7 @@
     <script src="{{ asset('dist/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
     @endif
+    
     @if ($title == 'fresh recent leads')
     <script src="{{ asset('dist/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js') }}"></script>
@@ -107,9 +110,12 @@
     <script src="{{ asset('dist/js/pages/leads-page.js') }}"></script>
     @endif
     
+    @if ($title == 'all leads')
+    <script src="{{ asset('dist/js/pages/all-leads.js') }}"></script>
+    @endif
+
     <script>
       window.addEventListener('pushToast', event => {
-          //alert('Name updated to: ' + event.detail.newName);
           const Toast = Swal.mixin({
               toast: true,
               position: 'top-end',
@@ -128,7 +134,7 @@
               title: event.detail.title
           })
       })
-      </script>
+    </script>
     @livewireScripts
   </body>
 

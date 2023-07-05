@@ -26,8 +26,8 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('whatsapp')->nullable();
             $table->boolean('is_active')->default(1);
-            $table->boolean('fee_waived')->default(0);
             $table->timestamp('email_verified_at')->nullable();
+            $table->foreignId('business_id')->nullable();
             $table->foreignId('created_by')->default(1);
             $table->rememberToken();
             $table->timestamps();

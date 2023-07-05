@@ -31,7 +31,7 @@ class LeadFactory extends Factory
             'campaign_name' => fake()->randomElement(['azizi riviera','damac lagoon','emaar beachfront']),
             'property_type' => fake()->randomElement(['villa','apartment','townhouse']),
             'bedroom' => fake()->numberBetween(1,10),
-            'status' => fake()->numberBetween(1,3),
+            'status' => fake()->numberBetween(1,23),
             'source' => fake()->randomElement(['facebook', 'instagram', 'tiktok', 'google']),
             'priority' => fake()->numberBetween(1,3),
             'developer' => fake()->randomElement(['emaar', 'damac', 'azizi']),
