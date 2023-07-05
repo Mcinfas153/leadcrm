@@ -29,7 +29,7 @@ class AllLeads extends Component
                     ->join('lead_statuses', 'leads.status', '=', 'lead_statuses.id')
                     ->join('users', 'leads.assign_to', '=', 'users.id')
                     ->select('leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
-                    ->orderByDesc('leads.created_at')->paginate(10);
+                    ->orderByDesc('leads.created_at')->paginate(5);
 
         } elseif(Auth::user()->user_type == config('custom.USER_ADMIN')){
 
@@ -39,7 +39,7 @@ class AllLeads extends Component
                         ->select('leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
                         ->orderByDesc('leads.created_at')
                         ->where('leads.created_by', Auth::user()->id)
-                        ->paginate(10);
+                        ->paginate(5);
 
         } else{
 
@@ -48,7 +48,7 @@ class AllLeads extends Component
                         ->join('users', 'leads.assign_to', '=', 'users.id')
                         ->select('leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
                         ->orderByDesc('leads.created_at')
-                        ->where('leads.assign_to', Auth::user()->id)->paginate(10);
+                        ->where('leads.assign_to', Auth::user()->id)->paginate(5);
                         
         }
 

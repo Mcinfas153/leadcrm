@@ -24,14 +24,38 @@
                     <tbody>    
                         @foreach ($leads as $lead)                                  
                         <tr>
-                            <td class="fixedCol">{{ $lead->fullname }}</td>
+                            <td class="fixedCol text-black"><a href="{{ URL::to('lead/view') }}/{{ $lead->id }}" target="_BLANK">{{ $lead->fullname }}</a></td>
                             <td>{{ getDateFormat($lead->created_at,'YYYY-MM-DD, h:mm a',config('custom.LOCAL_TIMEZONE')) }}</td>
-                            <td class="text-center">{{ $lead->phone }}</td>
-                            <td class="text-center">{{ $lead->email }}</td>
+                            <td class="text-center"><a onclick="makeCall('{{ $lead->phone }}')">{{ $lead->phone }}</a></td>
+                            <td class="text-center"><a onclick="sentEmail('{{ $lead->email }}')">{{ $lead->email }}</a></td>
                             <td class="text-center"><span onclick="changeStatus({{ $lead->id }}, {{ $lead->status }})" style="background-color:{{ $lead->color_code }}" class="badge fw-semibold py-2 px-3 text-white fs-2">{{ Str::title($lead->lead_status) }}</span></td>
                             <td class="text-center">{{ Str::title($lead->campaign_name) }}</td>
                             <td class="text-center"><span onclick="changeAgent({{ $lead->id }}, {{ $lead->assign_to }})" class="badge fw-semibold py-2 px-3 bg-success bg-gradient text-black fs-2">{{ Str::title($lead->assign_user) }}</span></td>
-                            <td class="text-center"></td>
+                            <td class="text-center">
+                              <div class="dropdown">
+                                <a class="text-decoration-none" href="javascript:void(0)" id="nft2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ti ti-dots-vertical fs-4"></i>
+                                </a>
+                                <ul class="dropdown-menu bg-light bg-gradient" aria-labelledby="nft2" id="action-panel">
+                                  <li class="">
+                                    <a class="dropdown-item d-flex align-items-center text-black" href="#">
+                                    <i class="ti ti-phone me-1 fs-1 text-black"></i>Schedule a Call Back </a>
+                                  </li>
+                                  <li class="">
+                                    <a class="dropdown-item d-flex align-items-center text-black" href="{{ URL::to('lead/activities') }}/{{ $lead->id }}">
+                                    <i class="ti ti-link me-1 fs-1 text-black"></i>Lead Activities </a>
+                                  </li>
+                                  <li class="">
+                                      <a class="dropdown-item d-flex align-items-center text-black" href="{{ URL::to('lead/view') }}/{{ $lead->id }}">
+                                      <i class="ti ti-eye me-1 fs-1 text-black"></i>View </a>
+                                  </li>
+                                  <li class="">
+                                    <a class="dropdown-item d-flex align-items-center text-black" href="#">
+                                    <i class="ti ti-trash me-1 fs-1 text-black"></i>Delete </a>
+                                </li>
+                                </ul>
+                             </div>
+                            </td>
                         </tr>
                     @endforeach 
                     </tbody>
