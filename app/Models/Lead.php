@@ -10,4 +10,5 @@ class Lead extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
 }

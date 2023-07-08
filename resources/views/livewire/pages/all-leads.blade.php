@@ -7,6 +7,17 @@
         <div class="col-12">
           <div class="card">
             <div class="card-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#import-modal" class="btn btn-primary">Import Leads</button>
+                  <a type="button"  href="{{ route('export-leads') }}" class="btn btn-secondary">Export Leads</a>
+                  <button type="button" class="btn btn-success">Bulk Assign</button>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+              </div>
+              
             <div class="table-responsive tscroll">
                 <table class="table data-table display text-nowrap">
                     <thead>
@@ -189,5 +200,62 @@
       </div>
     </div>
     </div>
+
+    {{-- import modal --}}
+    <div
+    class="modal fade"
+    id="import-modal"
+    tabindex="-1"
+    aria-labelledby="mySmallModalLabel"
+    aria-hidden="true"
+    wire:ignore.self
+    >
+   <div class="modal-dialog modal-sm">
+    <form action="{{ route('import.leads') }}" method="POST" enctype="multipart/form-data">
+      @csrf
+      <div class="modal-content">
+         <div
+            class="modal-header d-flex align-items-center modal-colored-header bg-success text-white"
+            >
+            <h4 class="modal-title" id="myModalLabel">
+               Import Leads
+            </h4>
+            <button
+               type="button"
+               class="btn-close"
+               data-bs-dismiss="modal"
+               aria-label="Close"
+               ></button>
+         </div>
+         <div class="modal-body">        
+           
+            <div class="mb-3">
+              <label for="file" class="form-label">File*</label>
+              <input class="form-control form-control-sm" id="formFileSm" type="file" name="file">
+              <div class="text-end">
+                <a download="lead-import-sample" href="{{ Storage::url('downloads/lead-import-sample.csv') }}" title="Lead Import Sample">Download Sample File</a>
+              </div>
+            </div>
+                     
+         </div>
+         <div class="modal-footer">
+            <button
+               type="button"
+               class="btn btn-danger text-black font-medium waves-effect"
+               data-bs-dismiss="modal"
+               >
+            Close
+            </button>
+            <button
+              type="submit"
+              class="btn btn-success text-black font-medium waves-effect"
+              >
+            Import
+          </button>
+         </div>
+      </div>
+    </form>
+   </div>
+</div>
 
 </div>

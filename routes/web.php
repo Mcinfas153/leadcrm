@@ -27,6 +27,8 @@ Route::middleware(['loggedUser'])->group(function () {
     Route::get('/leads', AllLeads::class)->name('leads');
     Route::get('/lead/view/{leadId}', LeadView::class)->name('leadview');
     //Route::get('/all-leads', [LeadController::class, 'getAllLeads'])->name('all.leads');
+    Route::post('/import',[LeadController::class,'importLeads'])->name('import.leads');
+    Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export-leads');
 });
 
 Route::middleware(['guestUser'])->group(function () {

@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Lead;
+use App\Exports\ExportLead;
+use App\Imports\ActionsImport;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\LeadImport;
 
 class LeadController extends Controller
 {
@@ -57,4 +60,34 @@ class LeadController extends Controller
                     ->make(true);
         }
     }
+
+    public function importLeads(Request $request)
+    {
+        try {
+
+            Excel::import(new LeadImport, $request->file);
+
+
+            return redirect()->back()->with([
+                'status' => 'success',
+                'icon' => 'success',
+                'title' => config('message.LEAD_IMPORT_SUCCESS'),
+            ]);;
+            
+          
+          } catch (\Exception $e) {
+
+            //$this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+          
+            dd($e->getMessage());
+
+        }
+
+    }
+
+    public function exportLeads(Request $request){
+        return Excel::download(new ExportLead, 'users.xlsx');
+    }
+
+    
 }
