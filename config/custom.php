@@ -11,5 +11,6 @@ return [
     'LEAD_TYPE_HOT' => 2,
     'LEAD_TYPE_COLD' => 3,
     'LOCAL_TIMEZONE' => 'Asia/Colombo',
+    'SERVER_TIMEZONE' => env('SERVER_TIMEZONE'),
     'APP_NAME' => 'LEAD CRM'
 ];

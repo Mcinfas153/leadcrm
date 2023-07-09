@@ -1,5 +1,6 @@
 <div class="container-fluid">
     <livewire:components.navigator title="all leads"/>
+    {{ timeZoneChange() }}
     <div wire:loading>
       <livewire:components.progress-loader/>
     </div>
