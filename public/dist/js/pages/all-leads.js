@@ -49,6 +49,25 @@ function sentEmail(email) {
     })
 }
 
+function exportLeads(url) {
+    Swal.fire({
+        title: 'Export Leads',
+        text: "Are you sure want export leads?",
+        width: '32em',
+        heightAuto: false,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, export it',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'No, don\'t',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = url
+        }
+    })
+}
+
 window.addEventListener('modalClose', event => {
     statusModal.hide()
     agentModal.hide()

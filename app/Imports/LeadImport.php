@@ -33,6 +33,7 @@ class LeadImport implements ToModel, WithHeadingRow
             "property_type" => $row['property_type'],
             "source" => $row['source'],
             "developer" => $row['developer'],
+            "assign_to" => Auth::user()->id,
             "created_by" => Auth::user()->id,
         ]);
     }

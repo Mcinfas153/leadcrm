@@ -10,7 +10,7 @@
               <div class="row">
                 <div class="col-md-8">
                   <button type="button" data-bs-toggle="modal" data-bs-target="#import-modal" class="btn btn-primary">Import Leads</button>
-                  <a type="button"  href="{{ route('export-leads') }}" class="btn btn-secondary">Export Leads</a>
+                  <button type="button" onclick="exportLeads('{{ route('export-leads') }}')" class="btn btn-secondary">Export Leads</button>
                   <button type="button" class="btn btn-success">Bulk Assign</button>
                 </div>
                 <div class="col-md-4">
@@ -233,9 +233,21 @@
               <label for="file" class="form-label">File*</label>
               <input class="form-control form-control-sm" id="formFileSm" type="file" name="file">
               <div class="text-end">
-                <a download="lead-import-sample" href="{{ Storage::url('downloads/lead-import-sample.csv') }}" title="Lead Import Sample">Download Sample File</a>
+                <a class="fs-1" download="lead-import-sample" href="{{ Storage::url('downloads/lead-import-sample.csv') }}" title="Lead Import Sample">Download Sample File</a>
               </div>
             </div>
+
+            {{-- @if (Auth::user()->user_type == config('custom.USER_ADMIN'))
+            <div class="mb-3">
+              <label for="status" class="form-label">Assign Agent</label>
+              <select class="form-select" aria-label="status" name="userId">
+                <option selected>Select a user</option>
+                @foreach ($users as $user)
+                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                @endforeach
+              </select>
+            </div>
+            @endif            --}}
                      
          </div>
          <div class="modal-footer">
