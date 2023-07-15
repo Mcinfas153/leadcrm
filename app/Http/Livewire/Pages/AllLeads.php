@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Pages;
 
-use App\Models\Lead;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;

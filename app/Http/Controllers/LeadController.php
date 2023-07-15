@@ -72,13 +72,11 @@ class LeadController extends Controller
                 'status' => 'success',
                 'icon' => 'success',
                 'title' => config('message.LEAD_IMPORT_SUCCESS'),
-            ]);;
+            ]);
             
           
           } catch (\Exception $e) {
 
-            //$this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
-          
             dd($e->getMessage());
 
         }

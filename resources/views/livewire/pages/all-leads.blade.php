@@ -240,22 +240,18 @@
               <label for="file" class="form-label">File*</label>
               <input class="form-control form-control-sm" id="formFileSm" type="file" name="file">
               <div class="text-end">
-                <a class="fs-1" download="lead-import-sample" href="{{ Storage::url('downloads/lead-import-sample.csv') }}" title="Lead Import Sample">Download Sample File</a>
+                <a class="fs-1" download="lead-import-sample" href="{{ Storage::url('downloads/lead-import-sample.xlsx') }}" title="Lead Import Sample">Download Sample File</a>
               </div>
             </div>
-
-            {{-- @if (Auth::user()->user_type == config('custom.USER_ADMIN'))
-            <div class="mb-3">
-              <label for="status" class="form-label">Assign Agent</label>
-              <select class="form-select" aria-label="status" name="userId">
-                <option selected>Select a user</option>
-                @foreach ($users as $user)
-                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                @endforeach
-              </select>
-            </div>
-            @endif            --}}
-                     
+            
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+              <div>
+                <p>Note:</p>
+                <div>Full Name is required</div>
+                <div>Emai is required</div>
+                <div>phone is required</div>
+              </div>
+            </div>                     
          </div>
          <div class="modal-footer">
             <button
