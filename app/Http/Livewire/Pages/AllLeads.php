@@ -14,6 +14,8 @@ class AllLeads extends Component
     public $leadId;
     public $statusId;
     public $userId;
+    public $bulkAssignUserId;
+    public $selectedLeads = [];
 
     use WithPagination;
  
@@ -30,7 +32,7 @@ class AllLeads extends Component
                     ->join('users', 'leads.assign_to', '=', 'users.id')
                     ->select('leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
                     ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
-                    ->orderByDesc('leads.created_at')->paginate(10);
+                    ->orderByDesc('leads.created_at')->paginate(5);
 
         } elseif(Auth::user()->user_type == config('custom.USER_ADMIN')){
 
@@ -41,7 +43,7 @@ class AllLeads extends Component
                         ->orderByDesc('leads.created_at')
                         ->where('leads.created_by', Auth::user()->id)
                         ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))                        
-                        ->paginate(10);
+                        ->paginate(5);
 
         } else{
 
@@ -52,8 +54,8 @@ class AllLeads extends Component
                         ->orderByDesc('leads.created_at')
                         ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
                         ->where('leads.assign_to', Auth::user()->id)
-                        ->orWhere('leads.created_by', Auth::user()->id)
-                        ->paginate(10);
+                        //->orWhere('leads.created_by', Auth::user()->id)
+                        ->paginate(5);
                         
         }
 
@@ -119,6 +121,37 @@ class AllLeads extends Component
             DB::commit();
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.USER_ASSIGN_CHANGE_SUCCESS')]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+        }
+
+    }
+
+    public function bulkAssign()
+    {
+
+        $this->dispatchBrowserEvent('modalClose');
+
+        DB::beginTransaction();
+
+        try {
+
+            foreach($this->selectedLeads as $leadId){
+                DB::table('leads')
+                    ->where('id', $leadId)
+                    ->update(['assign_to' => $this->bulkAssignUserId]);
+            }
+
+            DB::commit();
+
+            $this->selectedLeads = [];
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LAED_MASS_ASSIGN_SUCCESS')]);
 
         } catch (\Exception $e) {
 

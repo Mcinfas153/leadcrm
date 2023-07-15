@@ -7,5 +7,6 @@ return [
     'LEAD_STATUS_CHANGE_SUCCESS' => 'Lead status changed successfully',
     'LEAD_IMPORT_SUCCESS' => 'Lead imports successfully',
     'USER_ASSIGN_CHANGE_SUCCESS' => 'User assign to this lead successfully',
+    'LAED_MASS_ASSIGN_SUCCESS' => 'Leads mass assign finish successfully',
     'SOMETHING_HAPPENED' => 'Something went wrong. Please try again later'
 ];

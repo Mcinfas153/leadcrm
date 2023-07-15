@@ -1,6 +1,5 @@
 <div class="container-fluid">
     <livewire:components.navigator title="all leads"/>
-    {{ timeZoneChange() }}
     <div wire:loading>
       <livewire:components.progress-loader/>
     </div>
@@ -12,7 +11,7 @@
                 <div class="col-md-8">
                   <button type="button" data-bs-toggle="modal" data-bs-target="#import-modal" class="btn btn-primary">Import Leads</button>
                   <button type="button" onclick="exportLeads('{{ route('export-leads') }}')" class="btn btn-secondary">Export Leads</button>
-                  <button type="button" class="btn btn-success">Bulk Assign</button>
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#bulk-assign-modal" class="btn btn-success" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Assign</button>
                 </div>
                 <div class="col-md-4">
 
@@ -23,6 +22,7 @@
                 <table class="table data-table display text-nowrap">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th class="fixedCol">Name</th>
                             <th>Date</th>
                             <th class="text-center">Phone</th>
@@ -36,6 +36,11 @@
                     <tbody>    
                         @foreach ($leads as $lead)                                  
                         <tr>
+                            <td>
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" wire:model="selectedLeads" value="{{ $lead->id }}" id="flexCheckDefault">
+                              </div>
+                            </td>
                             <td class="fixedCol text-black"><a href="{{ URL::to('lead/view') }}/{{ $lead->id }}" target="_BLANK">{{ $lead->fullname }}</a></td>
                             <td>{{ getDateFormat($lead->created_at,'YYYY-MM-DD, h:mm a',config('custom.LOCAL_TIMEZONE')) }}</td>
                             <td class="text-center"><a onclick="makeCall('{{ $lead->phone }}')">{{ $lead->phone }}</a></td>
@@ -74,6 +79,7 @@
                     <tfoot>
                         <!-- start row -->
                         <tr>
+                          <th>#</th>
                           <th class="fixedCol">Name</th>
                           <th>Date</th>
                           <th class="text-center">Phone</th>
@@ -269,6 +275,59 @@
       </div>
     </form>
    </div>
+</div>
+
+{{-- Bulk change modal  --}}
+<div
+class="modal fade"
+id="bulk-assign-modal"
+tabindex="-1"
+aria-labelledby="mySmallModalLabel"
+aria-hidden="true"
+wire:ignore.self
+>
+<div class="modal-dialog modal-sm">
+  <div class="modal-content">
+    <div
+        class="modal-header d-flex align-items-center modal-colored-header bg-success text-white"
+        >
+        <h4 class="modal-title" id="myModalLabel">
+          Bulk Lead Assign
+        </h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          ></button>
+    </div>
+    <div class="modal-body">
+      <select class="form-select" aria-label="Default select example" wire:model.defer="bulkAssignUserId">
+        <option selected>Select a user</option>
+        @foreach ($users as $user)
+        <option value="{{ $user->id }}">{{ $user->name }}</option>
+        @endforeach
+      </select>
+    </div>
+    <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-danger text-black font-medium waves-effect"
+          data-bs-dismiss="modal"
+          >
+        Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-success text-black font-medium waves-effect"
+          id="status-change-save"
+          wire:click="bulkAssign"
+        >
+        Save changes
+      </button>
+    </div>
+  </div>
+</div>
 </div>
 
 </div>

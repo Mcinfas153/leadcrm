@@ -1,5 +1,6 @@
 const statusModal = new bootstrap.Modal(document.getElementById('status-change-modal'))
 const agentModal = new bootstrap.Modal(document.getElementById('agent-change-modal'))
+const bulkAssignModal = new bootstrap.Modal(document.getElementById('bulk-assign-modal'))
 
 function changeStatus(leadId, statusId) {
     statusModal.show()
@@ -8,6 +9,11 @@ function changeStatus(leadId, statusId) {
 
 function changeAgent(leadId, agentId) {
     agentModal.show()
+    Livewire.emit('leadAgentIdSelect', leadId, agentId)
+}
+
+function bulkAssign(leadId, agentId) {
+    bulkAssignModal.show()
     Livewire.emit('leadAgentIdSelect', leadId, agentId)
 }
 
@@ -71,4 +77,5 @@ function exportLeads(url) {
 window.addEventListener('modalClose', event => {
     statusModal.hide()
     agentModal.hide()
+    bulkAssignModal.hide()
 });

@@ -44,7 +44,7 @@ class LoginPage extends Component
                     'status' => 'success',
                     'icon' => 'success',
                     'title' => config('message.USER_LOGIN_SUCCESS'). Auth::user()->name,
-                ]);;
+                ]);
                             
             }
 
