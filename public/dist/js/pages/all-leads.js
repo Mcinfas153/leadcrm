@@ -74,6 +74,25 @@ function exportLeads(url) {
     })
 }
 
+function bulkDelete() {
+    Swal.fire({
+        title: 'Delete Leads',
+        text: "Are you sure want delete selected leads?",
+        width: '32em',
+        heightAuto: false,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'No, don\'t',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Livewire.emit('bulkDelete')
+        }
+    })
+}
+
 window.addEventListener('modalClose', event => {
     statusModal.hide()
     agentModal.hide()

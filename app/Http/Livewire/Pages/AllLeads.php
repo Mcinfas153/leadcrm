@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Pages;
 
+use App\Models\Lead;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -20,7 +21,7 @@ class AllLeads extends Component
  
     protected $paginationTheme = 'bootstrap';
 
-    protected $listeners = ['leadIdSelect' => 'leadIdSelect', 'leadAgentIdSelect' => 'leadAgentIdSelect'];
+    protected $listeners = ['leadIdSelect' => 'leadIdSelect', 'leadAgentIdSelect' => 'leadAgentIdSelect', 'bulkDelete' => 'bulkDelete'];
 
     public function render()
     {
@@ -151,6 +152,43 @@ class AllLeads extends Component
             $this->selectedLeads = [];
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LAED_MASS_ASSIGN_SUCCESS')]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+        }
+
+    }
+
+    public function bulkDelete()
+    {
+
+        DB::beginTransaction();
+
+        try {
+
+            foreach($this->selectedLeads as $leadId){
+
+                $currentLead = Lead::find($leadId);
+
+                if($currentLead->created_by == Auth::user()->id){
+
+                    $currentLead->delete();
+
+                } else{
+
+                    $currentLead->assign_to = Auth::user()->created_by;
+                }
+            }
+
+            DB::commit();
+
+            $this->selectedLeads = [];
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LAED_MASS_DELETE_SUCCESS')]);
 
         } catch (\Exception $e) {
 

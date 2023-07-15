@@ -12,6 +12,7 @@
                   <button type="button" data-bs-toggle="modal" data-bs-target="#import-modal" class="btn btn-primary">Import Leads</button>
                   <button type="button" onclick="exportLeads('{{ route('export-leads') }}')" class="btn btn-secondary">Export Leads</button>
                   <button type="button" data-bs-toggle="modal" data-bs-target="#bulk-assign-modal" class="btn btn-success" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Assign</button>
+                  <button type="button" onclick="bulkDelete()" class="btn btn-danger" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Delete</button>
                 </div>
                 <div class="col-md-4">
 
@@ -282,9 +283,9 @@ aria-labelledby="mySmallModalLabel"
 aria-hidden="true"
 wire:ignore.self
 >
-<div class="modal-dialog modal-sm">
-  <div class="modal-content">
-    <div
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div
         class="modal-header d-flex align-items-center modal-colored-header bg-success text-white"
         >
         <h4 class="modal-title" id="myModalLabel">
@@ -296,16 +297,16 @@ wire:ignore.self
           data-bs-dismiss="modal"
           aria-label="Close"
           ></button>
-    </div>
-    <div class="modal-body">
+      </div>
+      <div class="modal-body">
       <select class="form-select" aria-label="Default select example" wire:model.defer="bulkAssignUserId">
         <option selected>Select a user</option>
         @foreach ($users as $user)
         <option value="{{ $user->id }}">{{ $user->name }}</option>
         @endforeach
       </select>
-    </div>
-    <div class="modal-footer">
+      </div>
+      <div class="modal-footer">
         <button
           type="button"
           class="btn btn-danger text-black font-medium waves-effect"
@@ -320,10 +321,11 @@ wire:ignore.self
           wire:click="bulkAssign"
         >
         Save changes
-      </button>
+        </button>
+      </div>
     </div>
   </div>
 </div>
-</div>
+
 
 </div>
