@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LeadController;
+use App\Http\Livewire\Pages\AccountSettings;
 use App\Http\Livewire\Pages\AllLeads;
 use App\Http\Livewire\Pages\Dashboard;
 use App\Http\Livewire\Pages\ForgotPasswordPage;
@@ -9,6 +10,7 @@ use App\Http\Livewire\Pages\Leads;
 use App\Http\Livewire\Pages\LeadView;
 use App\Http\Livewire\Pages\LoginPage;
 use App\Http\Livewire\Pages\RegisterPage;
+use App\Http\Livewire\Pages\UsersList;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +31,8 @@ Route::middleware(['loggedUser'])->group(function () {
     //Route::get('/all-leads', [LeadController::class, 'getAllLeads'])->name('all.leads');
     Route::post('/import',[LeadController::class,'importLeads'])->name('import.leads');
     Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export-leads');
+    Route::get('/account-settings', AccountSettings::class)->name('settings');
+    Route::get('/users', UsersList::class)->name('users');
 });
 
 Route::middleware(['guestUser'])->group(function () {
