@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->text('password');
-            $table->foreignId('user_type');
-            $table->foreignId('user_role');
+            $table->integer('user_type')->constrained('user_types');
+            $table->integer('user_role')->constrained('user_roles');
             $table->string('designation')->nullable();
             $table->string('image')->nullable();
             $table->text('bio')->nullable();
@@ -27,8 +27,8 @@ return new class extends Migration
             $table->string('whatsapp')->nullable();
             $table->boolean('is_active')->default(1);
             $table->timestamp('email_verified_at')->nullable();
-            $table->foreignId('business_id')->nullable();
-            $table->foreignId('created_by')->default(1);
+            $table->integer('business_id')->nullable()->constrained('organizations');
+            $table->integer('created_by')->default(1)->constrained('users');
             $table->rememberToken();
             $table->timestamps();
         });

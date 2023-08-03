@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class User extends Authenticatable
@@ -47,14 +49,34 @@ class User extends Authenticatable
         );
     }
 
-    public function organization()
+    public function organization(): BelongsTo
     {
-        return $this->hasOne(Organization::class,'created_by');
+        return $this->belongsTo(Organization::class,'business_id');
     }
 
-    public function role()
+    public function type(): BelongsTo
     {
-        return $this->hasOne(UserRole::class, 'id', 'user_role');
+        return $this->belongsTo(UserType::class, 'user_type');
     }
+
+    public function role(): BelongsTo
+    {
+        return $this->BelongsTo(UserRole::class, 'user_role');
+    }
+
+    public function leads() :HasMany
+    {
+        return $this->hasMany(Lead::class, 'created_by');
+    }
+
+    public function assignLeads(): HasMany
+    {
+        return $this->hasMany(Lead::class, 'assign_to');
+    }
+
+    // public function business(): HasOne
+    // {
+    //     return $this->hasOne(Organization::class, '');
+    // }
 
 }

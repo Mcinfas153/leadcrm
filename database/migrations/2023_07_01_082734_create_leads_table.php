@@ -29,14 +29,14 @@ return new class extends Migration
             $table->string('campaign_name')->nullable();
             $table->string('property_type')->nullable();
             $table->string('bedroom')->nullable();
-            $table->foreignId('status')->default(1);
+            $table->integer('status')->default(1)->constrained('lead_statuses');
             $table->string('source')->nullable();
-            $table->foreignId('priority')->default(1);
+            $table->integer('priority')->default(1)->constrained('priorities');
             $table->string('developer')->nullable();
-            $table->foreignId('type')->default(1);
+            $table->integer('type')->default(1)->constrained('lead_types');
             $table->string('attachment')->nullable();
-            $table->foreignId('assign_to')->nullable();
-            $table->foreignId('created_by');
+            $table->integer('assign_to')->nullable()->constrained('users');
+            $table->integer('created_by')->constrained('users');
             $table->timestamps();
         });
     }
