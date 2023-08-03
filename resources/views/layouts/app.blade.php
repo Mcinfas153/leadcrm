@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  
+
 <head>
     <!-- --------------------------------------------------- -->
     <!-- Title -->
@@ -23,7 +23,7 @@
     <!-- Favicon -->
     <!-- --------------------------------------------------- -->
     <link rel="shortcut icon" type="image/png" href="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico" />
-    
+
     @if ($title == 'dashboard')
        <!-- Owl Carousel  -->
       <link rel="stylesheet" href="{{ asset('dist/libs/owl.carousel/dist/assets/owl.carousel.min.css') }}">
@@ -33,11 +33,11 @@
     <!-- datatable  Js -->
     <link rel="stylesheet" href="{{ asset('dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
     @endif
-    
+
     <!-- --------------------------------------------------- -->
     <!-- Core Css -->
     <!-- --------------------------------------------------- -->
-    
+
     <link  id="themeColors"  rel="stylesheet" href="{{ asset('dist/css/style.min.css') }}" />
     <link  id="themeColors"  rel="stylesheet" href="{{ asset('dist/css/custom.css') }}" />
     @livewireStyles
@@ -48,28 +48,28 @@
     <div class="preloader">
       <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico" alt="loader" class="lds-ripple img-fluid" />
     </div>
-    
+
     <livewire:components.alart-box/>
 
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
-      
+
       <livewire:components.sidebar/>
 
       <div class="body-wrapper">
-        
+
         <livewire:components.header/>
-        
+
           {{ $slot }}
-                 
+
       </div>
     </div>
-  
+
 
     <!--  Mobilenavbar -->
     <livewire:components.mobile-navbar/>
 
     <!--  Search Bar -->
-    <livewire:components.search-bar/>    
+    <livewire:components.search-bar/>
 
     <!-- ---------------------------------------------- -->
     <!-- Import Js Files -->
@@ -86,7 +86,7 @@
     <script src="{{ asset('dist/js/app.init.js') }}"></script>
     <script src="{{ asset('dist/js/app-style-switcher.js') }}"></script>
     <script src="{{ asset('dist/js/sidebarmenu.js') }}"></script>
-    
+
     <script src="{{ asset('dist/js/custom.js') }}"></script>
     <script src="{{ asset('dist/libs/prismjs/prism.js') }}"></script>
 
@@ -96,7 +96,7 @@
     <script src="{{ asset('dist/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
     @endif
-    
+
     @if ($title == 'fresh recent leads')
     <script src="{{ asset('dist/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js') }}"></script>
@@ -109,10 +109,15 @@
     <script src="{{ asset('cdn.datatables.net/buttons/1.5.1/js/fixedColumns.min.js') }}"></script>
     <script src="{{ asset('dist/js/pages/leads-page.js') }}"></script>
     @endif
-    
+
     @if ($title == 'all leads')
     <script src="{{ asset('dist/js/pages/all-leads.js') }}"></script>
     @endif
+
+    {{-- @if ($title == 'users list')
+    <script src="{{ asset('dist/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('dist/js/datatable/datatable-basic.init.js') }}"></script>
+    @endif --}}
 
     <script>
       window.addEventListener('pushToast', event => {
