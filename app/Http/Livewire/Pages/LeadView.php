@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Illuminate\Http\Request;
 
 class LeadView extends Component
 {
@@ -34,12 +35,14 @@ class LeadView extends Component
     public $type;
     public $attachment;
     public $assignTo;
+    public $lead;
 
 
     public function mount($leadId)
     {
         $this->leadId = $leadId;
         $lead = Lead::find($this->leadId);
+        $this->lead = $lead;
         $this->fullname = $lead->fullname;
         $this->phone = $lead->phone;
         $this->secondaryPhone = $lead->secondary_phone;
@@ -65,6 +68,10 @@ class LeadView extends Component
 
     public function render()
     {
+        if (Auth::user()->cannot('view', $this->lead)) {
+            abort(403);
+        }
+
         return view('livewire.pages.lead-view', [
             'statusList' => LeadStatus::where('is_active', 1)->get(),
             'usersList' => User::where('business_id', Auth::user()->business_id)->get(),
@@ -154,6 +161,11 @@ class LeadView extends Component
 
     public function updateLead()
     {
+
+        if (Auth::user()->cannot('update', $this->lead)) {
+            abort(403);
+        }
+
         DB::beginTransaction();
 
         try {
