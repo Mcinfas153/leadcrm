@@ -16,6 +16,9 @@ class LeadFactory extends Factory
      */
     public function definition()
     {
+        $createdBy = fake()->numberBetween(2,4);
+        $assignTo = $createdBy == 2 ? fake()->numberBetween(3,4) : $createdBy;
+
         return [
             'fullname' => fake()->name(),
             'phone' => fake()->phoneNumber(),
@@ -36,8 +39,8 @@ class LeadFactory extends Factory
             'priority' => fake()->numberBetween(1,3),
             'developer' => fake()->randomElement(['emaar', 'damac', 'azizi']),
             'type' => fake()->numberBetween(1,3),
-            'assign_to' => fake()->numberBetween(2,4),
-            'created_by' => fake()->numberBetween(1,4),
+            'assign_to' => $assignTo,
+            'created_by' => $createdBy,
             'created_at' => fake()->dateTimeThisYear(),
             'updated_at' => fake()->dateTimeThisMonth(),
         ];
