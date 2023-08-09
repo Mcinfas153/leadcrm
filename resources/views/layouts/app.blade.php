@@ -114,10 +114,16 @@
     <script src="{{ asset('dist/js/pages/all-leads.js') }}"></script>
     @endif
 
-    {{-- @if ($title == 'users list')
-    <script src="{{ asset('dist/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('dist/js/datatable/datatable-basic.init.js') }}"></script>
-    @endif --}}
+    @if ($title == "lead comments & activities")
+    <script src="{{ asset('dist/js/pages/lead-comments.js') }}"></script>
+    <script type="text/javascript">
+      window.onscroll = function (ev) {
+          if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 15) {
+              window.livewire.emit('load-more');
+          }
+      };
+  </script>
+    @endif
 
     <script>
       window.addEventListener('pushToast', event => {

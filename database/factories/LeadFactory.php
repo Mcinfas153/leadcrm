@@ -41,7 +41,7 @@ class LeadFactory extends Factory
             'type' => fake()->numberBetween(1,3),
             'assign_to' => $assignTo,
             'created_by' => $createdBy,
-            'created_at' => fake()->dateTimeThisYear(),
+            'created_at' => fake()->dateTimeThisMonth(),
             'updated_at' => fake()->dateTimeThisMonth(),
         ];
     }

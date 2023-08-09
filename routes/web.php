@@ -6,6 +6,7 @@ use App\Http\Livewire\Pages\AllLeads;
 use App\Http\Livewire\Pages\Dashboard;
 use App\Http\Livewire\Pages\ForgotPasswordPage;
 use App\Http\Livewire\Pages\FreshLeads;
+use App\Http\Livewire\Pages\LeadComments;
 use App\Http\Livewire\Pages\Leads;
 use App\Http\Livewire\Pages\LeadView;
 use App\Http\Livewire\Pages\LoginPage;
@@ -28,6 +29,7 @@ Route::middleware(['loggedUser'])->group(function () {
     Route::get('/recent-leads', FreshLeads::class)->name('freshleads');
     Route::get('/leads', AllLeads::class)->name('leads');
     Route::get('/lead/view/{leadId}', LeadView::class)->name('leadview');
+    Route::get('/lead/comments/{leadId}', LeadComments::class)->name('lead.comments');
     //Route::get('/all-leads', [LeadController::class, 'getAllLeads'])->name('all.leads');
     Route::post('/import',[LeadController::class,'importLeads'])->name('import.leads');
     Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export-leads');

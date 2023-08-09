@@ -6,7 +6,12 @@
             <livewire:components.progress-loader/>
         </div>
         <div class="">
-            <div class="card">
+            <div class="button-group mb-2 d-flex justify-content-end">
+                <a type="button" href="{{ URL::to('lead/comments/'.$leadId) }}" class="btn mb-1 waves-effect waves-light btn-rounded btn-primary">
+                  View Comments & Activities
+                </a>
+            </div> 
+            <div class="card">                
                 <div class="card-header text-center bg-info">
                     <h5 class="card-title text-light"><i class="ti ti-user-circle me-1 fs-6"></i> User Informations</h5>
                 </div>
@@ -16,14 +21,17 @@
                             <div class="form-group mb-3 col-md-6">
                                 <small id="fullname" class="form-text text-muted">Full Name *</small>
                                 <input type="text" class="form-control mt-1" wire:model.defer="fullname">
+                                @error('fullname') <span class="error">{{ $message }}</span> @enderror
                             </div>
                             <div class="form-group mb-3 col-md-6">
                                 <small id="email" class="form-text text-muted">Email Address *</small>
                                 <input type="email" class="form-control mt-1"aria-describedby="email" placeholder="Email Address *" wire:model.defer="email">
+                                @error('email') <span class="error">{{ $message }}</span> @enderror
                             </div>
                             <div class="form-group mb-3 col-md-4">
                                 <small id="phone" class="form-text text-muted">Phone Number *</small>
                                 <input type="text" class="form-control mt-1"aria-describedby="phone" placeholder="Phone Number *" wire:model.defer="phone">
+                                @error('phone') <span class="error">{{ $message }}</span> @enderror
                             </div>
                             <div class="form-group mb-3 col-md-4">
                                 <small id="secondaryphone" class="form-text text-muted">Secondary Phone</small>
@@ -90,7 +98,8 @@
                                         <option value="{{ $sl->id }}">{{ $sl->name }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div>                            
+                            @if (Auth::user()->user_type === (int)config('custom.USER_ADMIN'))
                             <div class="form-group mb-3 col-md-4">
                                 <small id="bedroom" class="form-text text-muted">Priority</small>
                                 <select class="form-select mr-sm-2 mt-1" id="inlineFormCustomSelect" wire:model="priority">
@@ -107,6 +116,7 @@
                                     @endforeach
                                 </select>
                             </div>
+                            @endif                            
                             <div class="form-group mb-3 col-md-12">
                                 <small id="inquiry" class="form-text text-muted">Inquiry</small>
                                 <textarea class="form-control mt-1"aria-describedby="inquiry" rows="4" wire:model.defer="inquiry"></textarea>
@@ -117,7 +127,7 @@
                                     <div class="ms-auto mt-3 mt-md-0">
                                         <button
                                             type="submit"
-                                            class="btn btn-info font-medium rounded-pill px-4"
+                                            class="btn btn-success font-medium rounded-pill px-4"
                                         >
                                             <div class="d-flex align-items-center">
                                                 <i class="ti ti-check me-2 fs-4"></i>
@@ -129,7 +139,7 @@
                             </div>
                         </div>
                     </form>
-                </div>
+                </div>                
             </div>
         </div>
     </div>

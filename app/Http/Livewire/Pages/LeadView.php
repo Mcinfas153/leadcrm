@@ -4,12 +4,12 @@ namespace App\Http\Livewire\Pages;
 
 use App\Models\Lead;
 use App\Models\LeadStatus;
+use App\Models\Note;
 use App\Models\Priority;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-use Illuminate\Http\Request;
 
 class LeadView extends Component
 {
@@ -37,6 +37,11 @@ class LeadView extends Component
     public $assignTo;
     public $lead;
 
+    protected $rules = [
+        'fullname' => 'required',
+        'phone' => 'required',
+        'email' => 'required'
+    ];
 
     public function mount($leadId)
     {
@@ -76,6 +81,7 @@ class LeadView extends Component
             'statusList' => LeadStatus::where('is_active', 1)->get(),
             'usersList' => User::where('business_id', Auth::user()->business_id)->get(),
             'priorityList' => Priority::where('is_active', 1)->get(),
+            'notes' => DB::table('notes')->get()
         ])->layout('layouts.app', [
             'title' => 'lead view',
         ]);
@@ -165,6 +171,8 @@ class LeadView extends Component
         if (Auth::user()->cannot('update', $this->lead)) {
             abort(403);
         }
+
+        $this->validate();
 
         DB::beginTransaction();
 

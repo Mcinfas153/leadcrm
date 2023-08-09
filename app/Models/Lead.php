@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Lead extends Model
 {
@@ -17,7 +18,7 @@ class Lead extends Model
     {
         return Attribute::make(
             //get: fn ($value) => '',
-            set: fn ($value) => timeZoneChange('UTC'),
+            //set: fn ($value) => timeZoneChange('UTC'),
         );
     }
 
@@ -44,5 +45,10 @@ class Lead extends Model
     public function statusName(): BelongsTo
     {
         return $this->belongsTo(LeadStatus::class, 'status');
+    }
+
+    public function notes(): HasMany
+    {
+        return $this->hasMany(Note::class);
     }
 }

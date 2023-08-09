@@ -74,9 +74,9 @@ class User extends Authenticatable
         return $this->hasMany(Lead::class, 'assign_to');
     }
 
-    // public function business(): HasOne
-    // {
-    //     return $this->hasOne(Organization::class, '');
-    // }
+    public function notes(): HasMany
+    {
+        return $this->hasMany(Note::class, 'created_by');
+    }
 
 }

@@ -54,7 +54,7 @@ class AllLeads extends Component
                         ->orderByDesc('leads.created_at')
                         ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
                         ->where('leads.assign_to', Auth::user()->id)
-                        //->orWhere('leads.created_by', Auth::user()->id)
+                        ->orWhere('leads.created_by', Auth::user()->id)
                         ->paginate(5);
                         
         }
