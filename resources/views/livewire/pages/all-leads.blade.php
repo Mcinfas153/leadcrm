@@ -75,7 +75,7 @@
                                   </li>
                                   @if (Auth::user()->can('delete', App\Models\Lead::find($lead->id)))
                                   <li class="">
-                                    <a class="dropdown-item d-flex align-items-center text-black" onclick="deleteLead({{ $lead->id }})">
+                                    <a class="dropdown-item d-flex align-items-center text-black" onclick="deleteLead({{ $lead->id }}, '{{ $lead->fullname }}')">
                                     <i class="ti ti-trash me-1 fs-1 text-black"></i>Delete </a>
                                   </li>
                                   @endif                                                               

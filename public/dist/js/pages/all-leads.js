@@ -99,10 +99,10 @@ window.addEventListener('modalClose', event => {
     bulkAssignModal.hide()
 });
 
-function deleteLead(id) {
+function deleteLead(id, name) {
     Swal.fire({
         title: 'Delete Leads',
-        text: "Are you sure want delete this leads?",
+        text: `Are you sure want delete ${name}?`,
         width: '32em',
         heightAuto: false,
         icon: 'warning',
