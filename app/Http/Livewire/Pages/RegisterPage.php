@@ -81,7 +81,7 @@ class RegisterPage extends Component
                 'status' => 'success',
                 'icon' => 'success',
                 'title' => config('message.USER_REGISTER_SUCCESS'). $user->name 
-            ]);;
+            ]);
           
           } catch (\Exception $e) {
 
@@ -89,7 +89,7 @@ class RegisterPage extends Component
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
           
-            dd($e->getMessage());
+            //dd($e->getMessage());
 
         }
     }

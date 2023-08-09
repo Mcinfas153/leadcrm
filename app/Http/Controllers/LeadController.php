@@ -77,7 +77,11 @@ class LeadController extends Controller
           
           } catch (\Exception $e) {
 
-            dd($e->getMessage());
+            return back()->with([
+                'status' => 'error',
+                'icon' => 'error',
+                'title' => Str::limit($e->getMessage(), 90) 
+            ]);
 
         }
 
