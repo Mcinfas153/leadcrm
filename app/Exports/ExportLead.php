@@ -31,9 +31,10 @@ class ExportLead implements FromCollection, WithHeadings
                         ->join('lead_statuses', 'leads.status', '=', 'lead_statuses.id')
                         ->join('users', 'leads.assign_to', '=', 'users.id')
                         ->select('leads.fullname','leads.phone','leads.secondary_phone', 'leads.email', 'leads.whatsapp', 'leads.city','leads.country', 'leads.budget', 'leads.contact_time', 'leads.purpose', 'leads.inquiry','leads.campaign_name', 'leads.property_type', 'leads.bedroom','lead_statuses.name as lead_status', 'users.name as assign_user')
-                        ->orderByDesc('leads.created_at')
-                        ->where('leads.created_by', Auth::user()->id)
-                        ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))                        
+                        ->where('leads.assign_to', Auth::user()->id)
+                        ->orWhere('leads.created_by', Auth::user()->id)
+                        ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD')) 
+                        ->orderByDesc('leads.created_at')                     
                         ->get();
 
         } else{
@@ -42,10 +43,10 @@ class ExportLead implements FromCollection, WithHeadings
                         ->join('lead_statuses', 'leads.status', '=', 'lead_statuses.id')
                         ->join('users', 'leads.assign_to', '=', 'users.id')
                         ->select('leads.fullname','leads.phone','leads.secondary_phone', 'leads.email', 'leads.whatsapp', 'leads.city','leads.country', 'leads.budget', 'leads.contact_time', 'leads.purpose', 'leads.inquiry','leads.campaign_name', 'leads.property_type', 'leads.bedroom','lead_statuses.name as lead_status')
-                        ->orderByDesc('leads.created_at')
                         ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
                         ->where('leads.assign_to', Auth::user()->id)
-                        //->orWhere('leads.created_by', Auth::user()->id)
+                        ->orWhere('leads.created_by', Auth::user()->id)
+                        ->orderByDesc('leads.created_at')
                         ->get();
                         
         }
