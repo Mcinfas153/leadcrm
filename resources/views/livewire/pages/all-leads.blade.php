@@ -11,7 +11,9 @@
                 <div class="col-md-8">
                   <button type="button" data-bs-toggle="modal" data-bs-target="#import-modal" class="btn btn-primary">Import Leads</button>
                   <button type="button" onclick="exportLeads('{{ route('export-leads') }}')" class="btn btn-secondary">Export Leads</button>
+                  @if (Auth::user()->can('changeAgent',App\Models\Lead::class))
                   <button type="button" data-bs-toggle="modal" data-bs-target="#bulk-assign-modal" class="btn btn-success" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Assign</button>
+                  @endif
                   <button type="button" onclick="bulkDelete()" class="btn btn-danger" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Delete</button>
                 </div>
                 <div class="col-md-4">
@@ -30,7 +32,9 @@
                             <th class="text-center">Email</th>
                             <th class="text-center">Status</th>
                             <th class="text-center">Campaign Name</th>
+                            @if (Auth::user()->can('changeAgent', App\Models\Lead::class))
                             <th class="text-center">Assign To</th>
+                            @endif                            
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -48,7 +52,9 @@
                             <td class="text-center"><a onclick="sentEmail('{{ $lead->email }}')">{{ $lead->email }}</a></td>
                             <td class="text-center"><span onclick="changeStatus({{ $lead->id }}, {{ $lead->status }})" style="background-color:{{ $lead->color_code }}" class="badge fw-semibold py-2 px-3 text-white fs-2">{{ Str::title($lead->lead_status) }}</span></td>
                             <td class="text-center">{{ Str::title($lead->campaign_name) }}</td>
+                            @if (Auth::user()->can('changeAgent', App\Models\Lead::class))
                             <td class="text-center"><span onclick="changeAgent({{ $lead->id }}, {{ $lead->assign_to }})" class="badge fw-semibold py-2 px-3 bg-success bg-gradient text-black fs-2">{{ Str::title($lead->assign_user) }}</span></td>
+                            @endif
                             <td class="text-center">
                               <div class="dropdown">
                                 <a class="text-decoration-none" href="javascript:void(0)" id="nft2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -64,13 +70,15 @@
                                     <i class="ti ti-link me-1 fs-1 text-black"></i>Lead Activities </a>
                                   </li>
                                   <li class="">
-                                      <a class="dropdown-item d-flex align-items-center text-black" href="{{ URL::to('lead/view') }}/{{ $lead->id }}">
+                                      <a class="dropdown-item d-flex align-items-center text-black" target="_BLANK" href="{{ URL::to('lead/view') }}/{{ $lead->id }}">
                                       <i class="ti ti-eye me-1 fs-1 text-black"></i>View </a>
                                   </li>
+                                  @if (Auth::user()->can('delete', App\Models\Lead::find($lead->id)))
                                   <li class="">
-                                    <a class="dropdown-item d-flex align-items-center text-black" href="#">
+                                    <a class="dropdown-item d-flex align-items-center text-black" onclick="deleteLead({{ $lead->id }})">
                                     <i class="ti ti-trash me-1 fs-1 text-black"></i>Delete </a>
-                                </li>
+                                  </li>
+                                  @endif                                                               
                                 </ul>
                              </div>
                             </td>
@@ -87,7 +95,9 @@
                           <th class="text-center">Email</th>
                           <th class="text-center">Status</th>
                           <th class="text-center">Campaign Name</th>
+                          @if (Auth::user()->can('changeAgent',App\Models\Lead::class))
                           <th class="text-center">Assign To</th>
+                          @endif
                           <th class="text-center">Action</th>
                         </tr>
                         <!-- end row -->

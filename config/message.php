@@ -8,6 +8,7 @@ return [
     'LEAD_PRIORITY_CHANGE_SUCCESS' => 'Lead priority changed successfully',
     'LEAD_IMPORT_SUCCESS' => 'Lead imports successfully',
     'LEAD_UPDATED_SUCCESS' => 'Lead updated successfully',
+    'LEAD_DELETED_SUCCESS' => 'Lead deleted successfully',
     'USER_ASSIGN_CHANGE_SUCCESS' => 'User assign to this lead successfully',
     'LAED_MASS_ASSIGN_SUCCESS' => 'Leads mass assign completed successfully',
     'LAED_MASS_DELETE_SUCCESS' => 'Leads mass delete completed successfully',

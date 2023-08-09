@@ -67,7 +67,7 @@ class LeadPolicy
      */
     public function delete(User $user, Lead $lead)
     {
-        //
+        return $user->id == $lead->created_by;
     }
 
     /**
@@ -77,9 +77,9 @@ class LeadPolicy
      * @param  \App\Models\Lead  $lead
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Lead $lead)
+    public function restore(User $user)
     {
-        //
+        return $user->user_type == config('custom.USER_ADMIN');
     }
 
     /**
@@ -92,5 +92,10 @@ class LeadPolicy
     public function forceDelete(User $user, Lead $lead)
     {
         //
+    }
+
+    public function changeAgent(User $user)
+    {
+        return $user->user_type == config('custom.USER_ADMIN');
     }
 }

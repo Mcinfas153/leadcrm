@@ -21,7 +21,12 @@ class AllLeads extends Component
  
     protected $paginationTheme = 'bootstrap';
 
-    protected $listeners = ['leadIdSelect' => 'leadIdSelect', 'leadAgentIdSelect' => 'leadAgentIdSelect', 'bulkDelete' => 'bulkDelete'];
+    protected $listeners = [
+        'leadIdSelect' => 'leadIdSelect', 
+        'leadAgentIdSelect' => 'leadAgentIdSelect',
+        'bulkDelete' => 'bulkDelete',
+        'deleteLead' => 'deleteLead',
+    ];
 
     public function render()
     {
@@ -189,6 +194,35 @@ class AllLeads extends Component
             $this->selectedLeads = [];
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LAED_MASS_DELETE_SUCCESS')]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+        }
+
+    }
+
+    public function deleteLead($leadId)
+    {
+
+        $lead = Lead::find($leadId);
+
+        if (Auth::user()->cannot('delete', $lead)) {
+            abort(403);
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+           $lead->delete();
+
+            DB::commit();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LEAD_DELETED_SUCCESS')]);
 
         } catch (\Exception $e) {
 
