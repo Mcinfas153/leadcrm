@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <livewire:components.navigator title="all leads"/>
+    <livewire:components.navigator title="all data leads"/>
     <div wire:loading>
       <livewire:components.progress-loader/>
     </div>
@@ -42,11 +42,11 @@
                         @foreach ($leads as $lead)                                  
                         <tr>
                             <td>
-                              @can('delete', App\Models\Lead::find($lead->id))
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" wire:model="selectedLeads" value="{{ $lead->id }}" id="flexCheckDefault">
-                              </div>
-                              @endcan
+                                @can('delete', App\Models\Lead::find($lead->id))
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" wire:model="selectedLeads" value="{{ $lead->id }}" id="flexCheckDefault">
+                                  </div>
+                                @endcan                              
                             </td>
                             <td class="fixedCol text-black"><a href="{{ URL::to('lead/view') }}/{{ $lead->id }}" target="_BLANK">{{ $lead->fullname }}</a></td>
                             <td>{{ getDateFormat($lead->created_at,'YYYY-MM-DD, h:mm a',config('custom.LOCAL_TIMEZONE')) }}</td>

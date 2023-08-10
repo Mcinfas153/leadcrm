@@ -10,6 +10,7 @@ use App\Http\Livewire\Pages\LeadComments;
 use App\Http\Livewire\Pages\Leads;
 use App\Http\Livewire\Pages\LeadView;
 use App\Http\Livewire\Pages\LoginPage;
+use App\Http\Livewire\Pages\OldDataLeads;
 use App\Http\Livewire\Pages\RegisterPage;
 use App\Http\Livewire\Pages\UsersList;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +31,7 @@ Route::middleware(['loggedUser'])->group(function () {
     Route::get('/leads', AllLeads::class)->name('leads');
     Route::get('/lead/view/{leadId}', LeadView::class)->name('leadview');
     Route::get('/lead/comments/{leadId}', LeadComments::class)->name('lead.comments');
-    //Route::get('/all-leads', [LeadController::class, 'getAllLeads'])->name('all.leads');
+    Route::get('/cold/leads', OldDataLeads::class)->name('old-data.leads');
     Route::post('/import',[LeadController::class,'importLeads'])->name('import.leads');
     Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export-leads');
     Route::get('/account-settings', AccountSettings::class)->name('settings');

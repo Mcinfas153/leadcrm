@@ -76,7 +76,7 @@
 
               <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">OLD DATA LEADS</span>
+                <span class="hide-menu">COLD DATA LEADS</span>
               </li>
 
               <li class="sidebar-item">
@@ -84,11 +84,11 @@
                   <span class="d-flex">
                     <i class="ti ti-phone"></i>
                   </span>
-                  <span class="hide-menu">Old Leads</span>
+                  <span class="hide-menu">Cold Data Leads</span>
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
-                    <a href="{{ URL::to('lead/old/add') }}" class="sidebar-link">
+                    <a href="{{ URL::to('lead/cold/add') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
@@ -96,15 +96,7 @@
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="{{ URL::to('recent-leads/old') }}" class="sidebar-link">
-                      <div class="round-16 d-flex align-items-center justify-content-center">
-                        <i class="ti ti-circle"></i>
-                      </div>
-                      <span class="hide-menu">Recent Leads</span>
-                    </a>
-                  </li>
-                  <li class="sidebar-item">
-                    <a href="{{ URL::to('leads/old') }}" class="sidebar-link">
+                    <a href="{{ URL::to('cold/leads') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
