@@ -111,12 +111,13 @@
                 </tr>
               </thead>
               <tbody class="border-top">
+                @foreach ($latestLeads as $latest)
                 <tr>
                   <td class="ps-0">
                     <div class="d-flex align-items-center">
                       <div class="me-2 pe-1">
                         <img
-                          src="../../dist/images/profile/user-1.jpg"
+                          src="{{ asset('dist/images/profile/user-1.jpg') }}"
                           class="rounded-circle"
                           width="40"
                           height="40"
@@ -124,154 +125,25 @@
                         />
                       </div>
                       <div>
-                        <h6 class="fw-semibold mb-1">Sunil Joshi</h6>
-                        <p class="fs-2 mb-0 text-muted">Web Designer</p>
+                        <h6 class="fw-semibold mb-1">{{ $latest->fullname }}</h6>
+                        <p class="fs-2 mb-0 text-muted">{{ $latest->country ?? "World" }}</p>
                       </div>
                     </div>
                   </td>
                   <td>
-                    <p class="mb-0 fs-3">Elite Admin</p>
+                    <p class="mb-0 fs-3">{{ $latest->phone }}</p>
                   </td>
                   <td>
                     <span
                       class="badge fw-semibold py-1 w-85 bg-light-primary text-primary"
-                      >Low</span
+                      >{{ $latest->email }}</span
                     >
                   </td>
                   <td>
-                    <p class="fs-3 text-dark mb-0">$3.9K</p>
+                    <p class="fs-3 text-dark mb-0">{{ $latest->campaign_name }}</p>
                   </td>
                 </tr>
-                <tr>
-                  <td class="ps-0">
-                    <div class="d-flex align-items-center">
-                      <div class="me-2 pe-1">
-                        <img
-                          src="../../dist/images/profile/user-2.jpg"
-                          class="rounded-circle"
-                          width="40"
-                          height="40"
-                          alt=""
-                        />
-                      </div>
-                      <div>
-                        <h6 class="fw-semibold mb-1">John Deo</h6>
-                        <p class="fs-2 mb-0 text-muted">
-                          Web Developer
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <p class="mb-0 fs-3">Flexy Admin</p>
-                  </td>
-                  <td>
-                    <span
-                      class="badge fw-semibold py-1 w-85 bg-light-warning text-warning"
-                      >Medium</span
-                    >
-                  </td>
-                  <td>
-                    <p class="fs-3 text-dark mb-0">$24.5K</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="ps-0">
-                    <div class="d-flex align-items-center">
-                      <div class="me-2 pe-1">
-                        <img
-                          src="../../dist/images/profile/user-3.jpg"
-                          class="rounded-circle"
-                          width="40"
-                          height="40"
-                          alt=""
-                        />
-                      </div>
-                      <div>
-                        <h6 class="fw-semibold mb-1">Nirav Joshi</h6>
-                        <p class="fs-2 mb-0 text-muted">Web Manager</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <p class="mb-0 fs-3">Material Pro</p>
-                  </td>
-                  <td>
-                    <span
-                      class="badge fw-semibold py-1 w-85 bg-light-info text-info"
-                      >High</span
-                    >
-                  </td>
-                  <td>
-                    <p class="fs-3 text-dark mb-0">$12.8K</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="ps-0">
-                    <div class="d-flex align-items-center">
-                      <div class="me-2 pe-1">
-                        <img
-                          src="../../dist/images/profile/user-4.jpg"
-                          class="rounded-circle"
-                          width="40"
-                          height="40"
-                          alt=""
-                        />
-                      </div>
-                      <div>
-                        <h6 class="fw-semibold mb-1">Yuvraj Sheth</h6>
-                        <p class="fs-2 mb-0 text-muted">
-                          Project Manager
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <p class="mb-0 fs-3">Xtreme Admin</p>
-                  </td>
-                  <td>
-                    <span
-                      class="badge fw-semibold py-1 w-85 bg-light-success text-success"
-                      >Low</span
-                    >
-                  </td>
-                  <td>
-                    <p class="fs-3 text-dark mb-0">$4.8K</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="border-0 ps-0">
-                    <div class="d-flex align-items-center">
-                      <div class="me-2 pe-1">
-                        <img
-                          src="../../dist/images/profile/user-5.jpg"
-                          class="rounded-circle"
-                          width="40"
-                          height="40"
-                          alt=""
-                        />
-                      </div>
-                      <div>
-                        <h6 class="fw-semibold mb-1">Micheal Doe</h6>
-                        <p class="fs-2 mb-0 text-muted">
-                          Content Writer
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="border-0">
-                    <p class="mb-0 fs-3">Helping Hands WP Theme</p>
-                  </td>
-                  <td class="border-0">
-                    <span
-                      class="badge fw-semibold py-1 w-85 bg-light-danger text-danger"
-                      >High</span
-                    >
-                  </td>
-                  <td class="border-0">
-                    <p class="fs-3 text-dark mb-0">$9.3K</p>
-                  </td>
-                </tr>
+                @endforeach
               </tbody>
             </table>
           </div>

@@ -52,6 +52,11 @@ class Dashboard extends Component
         ->where('status', config('custom.LEAD_STATUS_DEAL_CLOSED'))
         ->count();
 
+        $latesLeads = Lead::where('created_by', Auth::user()->id)
+                            ->limit(5)
+                            ->latest()
+                            ->get();
+
 
         } else if(Auth::user()->user_type == config('custom.USER_NORMAL')){
 
@@ -98,6 +103,14 @@ class Dashboard extends Component
                         ->where('status', config('custom.LEAD_STATUS_DEAL_CLOSED'))
                         ->count();
 
+        $latesLeads = Lead::where(function($query) {
+                        $query->where('created_by', Auth::user()->id)
+                            ->orWhere('assign_to', Auth::user()->id);
+                        })
+                        ->limit(5)
+                        ->latest()
+                        ->get();
+
         } else {
 
             $newLeadsCount = 0;
@@ -105,6 +118,7 @@ class Dashboard extends Component
             $followingLeadCount = 0;
             $totalLeadsCount = 0;
             $closeDealsCount = 0;
+            $latesLeads = [];
         }
 
         return view('livewire.pages.dashboard',[
@@ -115,6 +129,7 @@ class Dashboard extends Component
             'closeDealsCount' => $closeDealsCount,
             'chart' => $chart->build(),
             'monthlyLeadChart' => $monthlyLeadChart->build(),
+            'latestLeads' => $latesLeads
         ])->layout('layouts.app', [
             'title' => 'dashboard'
         ]);

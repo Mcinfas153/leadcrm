@@ -3,6 +3,7 @@
 namespace App\Charts;
 
 use ArielMejiaDev\LarapexCharts\LarapexChart;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -49,7 +50,7 @@ class MonthlyLeadsChart
         }
 
              foreach($leadStat as $ls){
-                $dates[] = $ls->month;
+                $dates[] = $monthName = date('F', mktime(0, 0, 0, $ls->month, 10));;
                 $leadsCount[] = $ls->leadCount;
              }
 
