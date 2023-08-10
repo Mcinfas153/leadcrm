@@ -1,4 +1,6 @@
 <?php
+//namespace App\Helpers;
+
 use Carbon\Carbon;
 
 function getDateFormat($dateTime, $format = 'YYYY-MM-DD, h:mm a', $timezone = 'UTC')
