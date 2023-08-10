@@ -16,6 +16,7 @@ class AllLeads extends Component
     public $userId;
     public $bulkAssignUserId;
     public $selectedLeads = [];
+    public $search = '';
 
     use WithPagination;
  
@@ -27,6 +28,11 @@ class AllLeads extends Component
         'bulkDelete' => 'bulkDelete',
         'deleteLead' => 'deleteLead',
     ];
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {
@@ -47,7 +53,13 @@ class AllLeads extends Component
                         ->select('leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
                         ->orderByDesc('leads.created_at')
                         ->where('leads.created_by', Auth::user()->id)
-                        ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))                        
+                        ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
+                        ->where(function($query) {
+                            $query->where('leads.fullname', 'like', '%'.$this->search.'%')
+                                ->orWhere('leads.phone', 'like', '%'.$this->search.'%')
+                                ->orWhere('leads.email', 'like', '%'.$this->search.'%')
+                                ->orWhere('leads.campaign_name', 'like', '%'.$this->search.'%');
+                        })                                               
                         ->paginate(5);
 
         } else{
@@ -58,8 +70,16 @@ class AllLeads extends Component
                         ->select('leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
                         ->orderByDesc('leads.created_at')
                         ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
-                        ->where('leads.assign_to', Auth::user()->id)
-                        ->orWhere('leads.created_by', Auth::user()->id)
+                        ->where(function($query) {
+                            $query->where('leads.assign_to', Auth::user()->id)
+                                ->orWhere('leads.created_by', Auth::user()->id);
+                        })
+                        ->where(function($query) {
+                            $query->where('leads.fullname', 'like', '%'.$this->search.'%')
+                                ->orWhere('leads.phone', 'like', '%'.$this->search.'%')
+                                ->orWhere('leads.email', 'like', '%'.$this->search.'%')
+                                ->orWhere('leads.campaign_name', 'like', '%'.$this->search.'%');
+                        })
                         ->paginate(5);
                         
         }

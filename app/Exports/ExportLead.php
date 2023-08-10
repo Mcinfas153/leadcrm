@@ -44,8 +44,10 @@ class ExportLead implements FromCollection, WithHeadings
                         ->join('users', 'leads.assign_to', '=', 'users.id')
                         ->select('leads.fullname','leads.phone','leads.secondary_phone', 'leads.email', 'leads.whatsapp', 'leads.city','leads.country', 'leads.budget', 'leads.contact_time', 'leads.purpose', 'leads.inquiry','leads.campaign_name', 'leads.property_type', 'leads.bedroom','lead_statuses.name as lead_status')
                         ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
-                        ->where('leads.assign_to', Auth::user()->id)
-                        ->orWhere('leads.created_by', Auth::user()->id)
+                        ->where(function($query) {
+                            $query->where('leads.assign_to', Auth::user()->id)
+                                ->orWhere('leads.created_by', Auth::user()->id);
+                        })
                         ->orderByDesc('leads.created_at')
                         ->get();
                         

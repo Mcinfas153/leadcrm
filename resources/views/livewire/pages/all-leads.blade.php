@@ -17,7 +17,7 @@
                   <button type="button" onclick="bulkDelete()" class="btn btn-danger" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Delete</button>
                 </div>
                 <div class="col-md-4">
-
+                  <input class="form-control" type="text" placeholder="Search Here" wire:model="search">
                 </div>
               </div>
               
