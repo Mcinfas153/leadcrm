@@ -2,21 +2,25 @@
 
 namespace App\Http\Livewire\Pages;
 
+use App\Charts\DailyLeadsChart;
 use App\Models\Lead;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use App\Http\Traits\DateTrait;
 
 class Dashboard extends Component
 {
+
+    use DateTrait;
 
     public function mount()
     {
         
     }
 
-    public function render()
+    public function render(DailyLeadsChart $chart)
     {
+
         if(Auth::user()->user_type == config('custom.USER_ADMIN')){
 
         $newLeadsCount = Lead::where('created_by', Auth::user()->id)
@@ -108,8 +112,7 @@ class Dashboard extends Component
             'followingLeadCount' => $followingLeadCount,
             'totalLeadsCount' => $totalLeadsCount,
             'closeDealsCount' => $closeDealsCount,
-            'dailyLeads' => [20, 15, 30, 25, 10, 15],
-            'monthDates' => [1, 2, 3, 4, 5, 6]
+            'chart' => $chart->build(),
         ])->layout('layouts.app', [
             'title' => 'dashboard'
         ]);

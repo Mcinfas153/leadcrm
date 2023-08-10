@@ -63,7 +63,9 @@
           <div>
             <h5 class="card-title fw-semibold mb-1">Leads Count</h5>
             <p class="card-subtitle mb-0">Every Day</p>
-            <div id="daily-leads" class="mb-7 pb-8"></div>
+            <div id="daily-leads" class="mb-7 pb-8">
+              {!! $chart->container() !!}
+            </div>
           </div>
           </div>
         </div>
@@ -275,9 +277,6 @@
       </div>
     </div>
   </div>
-
-  <script>
-    const dailyLeads = {{ json_encode($dailyLeads) }}
-    const monthDates = {{ json_encode($monthDates) }}
-  </script>
+  <script src="{{ $chart->cdn() }}"></script>
+  {{ $chart->script() }}
 </div>
