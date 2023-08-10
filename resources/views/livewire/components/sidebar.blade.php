@@ -60,7 +60,7 @@
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
-                      <span class="hide-menu">Recent Leads</span>
+                      <span class="hide-menu">Dowload Leads</span>
                     </a>
                   </li>
                   <li class="sidebar-item">

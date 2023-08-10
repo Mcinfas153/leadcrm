@@ -6,53 +6,74 @@
           <div class="card">
             <div class="card-body">
             <div class="table-responsive">
-                <table
-                  id="leads"
-                  class="table border table-striped display text-nowrap"
-                >
-                  <thead>
+              <table class="table data-table display text-nowrap" id="leads">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th class="fixedCol">Name</th>
+                        <th>Date</th>
+                        <th class="text-center">Phone</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Campaign Name</th>
+                        @if (Auth::user()->can('changeAgent', App\Models\Lead::class))
+                        <th class="text-center">Assign To</th>
+                        @endif                            
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>    
+                    @foreach ($leads as $lead)                                  
+                    <tr>
+                        <td>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{ $lead->id }}" id="flexCheckDefault">
+                          </div>
+                        </td>
+                        <td class="fixedCol text-black"><a href="{{ URL::to('lead/view') }}/{{ $lead->id }}" target="_BLANK">{{ $lead->fullname }}</a></td>
+                        <td>{{ getDateFormat($lead->created_at,'YYYY-MM-DD, h:mm a',config('custom.LOCAL_TIMEZONE')) }}</td>
+                        <td class="text-center"><a>{{ $lead->phone }}</a></td>
+                        <td class="text-center"><a>{{ $lead->email }}</a></td>
+                        <td class="text-center"><span style="background-color:{{ $lead->color_code }}" class="badge fw-semibold py-2 px-3 text-white fs-2">{{ Str::title($lead->lead_status) }}</span></td>
+                        <td class="text-center">{{ Str::title($lead->campaign_name) }}</td>
+                        @if (Auth::user()->can('changeAgent', App\Models\Lead::class))
+                        <td class="text-center"><span class="badge fw-semibold py-2 px-3 bg-success bg-gradient text-black fs-2">{{ Str::title($lead->assign_user) }}</span></td>
+                        @endif
+                        <td class="text-center">
+                          <div class="dropdown">
+                            <a class="text-decoration-none" href="javascript:void(0)" id="nft2" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ti ti-dots-vertical fs-4"></i>
+                            </a>
+                            <ul class="dropdown-menu bg-light bg-gradient" aria-labelledby="nft2" id="action-panel">
+                              <li class="">
+                                  <a class="dropdown-item d-flex align-items-center text-black" target="_BLANK" href="{{ URL::to('lead/view') }}/{{ $lead->id }}">
+                                  <i class="ti ti-eye me-1 fs-1 text-black"></i>View </a>
+                              </li>                                                             
+                            </ul>
+                         </div>
+                        </td>
+                    </tr>
+                @endforeach 
+                </tbody>
+                <tfoot>
                     <!-- start row -->
                     <tr>
-                      <th>Name</th>
+                      <th>#</th>
+                      <th class="fixedCol">Name</th>
                       <th>Date</th>
-                      <th>Phone</th>
-                      <th>Email</th>
-                      <th>Status</th>
-                      <th>Campaign Name</th>
-                      <th>Assign To</th>
-                      <th>Action</th>
-                    </tr>
-                    <!-- end row -->
-                  </thead>
-                  <tbody>
-                    @foreach ($leads as $lead)
-                    <tr>
-                      <td>{{ $lead->fullname }}</td>
-                      <td>{{ getDateFormat($lead->created_at,'YYYY-MM-DD, h:mm a',config('custom.LOCAL_TIMEZONE')) }}</td>
-                      <td>{{ $lead->phone }}</td>
-                      <td>{{ $lead->email }}</td>
-                      <td>{{ $lead->status }}</td>
-                      <td>{{ $lead->campaign_name }}</td>
-                      <td>{{ $lead->assign_to }}</td>
-                      <td></td>
-                    </tr>
-                    @endforeach                   
-                  </tbody>
-                  <tfoot>
-                    <!-- start row -->
-                    <tr>
-                      <th>Name</th>
-                      <th>Date</th>
-                      <th>Phone</th>
-                      <th>Email</th>
-                      <th>Status</th>
-                      <th>Campaign Name</th>
-                      <th>Assign To</th>
-                      <th>Action</th>
+                      <th class="text-center">Phone</th>
+                      <th class="text-center">Email</th>
+                      <th class="text-center">Status</th>
+                      <th class="text-center">Campaign Name</th>
+                      @if (Auth::user()->can('changeAgent',App\Models\Lead::class))
+                      <th class="text-center">Assign To</th>
+                      @endif
+                      <th class="text-center">Action</th>
                     </tr>
                     <!-- end row -->
                   </tfoot>
-                </table>
+                  
+            </table>
               </div>
             </div>
           </div>
