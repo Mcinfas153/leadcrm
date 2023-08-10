@@ -79,7 +79,9 @@
           <div>
             <h5 class="card-title fw-semibold mb-1">Leads Count</h5>
             <p class="card-subtitle mb-0">Every Month</p>
-            <div id="monthly-leads" class="mb-7 pb-8"></div>
+            <div id="monthly-leads" class="mb-7 pb-8">
+              {!! $monthlyLeadChart->container() !!}
+            </div>
           </div>
           </div>
         </div>
@@ -278,5 +280,7 @@
     </div>
   </div>
   <script src="{{ $chart->cdn() }}"></script>
+  <script src="{{ $monthlyLeadChart->cdn() }}"></script>
   {{ $chart->script() }}
+  {{ $monthlyLeadChart->script() }}
 </div>

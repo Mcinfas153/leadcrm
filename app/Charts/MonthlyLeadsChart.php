@@ -3,16 +3,11 @@
 namespace App\Charts;
 
 use ArielMejiaDev\LarapexCharts\LarapexChart;
-use App\Http\Traits\DateTrait;
-use App\Http\Traits\LeadTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class DailyLeadsChart
+class MonthlyLeadsChart
 {
-
-    use DateTrait; 
-
     protected $chart;
 
     public function __construct(LarapexChart $chart)
@@ -20,32 +15,31 @@ class DailyLeadsChart
         $this->chart = $chart;
     }
 
-    public function build(): \ArielMejiaDev\LarapexCharts\LineChart
+    public function build(): \ArielMejiaDev\LarapexCharts\AreaChart
     {
-
         $dates = [];
         $leadsCount = [];
 
         if(Auth::user()->user_type == config('custom.USER_ADMIN')){
             
             $leadStat = DB::table('leads')
-                ->select('created_at',DB::raw('count(*) as leadCount'), DB::raw('DATE(created_at) as date'))
+                ->select('created_at',DB::raw('count(*) as leadCount'), DB::raw('MONTH(created_at) as month'))
                 ->where('created_by', Auth::user()->id)
                 ->orderByDesc('created_at')
-                ->groupBy('date')
+                ->groupBy('month')
                 ->limit(20)
                 ->get();
 
         } else if(Auth::user()->user_type == config('custom.USER_NORMAL')) {
 
             $leadStat = DB::table('leads')
-                ->select(DB::raw('count(*) as leadCount'), DB::raw('DATE(created_at) as date'))
+                ->select(DB::raw('count(*) as leadCount'), DB::raw('MONTH(created_at) as month'))
                 ->where(function($query) {
                     $query->where('created_by', Auth::user()->id)
                             ->orWhere('assign_to', Auth::user()->id);
                     })
                 ->orderByDesc('created_at')
-                ->groupBy('date')
+                ->groupBy('month')
                 ->limit(20)
                 ->get();
 
@@ -55,16 +49,16 @@ class DailyLeadsChart
         }
 
              foreach($leadStat as $ls){
-                $dates[] = $ls->date;
+                $dates[] = $ls->month;
                 $leadsCount[] = $ls->leadCount;
              }
 
-        return $this->chart->lineChart()
-            ->setColors(['#F1A208', '#ff6384'])
-            ->addData('Daily Leads', array_reverse($leadsCount))
+        return $this->chart->areaChart()
+            ->setColors(['#06A77D', '#ff6384'])
+            ->addData('Monthly Leads', array_reverse($leadsCount))
             ->setXAxis(array_reverse($dates))
-            ->setColors(['#052F5F', '#052F5F'])
-            ->setMarkers(['#F1A208', '#052F5F'], 7, 10)
+            ->setColors(['#06A77D', '#303F9F'])
+            ->setMarkers(['#FF5722', '#E040FB'], 7, 10)
             ->setGrid();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pages;
 
 use App\Charts\DailyLeadsChart;
+use App\Charts\MonthlyLeadsChart;
 use App\Models\Lead;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -18,7 +19,7 @@ class Dashboard extends Component
         
     }
 
-    public function render(DailyLeadsChart $chart)
+    public function render(DailyLeadsChart $chart, MonthlyLeadsChart $monthlyLeadChart)
     {
 
         if(Auth::user()->user_type == config('custom.USER_ADMIN')){
@@ -113,6 +114,7 @@ class Dashboard extends Component
             'totalLeadsCount' => $totalLeadsCount,
             'closeDealsCount' => $closeDealsCount,
             'chart' => $chart->build(),
+            'monthlyLeadChart' => $monthlyLeadChart->build(),
         ])->layout('layouts.app', [
             'title' => 'dashboard'
         ]);
