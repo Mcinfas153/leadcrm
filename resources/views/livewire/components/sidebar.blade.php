@@ -76,30 +76,6 @@
 
               <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">USER MANAGEMENT</span>
-              </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
-                        <span class="d-flex">
-                            <i class="ti ti-user-circle"></i>
-                        </span>
-                        <span class="hide-menu">User Management</span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse first-level">
-                        <li class="sidebar-item">
-                            <a href="{{ URL::to('/users') }}" class="sidebar-link">
-                                <div class="round-16 d-flex align-items-center justify-content-center">
-                                    <i class="ti ti-circle"></i>
-                                </div>
-                                <span class="hide-menu">Users List</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-              <li class="nav-small-cap">
-                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">OLD DATA LEADS</span>
               </li>
 
@@ -137,6 +113,34 @@
                   </li>
                 </ul>
               </li>
+
+              @can('isAdmin', App\Http\User::class)
+              <li class="nav-small-cap">
+                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                <span class="hide-menu">USER MANAGEMENT</span>
+              </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
+                        <span class="d-flex">
+                            <i class="ti ti-user-circle"></i>
+                        </span>
+                        <span class="hide-menu">User Management</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="{{ URL::to('/users') }}" class="sidebar-link">
+                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-circle"></i>
+                                </div>
+                                <span class="hide-menu">Users List</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+              @endcan         
+
+              
               <!-- ============================= -->
               <!-- PAGES -->
               <!-- ============================= -->
@@ -154,6 +158,7 @@
                     </a>
                 </li>
 
+                @can('isAdmin', App\Http\User::class)
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
                         <span class="d-flex">
@@ -223,15 +228,16 @@
                         </li>
                     </ul>
                 </li>
+                @endcan
             </ul>
             <div class="unlimited-access hide-menu bg-light-primary position-relative my-7 rounded">
               <div class="d-flex">
                 <div class="unlimited-access-title">
                   <h6 class="fw-semibold fs-4 mb-6 text-dark w-85">Unlimited Access</h6>
-                  <button class="btn btn-primary fs-2 fw-semibold lh-sm">Signup</button>
+                  {{-- <button class="btn btn-primary fs-2 fw-semibold lh-sm">Signup</button> --}}
                 </div>
                 <div class="unlimited-access-img">
-                  <img src="../../dist/images/backgrounds/rocket.png" alt="" class="img-fluid">
+                  <img src="{{ asset('dist/images/backgrounds/rocket.png') }}" alt="" class="img-fluid">
                 </div>
               </div>
             </div>
