@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Pages;
 
+use App\Mail\NotifyNewUserToSP;
+use App\Mail\WelcomeNewUser;
 use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -9,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterPage extends Component
 {
@@ -72,10 +75,15 @@ class RegisterPage extends Component
               ->where('id', $user->id)
               ->update(['business_id' => $business->id]);
 
-           
-            DB::commit();
-
             Auth::login($user, $remember = true);
+
+            //send welcome mail to user
+            Mail::to($user->email)->send(new WelcomeNewUser($user));
+
+            //send mail to super admin
+            Mail::to(config('custom.SP_EMAIL'))->send(new NotifyNewUserToSP($user));
+
+            DB::commit();
 
             return redirect('/')->with([
                 'status' => 'success',
@@ -88,8 +96,6 @@ class RegisterPage extends Component
             DB::rollBack();
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
-          
-            //dd($e->getMessage());
 
         }
     }

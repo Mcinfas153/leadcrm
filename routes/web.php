@@ -14,7 +14,10 @@ use App\Http\Livewire\Pages\LoginPage;
 use App\Http\Livewire\Pages\OldDataLeads;
 use App\Http\Livewire\Pages\RegisterPage;
 use App\Http\Livewire\Pages\UsersList;
+use App\Mail\WelcomeNewUser;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,5 +47,9 @@ Route::middleware(['guestUser'])->group(function () {
     Route::get('/login', LoginPage::class)->name('login');
     Route::get('/register', RegisterPage::class)->name('register');
     Route::get('/forgot-password', ForgotPasswordPage::class)->name('forgot-password');
+    // Route::get('/send', function(){
+    //     $user = User::find(5);
+    //     Mail::to('mcinfas9394@gmail.com')->send(new WelcomeNewUser($user));
+    // });
 });
 

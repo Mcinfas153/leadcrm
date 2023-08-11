@@ -22,5 +22,6 @@ return [
     'LEAD_STATUS_DEAL_CLOSED' => 18,
     'SERVER_TIMEZONE' => env('SERVER_TIMEZONE'),
     'LOCAL_TIMEZONE' => env('LOCAL_TIME_ZONE'),
-    'APP_NAME' => 'LEAD CRM'
+    'APP_NAME' => 'LEAD CRM',
+    'SP_EMAIL' => 'sp@leadmediaproduction.com'
 ];
