@@ -7,9 +7,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Http\Traits\ActivityTrait;
 
 class AllLeads extends Component
 {
+
+    use WithPagination;
+    use ActivityTrait;
 
     public $leadId;
     public $statusId;
@@ -17,8 +21,6 @@ class AllLeads extends Component
     public $bulkAssignUserId;
     public $selectedLeads = [];
     public $search = '';
-
-    use WithPagination;
  
     protected $paginationTheme = 'bootstrap';
 
@@ -119,6 +121,8 @@ class AllLeads extends Component
 
             DB::commit();
 
+            ActivityTrait::add(Auth::user()->id,config('custom.ACTION_CHANGE_STATUS'),Auth::user()->name.' changed the lead status', $this->leadId);
+
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LEAD_STATUS_CHANGE_SUCCESS')]);
 
         } catch (\Exception $e) {
@@ -145,6 +149,8 @@ class AllLeads extends Component
 
             DB::commit();
 
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_ASSIGN_USER'),Auth::user()->name.' assign the lead', $this->leadId);
+
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.USER_ASSIGN_CHANGE_SUCCESS')]);
 
         } catch (\Exception $e) {
@@ -159,6 +165,13 @@ class AllLeads extends Component
 
     public function bulkAssign()
     {
+        $this->validate(
+            ['bulkAssignUserId' => 'required'],
+            [
+                'bulkAssignUserId.required' => 'The :attribute cannot be empty.',
+            ],
+            ['bulkAssignUserId' => 'user']
+        );
 
         $this->dispatchBrowserEvent('modalClose');
 
@@ -175,6 +188,8 @@ class AllLeads extends Component
             DB::commit();
 
             $this->selectedLeads = [];
+
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_ASSIGN_USER'),Auth::user()->name.' assign bulk leads');
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LAED_MASS_ASSIGN_SUCCESS')]);
 
@@ -213,6 +228,8 @@ class AllLeads extends Component
 
             $this->selectedLeads = [];
 
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_DELETE_LEAD'),Auth::user()->name.' delete bulk leads');
+
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LAED_MASS_DELETE_SUCCESS')]);
 
         } catch (\Exception $e) {
@@ -241,6 +258,8 @@ class AllLeads extends Component
            $lead->delete();
 
             DB::commit();
+
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_DELETE_LEAD'),Auth::user()->name.' delete the lead', $leadId);
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LEAD_DELETED_SUCCESS')]);
 

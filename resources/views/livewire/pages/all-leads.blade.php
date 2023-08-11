@@ -312,11 +312,12 @@ wire:ignore.self
       </div>
       <div class="modal-body">
       <select class="form-select" aria-label="Default select example" wire:model.defer="bulkAssignUserId">
-        <option selected>Select a user</option>
+        <option selected hidden>Select a user</option>
         @foreach ($users as $user)
         <option value="{{ $user->id }}">{{ $user->name }}</option>
         @endforeach
       </select>
+      @error('bulkAssignUserId') <span class="error">{{ $message }}</span> @enderror
       </div>
       <div class="modal-footer">
         <button

@@ -40,7 +40,7 @@ Route::middleware(['loggedUser'])->group(function () {
         Route::get('/lead/comments/{leadId}', LeadComments::class)->name('lead.comments');
         Route::get('/cold/leads', OldDataLeads::class)->name('old-data.leads');
         Route::post('/import',[LeadController::class,'importLeads'])->name('import.leads');
-        Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export.leads');
+        Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export-leads');
         Route::get('/account-settings', AccountSettings::class)->name('settings');
         Route::get('/users', UsersList::class)->name('users');
     });

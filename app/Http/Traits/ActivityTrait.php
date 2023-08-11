@@ -11,7 +11,6 @@ trait ActivityTrait{
     public static function add(int $userId, int $actionId, string $infomation = "", int|null $leadId = null): void
     {
 
-        //dd($userId);
         DB::beginTransaction();
 
         try {
@@ -37,8 +36,7 @@ trait ActivityTrait{
           } catch (\Exception $e) {
 
             DB::rollBack();
-            
-            dd($e->getMessage());
+        
         }
     }
 
