@@ -4,9 +4,12 @@ namespace App\Http\Livewire\Pages;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Traits\ActivityTrait;
 
 class LoginPage extends Component
 {
+
+    use ActivityTrait;
 
     public $email;
     public $password;
@@ -39,6 +42,8 @@ class LoginPage extends Component
             if (Auth::attempt(['email' => $this->email, 'password' => $this->password, 'is_active' => 1], $this->remember)) {
                             
                 session()->regenerate();
+
+                ActivityTrait::add(Auth::user()->id, config('custom.ACTION_LOGIN'),Auth::user()->name.' logged in');
                 
                 return redirect('/')->with([
                     'status' => 'success',
