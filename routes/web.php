@@ -4,6 +4,7 @@ use App\Http\Controllers\LeadController;
 use App\Http\Livewire\Pages\AccountSettings;
 use App\Http\Livewire\Pages\AddLead;
 use App\Http\Livewire\Pages\AllLeads;
+use App\Http\Livewire\Pages\BusinessInactive;
 use App\Http\Livewire\Pages\Dashboard;
 use App\Http\Livewire\Pages\ForgotPasswordPage;
 use App\Http\Livewire\Pages\FreshLeads;
@@ -30,17 +31,21 @@ use Illuminate\Support\Facades\Mail;
 |
 */
 Route::middleware(['loggedUser'])->group(function () {
-    Route::get('/', Dashboard::class)->name('dashboard');
-    Route::get('/recent-leads', FreshLeads::class)->name('freshleads');
-    Route::get('/leads', AllLeads::class)->name('leads');
-    Route::get('/lead/add', AddLead::class)->name('add-lead');
-    Route::get('/lead/view/{leadId}', LeadView::class)->name('leadview');
-    Route::get('/lead/comments/{leadId}', LeadComments::class)->name('lead.comments');
-    Route::get('/cold/leads', OldDataLeads::class)->name('old-data.leads');
-    Route::post('/import',[LeadController::class,'importLeads'])->name('import.leads');
-    Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export-leads');
-    Route::get('/account-settings', AccountSettings::class)->name('settings');
-    Route::get('/users', UsersList::class)->name('users');
+    Route::middleware(['activeBusiness'])->group(function () {
+        Route::get('/', Dashboard::class)->name('dashboard');
+        Route::get('/recent-leads', FreshLeads::class)->name('fresh.leads');
+        Route::get('/leads', AllLeads::class)->name('leads');
+        Route::get('/lead/add', AddLead::class)->name('add.lead');
+        Route::get('/lead/view/{leadId}', LeadView::class)->name('lead.view');
+        Route::get('/lead/comments/{leadId}', LeadComments::class)->name('lead.comments');
+        Route::get('/cold/leads', OldDataLeads::class)->name('old-data.leads');
+        Route::post('/import',[LeadController::class,'importLeads'])->name('import.leads');
+        Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export.leads');
+        Route::get('/account-settings', AccountSettings::class)->name('settings');
+        Route::get('/users', UsersList::class)->name('users');
+    });
+    
+    Route::get('/businss/inactive', BusinessInactive::class)->name('business.inactive')->middleware('inactiveBusiness');
 });
 
 Route::middleware(['guestUser'])->group(function () {

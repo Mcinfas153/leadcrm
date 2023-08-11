@@ -52,6 +52,13 @@ class Kernel extends HttpKernel
         'guestUser' => [
             \App\Http\Middleware\EnsureUserIsNotLoggedIn::class
         ],
+
+        'activeBusiness' => [
+            \App\Http\Middleware\EnsureBusinessIsActive::class
+        ],
+        'inactiveBusiness' => [
+            \App\Http\Middleware\EnsureBusinessIsNotActive::class
+        ],
     ];
 
     /**

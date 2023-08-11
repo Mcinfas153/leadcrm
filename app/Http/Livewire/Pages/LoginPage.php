@@ -53,8 +53,6 @@ class LoginPage extends Component
           } catch (\Exception $e) {
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
-          
-            //dd($e->getMessage());
 
         }
     }
