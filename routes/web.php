@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LeadController;
 use App\Http\Livewire\Pages\AccountSettings;
+use App\Http\Livewire\Pages\AddLead;
 use App\Http\Livewire\Pages\AllLeads;
 use App\Http\Livewire\Pages\Dashboard;
 use App\Http\Livewire\Pages\ForgotPasswordPage;
@@ -29,6 +30,7 @@ Route::middleware(['loggedUser'])->group(function () {
     Route::get('/', Dashboard::class)->name('dashboard');
     Route::get('/recent-leads', FreshLeads::class)->name('freshleads');
     Route::get('/leads', AllLeads::class)->name('leads');
+    Route::get('/lead/add', AddLead::class)->name('add-lead');
     Route::get('/lead/view/{leadId}', LeadView::class)->name('leadview');
     Route::get('/lead/comments/{leadId}', LeadComments::class)->name('lead.comments');
     Route::get('/cold/leads', OldDataLeads::class)->name('old-data.leads');

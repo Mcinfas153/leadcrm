@@ -14,5 +14,6 @@ return [
     'LAED_MASS_DELETE_SUCCESS' => 'Leads mass delete completed successfully',
     'NOTE_ADDED_SUCCESS' => 'Note added successfully',
     'NOTE_DELETED_SUCCESS' => 'Note deleted successfully',
-    'SOMETHING_HAPPENED' => 'Something went wrong. Please try again later'
+    'SOMETHING_HAPPENED' => 'Something went wrong. Please try again later',
+    'LEAD_CREATED_SUCCESS' => 'Lead created successfully',
 ];
