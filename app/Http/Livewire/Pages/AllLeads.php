@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Http\Traits\ActivityTrait;
+use App\Mail\LeadAssign;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 
 class AllLeads extends Component
 {
@@ -153,11 +156,16 @@ class AllLeads extends Component
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.USER_ASSIGN_CHANGE_SUCCESS')]);
 
+            //notify agent
+            Mail::to(User::find($this->userId)->email)->queue(new LeadAssign(Lead::find($this->leadId)));
+
         } catch (\Exception $e) {
 
             DB::rollBack();
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+            dd($e->getMessage());
 
         }
 
@@ -192,6 +200,9 @@ class AllLeads extends Component
             ActivityTrait::add(Auth::user()->id, config('custom.ACTION_ASSIGN_USER'),Auth::user()->name.' assign bulk leads');
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LAED_MASS_ASSIGN_SUCCESS')]);
+
+            //notify agent
+            Mail::to(User::find($this->userId)->email)->queue(new LeadAssign(Lead::find($this->leadId)));
 
         } catch (\Exception $e) {
 
