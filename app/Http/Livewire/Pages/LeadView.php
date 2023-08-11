@@ -10,9 +10,13 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use App\Http\Traits\ActivityTrait;
 
 class LeadView extends Component
 {
+
+    use ActivityTrait;
+
     public $leadId;
     public $fullname;
     public $phone;
@@ -69,6 +73,9 @@ class LeadView extends Component
         $this->type = $lead->type;
         $this->attachment = $lead->attachment;
         $this->assignTo = $lead->assign_to;
+
+        ActivityTrait::add(Auth::user()->id, config('custom.ACTION_OPEN_LEAD'),Auth::user()->name.' open the lead', $this->leadId);
+
     }
 
     public function render()
@@ -104,6 +111,8 @@ class LeadView extends Component
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LEAD_STATUS_CHANGE_SUCCESS')]);
 
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_CHANGE_STATUS'),Auth::user()->name.' update lead status', $this->leadId);
+
         } catch (\Exception $e) {
 
             DB::rollBack();
@@ -127,6 +136,8 @@ class LeadView extends Component
             $lead->save();
 
             DB::commit();
+
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_ASSIGN_USER'),Auth::user()->name.' assign the lead', $this->leadId);
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.USER_ASSIGN_CHANGE_SUCCESS')]);
 
@@ -153,6 +164,8 @@ class LeadView extends Component
             $lead->save();
 
             DB::commit();
+
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_EDIT_LEAD'),Auth::user()->name.' update the lead', $this->leadId);
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LEAD_PRIORITY_CHANGE_SUCCESS')]);
 
@@ -199,6 +212,8 @@ class LeadView extends Component
             ]);
 
             DB::commit();
+
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_EDIT_LEAD'),Auth::user()->name.' update the lead', $this->leadId);
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LEAD_UPDATED_SUCCESS')]);
 
