@@ -9,6 +9,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Http\Traits\ActivityTrait;
 use App\Mail\LeadAssign;
+use App\Models\Note;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
@@ -229,6 +230,8 @@ class AllLeads extends Component
 
                     $currentLead->delete();
 
+                    Note::where('lead_id', $leadId)->delete();
+
                 } else{
 
                     $currentLead->assign_to = Auth::user()->created_by;
@@ -268,6 +271,8 @@ class AllLeads extends Component
 
            $lead->delete();
 
+           Note::where('lead_id', $leadId)->delete();
+
             DB::commit();
 
             ActivityTrait::add(Auth::user()->id, config('custom.ACTION_DELETE_LEAD'),Auth::user()->name.' delete the lead', $leadId);
@@ -279,6 +284,8 @@ class AllLeads extends Component
             DB::rollBack();
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+            //dd($e->getMessage());
 
         }
 

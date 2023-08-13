@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pages;
 
 use App\Models\Lead;
+use App\Models\Note;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -203,6 +204,8 @@ class OldDataLeads extends Component
 
                     $currentLead->delete();
 
+                    Note::where('lead_id', $leadId)->delete();
+
                 } else{
 
                     $currentLead->assign_to = Auth::user()->created_by;
@@ -239,6 +242,8 @@ class OldDataLeads extends Component
         try {
 
            $lead->delete();
+
+           Note::where('lead_id', $leadId)->delete();
 
             DB::commit();
 
