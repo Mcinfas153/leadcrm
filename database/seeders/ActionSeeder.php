@@ -30,6 +30,8 @@ class ActionSeeder extends Seeder
             ['name' => 'change status'],
             ['name' => 'assign user'],
             ['name' => 'schedule callback'],
+            ['name' => 'add note'],
+            ['name' => 'delete note'],
         ]);
     }
 }

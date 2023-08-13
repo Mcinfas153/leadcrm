@@ -8,17 +8,14 @@ use App\Http\Livewire\Pages\BusinessInactive;
 use App\Http\Livewire\Pages\Dashboard;
 use App\Http\Livewire\Pages\ForgotPasswordPage;
 use App\Http\Livewire\Pages\FreshLeads;
+use App\Http\Livewire\Pages\LeadActivities;
 use App\Http\Livewire\Pages\LeadComments;
-use App\Http\Livewire\Pages\Leads;
 use App\Http\Livewire\Pages\LeadView;
 use App\Http\Livewire\Pages\LoginPage;
 use App\Http\Livewire\Pages\OldDataLeads;
 use App\Http\Livewire\Pages\RegisterPage;
 use App\Http\Livewire\Pages\UsersList;
-use App\Mail\WelcomeNewUser;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +35,7 @@ Route::middleware(['loggedUser'])->group(function () {
         Route::get('/lead/add', AddLead::class)->name('add.lead');
         Route::get('/lead/view/{leadId}', LeadView::class)->name('lead.view');
         Route::get('/lead/comments/{leadId}', LeadComments::class)->name('lead.comments');
+        Route::get('/lead/activities/{leadId}', LeadActivities::class)->name('lead.activities');
         Route::get('/cold/leads', OldDataLeads::class)->name('old-data.leads');
         Route::post('/import',[LeadController::class,'importLeads'])->name('import.leads');
         Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export-leads');

@@ -18,7 +18,7 @@ class Lead extends Model
     protected function createdAt(): Attribute
     {
         return Attribute::make(
-            //get: fn ($value) => '',
+            //get: fn ($value) => getDateFormat($value,'YYYY-MM-DD, h:mm a',config('custom.LOCAL_TIMEZONE')),
             //set: fn ($value) => timeZoneChange('UTC'),
         );
     }

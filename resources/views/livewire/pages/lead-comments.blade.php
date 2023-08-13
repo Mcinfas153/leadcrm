@@ -4,20 +4,20 @@
         <livewire:components.progress-loader/>
     </div>
     <div class="row">
-        <div class="col-lg-6 d-flex align-items-stretch">
+        <div class="col-lg-6">
             <div class="card-body">
                 <form wire:submit.prevent="addComment">
-                <div class="mb-3 d-flex flex-column">                            
-                        <label for="note" class="form-label">Add your note here...</label>
-                        <input class="form-control" wire:model.defer="note">
-                        @error('note') <span class="error">{{ $message }}</span> @enderror
-                        <div class="align-self-end">
-                            
-                            <button type="submit" class="btn rounded-pill waves-effect waves-light btn-primary mt-2">
-                                Add Note
-                            </button>
-                        </div>                                                  
-                  </div>
+                    <div class="mb-3 d-flex flex-column">                            
+                            <label for="note" class="form-label">Add your note here...</label>
+                            <input class="form-control" wire:model.defer="note">
+                            @error('note') <span class="error">{{ $message }}</span> @enderror
+                            <div class="align-self-end">
+                                
+                                <button type="submit" class="btn rounded-pill waves-effect waves-light btn-primary mt-2">
+                                    Add Note
+                                </button>
+                            </div>                                                  
+                    </div>
                 </form>
                 @if ($notes->isEmpty())
                     <h5 class="card-title fw-semibold mb-3">There is no notes</h5>
@@ -28,6 +28,6 @@
                     <livewire:components.comment-card :note="$note" :wire:key="$note->id">
                 @endforeach
               </div>
-        </div>
+        </div>       
     </div>
 </div>

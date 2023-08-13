@@ -119,6 +119,7 @@
       window.onscroll = function (ev) {
           if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 15) {
               window.livewire.emit('load-more');
+              window.livewire.emit('load-more-activities');
           }
       };
   </script>

@@ -5,7 +5,7 @@ use Carbon\Carbon;
 
 function getDateFormat($dateTime, $format = 'YYYY-MM-DD, h:mm a', $timezone = 'UTC')
 {
-    $date = Carbon::createFromFormat('Y-m-d H:i:s', $dateTime, 'UTC');
+    $date = Carbon::createFromFormat('Y-m-d H:i:s', $dateTime, config('custom.SERVER_TIMEZONE'));
     $newDate = $date->setTimezone($timezone);
     return $newDate->isoFormat($format);
 }
