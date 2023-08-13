@@ -68,8 +68,12 @@
                                     <i class="ti ti-phone me-1 fs-1 text-black"></i>Schedule a Call Back </a>
                                   </li>
                                   <li class="">
-                                    <a class="dropdown-item d-flex align-items-center text-black" href="{{ URL::to('lead/activities') }}/{{ $lead->id }}">
+                                    <a class="dropdown-item d-flex align-items-center text-black" target="_BLANK" href="{{ URL::to('lead/activities') }}/{{ $lead->id }}">
                                     <i class="ti ti-link me-1 fs-1 text-black"></i>Lead Activities </a>
+                                  </li>
+                                  <li class="">
+                                    <a class="dropdown-item d-flex align-items-center text-black" target="_BLANK" href="{{ URL::to('lead/comments') }}/{{ $lead->id }}">
+                                    <i class="ti ti-link me-1 fs-1 text-black"></i>Lead Comments </a>
                                   </li>
                                   <li class="">
                                       <a class="dropdown-item d-flex align-items-center text-black" target="_BLANK" href="{{ URL::to('lead/view') }}/{{ $lead->id }}">

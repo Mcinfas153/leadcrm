@@ -8,7 +8,10 @@
         <div class="">
             <div class="button-group mb-2 d-flex justify-content-end">
                 <a type="button" href="{{ URL::to('lead/comments/'.$leadId) }}" class="btn mb-1 waves-effect waves-light btn-rounded btn-primary">
-                  View Comments & Activities
+                  View Comments
+                </a>
+                <a type="button" href="{{ URL::to('lead/activities/'.$leadId) }}" class="btn mb-1 waves-effect waves-light btn-rounded btn-primary">
+                    View Activities
                 </a>
             </div> 
             <div class="card">                

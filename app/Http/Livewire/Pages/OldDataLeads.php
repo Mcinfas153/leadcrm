@@ -8,10 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Http\Traits\ActivityTrait;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 
 class OldDataLeads extends Component
 {
     use WithPagination;
+    use ActivityTrait;
  
     protected $paginationTheme = 'bootstrap';
 
@@ -122,6 +126,8 @@ class OldDataLeads extends Component
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LEAD_STATUS_CHANGE_SUCCESS')]);
 
+            ActivityTrait::add(Auth::user()->id,config('custom.ACTION_CHANGE_STATUS'),Auth::user()->name.' changed the lead status', $this->leadId);
+
         } catch (\Exception $e) {
 
             DB::rollBack();
@@ -146,7 +152,12 @@ class OldDataLeads extends Component
 
             DB::commit();
 
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_ASSIGN_USER'),Auth::user()->name.' assign the lead', $this->leadId);
+
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.USER_ASSIGN_CHANGE_SUCCESS')]);
+
+            //notify agent
+            Mail::to(User::find($this->userId)->email)->queue(new LeadAssign(Lead::find($this->leadId)));
 
         } catch (\Exception $e) {
 
@@ -177,7 +188,12 @@ class OldDataLeads extends Component
 
             $this->selectedLeads = [];
 
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_ASSIGN_USER'),Auth::user()->name.' assign bulk leads');
+
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LAED_MASS_ASSIGN_SUCCESS')]);
+
+            //notify agent
+            Mail::to(User::find($this->userId)->email)->queue(new LeadAssign(Lead::find($this->leadId)));
 
         } catch (\Exception $e) {
 
@@ -216,6 +232,8 @@ class OldDataLeads extends Component
 
             $this->selectedLeads = [];
 
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_DELETE_LEAD'),Auth::user()->name.' delete bulk leads');
+
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LAED_MASS_DELETE_SUCCESS')]);
 
         } catch (\Exception $e) {
@@ -248,6 +266,8 @@ class OldDataLeads extends Component
             DB::commit();
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LEAD_DELETED_SUCCESS')]);
+
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_DELETE_LEAD'),Auth::user()->name.' delete the lead', $leadId);
 
         } catch (\Exception $e) {
 
