@@ -49,6 +49,10 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\EnsureUserIsLoggedIn::class
         ],
 
+        'adminUser' => [
+            \App\Http\Middleware\EnsureUserIsAdmin::class
+        ],
+
         'guestUser' => [
             \App\Http\Middleware\EnsureUserIsNotLoggedIn::class
         ],

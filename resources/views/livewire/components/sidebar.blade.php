@@ -130,25 +130,20 @@
                         </li>
                     </ul>
                 </li>
-              @endcan
-
-
-              <!-- ============================= -->
-              <!-- PAGES -->
-              <!-- ============================= -->
                 <li class="nav-small-cap">
-                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                    <span class="hide-menu">OTHERS</span>
+                  <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                  <span class="hide-menu">OTHERS</span>
                 </li>
 
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="/account-settings" aria-expanded="false">
-                    <span>
-                        <i class="ti ti-user-circle"></i>
-                    </span>
-                    <span class="hide-menu">Account Setting</span>
-                    </a>
+                  <a class="sidebar-link" href="/account-settings" aria-expanded="false">
+                  <span>
+                      <i class="ti ti-user-circle"></i>
+                  </span>
+                  <span class="hide-menu">Account Setting</span>
+                  </a>
                 </li>
+              @endcan
 
                 @can('isAdmin', App\Http\User::class)
                 <li class="sidebar-item">

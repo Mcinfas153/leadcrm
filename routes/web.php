@@ -31,6 +31,12 @@ use Illuminate\Support\Facades\Route;
 */
 Route::middleware(['loggedUser'])->group(function () {
     Route::middleware(['activeBusiness'])->group(function () {
+        Route::middleware(['adminUser'])->group(function () {
+            Route::get('/users', UsersList::class)->name('users');
+            Route::get('/user/daily-report', DailyUserReport::class)->name('user.daily.report');
+            Route::get('/user/report/{userId}/{period}', [ReportController::class, 'userReportExport'])->name('user.report.download');
+            Route::get('/account-settings', AccountSettings::class)->name('settings');
+        });
         Route::get('/', Dashboard::class)->name('dashboard');
         Route::get('/recent-leads', FreshLeads::class)->name('fresh.leads');
         Route::get('/leads', AllLeads::class)->name('leads');
@@ -41,10 +47,6 @@ Route::middleware(['loggedUser'])->group(function () {
         Route::get('/cold/leads', OldDataLeads::class)->name('old-data.leads');
         Route::post('/import',[LeadController::class,'importLeads'])->name('import.leads');
         Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export-leads');
-        Route::get('/account-settings', AccountSettings::class)->name('settings');
-        Route::get('/users', UsersList::class)->name('users');
-        Route::get('/user/daily-report', DailyUserReport::class)->name('user.daily.report');
-        Route::get('/user/report/{userId}/{period}', [ReportController::class, 'userReportExport'])->name('user.report.download');
     });
     
     Route::get('/businss/inactive', BusinessInactive::class)->name('business.inactive')->middleware('inactiveBusiness');
