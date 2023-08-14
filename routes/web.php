@@ -5,6 +5,7 @@ use App\Http\Livewire\Pages\AccountSettings;
 use App\Http\Livewire\Pages\AddLead;
 use App\Http\Livewire\Pages\AllLeads;
 use App\Http\Livewire\Pages\BusinessInactive;
+use App\Http\Livewire\Pages\DailyUserReport;
 use App\Http\Livewire\Pages\Dashboard;
 use App\Http\Livewire\Pages\ForgotPasswordPage;
 use App\Http\Livewire\Pages\FreshLeads;
@@ -41,6 +42,7 @@ Route::middleware(['loggedUser'])->group(function () {
         Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export-leads');
         Route::get('/account-settings', AccountSettings::class)->name('settings');
         Route::get('/users', UsersList::class)->name('users');
+        Route::get('/user/daily-report', DailyUserReport::class)->name('user.daily.report');
     });
     
     Route::get('/businss/inactive', BusinessInactive::class)->name('business.inactive')->middleware('inactiveBusiness');

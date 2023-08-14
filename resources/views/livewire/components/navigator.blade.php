@@ -7,7 +7,7 @@
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a class="" href="{{ URL::to('/') }}">Dashboard</a></li>
             @if ($title != 'dashboard')
-            <li class="breadcrumb-item" aria-current="page">{{ ucfirst($title) }}</li>
+            <li class="breadcrumb-item" aria-current="page">{{ Str::title($title) }}</li>
             @endif
           </ol>
         </nav>
