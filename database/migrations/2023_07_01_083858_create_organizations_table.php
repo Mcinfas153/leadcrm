@@ -24,6 +24,11 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('auth_code');
             $table->string('timezone')->nullable();
+            $table->boolean('lead_reshuffle')->default(0);
+            $table->integer('lead_reshuffle_period')->default(1)->constrained('reshuffle_periods');
+            $table->string('reporting_email')->nullable();
+            $table->boolean('report_via_email')->default(0);
+            $table->integer('report_period')->default(1)->constrained('report_periods');
             $table->boolean('is_active')->default(1);
             $table->string('logo')->nullable();
             $table->boolean('fee_waived')->default(0);

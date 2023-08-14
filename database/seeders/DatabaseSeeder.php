@@ -23,7 +23,9 @@ class DatabaseSeeder extends Seeder
             OrganizationSeeder::class,
             PrioritySeeder::class,
             UserTypeSeeder::class,
-            UserRoleSeeder::class
+            UserRoleSeeder::class,
+            ReportPeriodSeeder::class,
+            ReshufflePeriodSeeder::class
         ]);
     }
 }
