@@ -63,9 +63,21 @@ class LeadController extends Controller
 
     public function importLeads(Request $request)
     {
+
+        $validated = $request->validate([
+            'file' => 'required',
+            'leadType' => 'required',
+        ]);
+
+        if($request->input('importAssignUserId') == '' || $request->input('importAssignUserId') == null){
+            $userAssignId = Auth::user()->id;
+        } else {
+            $userAssignId = $request->input('importAssignUserId');
+        }
+
         try {
 
-            Excel::import(new LeadImport, $request->file);
+            Excel::import(new LeadImport($userAssignId, $request->leadType), $request->file);
 
 
             return redirect()->back()->with([
@@ -88,7 +100,7 @@ class LeadController extends Controller
     }
 
     public function exportLeads(Request $request){
-        return Excel::download(new ExportLead, 'users.xlsx');
+        return Excel::download(new ExportLead, 'leads.xlsx');
     }
 
     

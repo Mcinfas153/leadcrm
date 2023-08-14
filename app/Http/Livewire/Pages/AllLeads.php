@@ -9,6 +9,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Http\Traits\ActivityTrait;
 use App\Mail\LeadAssign;
+use App\Models\LeadType;
 use App\Models\Note;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
@@ -94,6 +95,7 @@ class AllLeads extends Component
             'lead_status' => DB::table('lead_statuses')->where('is_active', 1)->get(),
             'users' => DB::table('users')->where(['business_id' => Auth::user()->business_id, 'is_active' => 1])->get(),
             'leads' =>  $leads,
+            'leadTypes' => LeadType::all()
         ])->layout('layouts.app',[
             'title' => 'all leads'
         ]);

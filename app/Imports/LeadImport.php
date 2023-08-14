@@ -9,11 +9,16 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class LeadImport implements ToModel, WithHeadingRow
 {
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+
+    public $userId;
+    public $leadType;
+
+    public function  __construct($userId, $leadType)
+    {
+        $this->userId= $userId;
+        $this->leadType= $leadType;
+    }
+    
     public function model(array $row)
     {
         return new Lead([
@@ -33,7 +38,8 @@ class LeadImport implements ToModel, WithHeadingRow
             "property_type" => $row['property_type'],
             "source" => $row['source'],
             "developer" => $row['developer'],
-            "assign_to" => Auth::user()->id,
+            "type" => $this->leadType,
+            "assign_to" => $this->userId,
             "created_by" => Auth::user()->id,
         ]);
     }

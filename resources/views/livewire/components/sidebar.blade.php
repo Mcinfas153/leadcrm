@@ -154,41 +154,6 @@
                   <span class="hide-menu">User Report</span>
                   </a>
                 </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
-                        <span class="d-flex">
-                            <i class="ti ti-file"></i>
-                        </span>
-                        <span class="hide-menu">Lead Reports</span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse first-level">
-                        <li class="sidebar-item">
-                            <a href="{{ URL::to('/leads/daily-report') }}" class="sidebar-link">
-                                <div class="round-16 d-flex align-items-center justify-content-center">
-                                    <i class="ti ti-circle"></i>
-                                </div>
-                                <span class="hide-menu">Daily Report</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ URL::to('/leads/weekly-report') }}" class="sidebar-link">
-                                <div class="round-16 d-flex align-items-center justify-content-center">
-                                    <i class="ti ti-circle"></i>
-                                </div>
-                                <span class="hide-menu">Weekly Report</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ URL::to('/leads/monthly-report') }}" class="sidebar-link">
-                                <div class="round-16 d-flex align-items-center justify-content-center">
-                                    <i class="ti ti-circle"></i>
-                                </div>
-                                <span class="hide-menu">Monthly Report</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
                 @endcan
             </ul>
             <div class="unlimited-access hide-menu bg-light-primary position-relative my-7 rounded">

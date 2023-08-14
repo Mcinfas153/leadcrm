@@ -260,13 +260,43 @@
                 <a class="fs-1" download="lead-import-sample" href="{{ Storage::url('downloads/lead-import-sample.xlsx') }}" title="Lead Import Sample">Download Sample File</a>
               </div>
             </div>
+            <div class="mb-3">
+              <label for="Lead Type" class="form-label">Lead Type*</label>
+              <select class="form-select" aria-label="Lead Type" name="leadType">
+                <option hidden disabled>Select Lead Type</option>
+                @foreach ($leadTypes as $leadType)
+                <option value="{{ $leadType->id }}">{{ $leadType->name }}</option>
+                @endforeach
+              </select>
+            </div>
+            @can('isAdmin', App\Models\User::class)
+            <div class="mb-3">
+              <label for="assignUser" class="form-label">Assign User</label>
+              <select class="form-select" aria-label="Assign User" name="importAssignUserId">
+                <option hidden disabled>Select User to Assign</option>
+                @foreach ($users as $user)
+                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                @endforeach
+              </select>
+            </div>
+            @endcan
+            
+            @if ($errors->any())
+              <div class="alert alert-danger">
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+            @endif
             
             <div class="alert alert-danger d-flex align-items-center" role="alert">
               <div>
-                <p>Note:</p>
-                <div>Full Name is required</div>
+                <p>In Excel Import File:</p>
+                <div>Full name is required</div>
                 <div>Emai is required</div>
-                <div>phone is required</div>
+                <div>Phone is required</div>
               </div>
             </div>                     
          </div>
