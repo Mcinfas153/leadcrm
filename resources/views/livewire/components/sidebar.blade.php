@@ -152,38 +152,12 @@
 
                 @can('isAdmin', App\Http\User::class)
                 <li class="sidebar-item">
-                    <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
-                        <span class="d-flex">
-                            <i class="ti ti-file"></i>
-                        </span>
-                        <span class="hide-menu">User Reports</span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse first-level">
-                        <li class="sidebar-item">
-                            <a href="{{ URL::to('/user/daily-report') }}" class="sidebar-link">
-                                <div class="round-16 d-flex align-items-center justify-content-center">
-                                    <i class="ti ti-circle"></i>
-                                </div>
-                                <span class="hide-menu">Daily Report</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ URL::to('/user/weekly-report') }}" class="sidebar-link">
-                                <div class="round-16 d-flex align-items-center justify-content-center">
-                                    <i class="ti ti-circle"></i>
-                                </div>
-                                <span class="hide-menu">Weekly Report</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ URL::to('/user/monthly-report') }}" class="sidebar-link">
-                                <div class="round-16 d-flex align-items-center justify-content-center">
-                                    <i class="ti ti-circle"></i>
-                                </div>
-                                <span class="hide-menu">Monthly Report</span>
-                            </a>
-                        </li>
-                    </ul>
+                  <a class="sidebar-link" href="{{ URL::to('/user/daily-report') }}" aria-expanded="false">
+                  <span>
+                      <i class="ti ti-file"></i>
+                  </span>
+                  <span class="hide-menu">User Report</span>
+                  </a>
                 </li>
 
                 <li class="sidebar-item">

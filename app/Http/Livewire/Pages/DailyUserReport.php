@@ -24,6 +24,7 @@ class DailyUserReport extends Component
     public function mount()
     {
         $this->period = "daily";
+        $this->userId = 0;
     }
 
     public function render()
@@ -96,7 +97,7 @@ class DailyUserReport extends Component
                 'https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/svgs/icon-connect.svg'
             ]
         ])->layout('layouts.app',[
-            'title' => 'daily user report'
+            'title' => 'user report'
         ]);
     }
 

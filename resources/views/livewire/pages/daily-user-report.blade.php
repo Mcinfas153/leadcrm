@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <livewire:components.navigator title="daily user report"/>
+    <livewire:components.navigator title="user report"/>
     
     <div class="row">
         <div class="col-12">
@@ -21,7 +21,7 @@
                             </optgroup>
                         </select>
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 d-flex flex-column align-items-end">
                         <label for="exampleFormControlInput1" class="form-label">Please Select a Period of Time</label>
                         <select
                             class="form-control"
@@ -33,7 +33,8 @@
                             <option value="weekly">Weekly</option>
                             <option value="monthly">Monthly</option>
                         </select>
-                    </div>
+                        <a class="btn btn-primary mt-3" href="{{ URL::to('user/report') }}/{{ $userId }}/{{ $period }}">Download Current Report</a>
+                    </div>                    
                 </div>
                 <h5 class="card-title fw-semibold mb-3">{{ $selectedUser->name ?? '' }}</h5>
                 @if (!$activities->isEmpty())

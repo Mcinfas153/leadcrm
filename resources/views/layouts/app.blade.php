@@ -129,7 +129,7 @@
     </script>
     @endif
 
-    @if ($title == 'daily user report')
+    @if ($title == 'user report')
     <script src="{{ asset('dist/libs/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('dist/libs/select2/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('dist/js/pages/reports.js') }}"></script>
