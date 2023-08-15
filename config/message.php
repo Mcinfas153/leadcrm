@@ -16,4 +16,5 @@ return [
     'NOTE_DELETED_SUCCESS' => 'Note deleted successfully',
     'SOMETHING_HAPPENED' => 'Something went wrong. Please try again later',
     'LEAD_CREATED_SUCCESS' => 'Lead created successfully',
+    'USER_CREATED_SUCCESS' => 'User created successfully',
 ];

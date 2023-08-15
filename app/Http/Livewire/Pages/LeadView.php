@@ -30,13 +30,13 @@ class LeadView extends Component
     public $purpose;
     public $inquiry;
     public $campaignName;
-    public $propertyType;
+    public $type;
     public $bedroom;
     public $status;
     public $source;
     public $priority;
     public $developer;
-    public $type;
+    public $propertyType;
     public $attachment;
     public $assignTo;
     public $lead;
@@ -65,6 +65,7 @@ class LeadView extends Component
         $this->inquiry = $lead->inquiry;
         $this->campaignName = $lead->campaign_name;
         $this->propertyType = $lead->property_type;
+        $this->type = $lead->type;
         $this->bedroom = $lead->bedroom;
         $this->status = $lead->status;
         $this->source = $lead->source;
@@ -88,7 +89,8 @@ class LeadView extends Component
             'statusList' => LeadStatus::where('is_active', 1)->get(),
             'usersList' => User::where('business_id', Auth::user()->business_id)->get(),
             'priorityList' => Priority::where('is_active', 1)->get(),
-            'notes' => DB::table('notes')->get()
+            'notes' => DB::table('notes')->get(),
+            'types' => DB::table('lead_types')->get(),
         ])->layout('layouts.app', [
             'title' => 'lead view',
         ]);
@@ -100,7 +102,7 @@ class LeadView extends Component
         DB::beginTransaction();
 
         try {
-            
+
             $lead = Lead::find($this->leadId);
 
             $lead->status = $value;
@@ -128,7 +130,7 @@ class LeadView extends Component
         DB::beginTransaction();
 
         try {
-            
+
             $lead = Lead::find($this->leadId);
 
             $lead->assign_to = $value;
@@ -156,7 +158,7 @@ class LeadView extends Component
         DB::beginTransaction();
 
         try {
-            
+
             $lead = Lead::find($this->leadId);
 
             $lead->priority = $value;
@@ -190,7 +192,7 @@ class LeadView extends Component
         DB::beginTransaction();
 
         try {
-            
+
            Lead::find($this->leadId)
             ->update([
                 'fullname' => $this->fullname,
@@ -206,6 +208,7 @@ class LeadView extends Component
                 'inquiry' => $this->inquiry,
                 'campaign_name' => $this->campaignName,
                 'property_type' => $this->propertyType,
+                'type' => $this->type,
                 'bedroom' => $this->bedroom,
                 'source' => $this->source,
                 'developer' => $this->developer

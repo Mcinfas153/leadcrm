@@ -128,8 +128,21 @@
                             @enderror
                         </div>
 
-                        @can('isAdmin', App\Models\User::class)
                         <div class="col-md-3 form-group mb-3">
+                            <label for="type">Lead Type *</label>
+                            <select type="text" class="form-control" wire:model.defer="type" aria-describedby="type">
+                                <option selected hidden>Select the Type</option>
+                                @foreach ($types as $type)
+                                    <option value="{{ $type->id }}">{{ Str::title($type->name) }}</option>
+                                @endforeach
+                            </select>
+                            @error('type')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        @can('isAdmin', App\Models\User::class)
+                        <div class="col-md-12 form-group mb-3">
                             <label for="assignedTo">Assigned to</label>
                             <select type="text" class="form-control" wire:model.defer="assignedTo" aria-describedby="assignedTo">
                                 @foreach ($agents as $agent)

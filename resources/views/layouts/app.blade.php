@@ -22,7 +22,7 @@
     <!-- --------------------------------------------------- -->
     <!-- Favicon -->
     <!-- --------------------------------------------------- -->
-    <link rel="shortcut icon" type="image/png" href="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico" />
+    <link rel="shortcut icon" type="image/png" href="{{ asset('dist/images/favicon.png') }}" />
 
     @if ($title == 'dashboard')
        <!-- Owl Carousel  -->

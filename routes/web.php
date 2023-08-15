@@ -4,6 +4,7 @@ use App\Http\Controllers\LeadController;
 use App\Http\Controllers\ReportController;
 use App\Http\Livewire\Pages\AccountSettings;
 use App\Http\Livewire\Pages\AddLead;
+use App\Http\Livewire\Pages\AddUser;
 use App\Http\Livewire\Pages\AllLeads;
 use App\Http\Livewire\Pages\BusinessInactive;
 use App\Http\Livewire\Pages\DailyUserReport;
@@ -33,6 +34,7 @@ Route::middleware(['loggedUser'])->group(function () {
     Route::middleware(['activeBusiness'])->group(function () {
         Route::middleware(['adminUser'])->group(function () {
             Route::get('/users', UsersList::class)->name('users');
+            Route::get('/add-user', AddUser::class)->name('add.user');
             Route::get('/user/daily-report', DailyUserReport::class)->name('user.daily.report');
             Route::get('/user/report/{userId}/{period}', [ReportController::class, 'userReportExport'])->name('user.report.download');
             Route::get('/account-settings', AccountSettings::class)->name('settings');
@@ -48,7 +50,7 @@ Route::middleware(['loggedUser'])->group(function () {
         Route::post('/import',[LeadController::class,'importLeads'])->name('import.leads');
         Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export-leads');
     });
-    
+
     Route::get('/businss/inactive', BusinessInactive::class)->name('business.inactive')->middleware('inactiveBusiness');
 });
 

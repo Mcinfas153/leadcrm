@@ -26,6 +26,7 @@ class AddLead extends Component
     public $source;
     public $priority;
     public $status;
+    public $type;
     public $assignedTo;
     public $inquiry;
 
@@ -36,6 +37,7 @@ class AddLead extends Component
         'campaignName' => 'required',
         'priority' => 'required',
         'status' => 'required',
+        'type' => 'required',
     ];
 
     protected $messages = [
@@ -46,6 +48,7 @@ class AddLead extends Component
         'campaignName.required' => 'The campaign name cannot be empty.',
         'priority.required' => 'The priority cannot be empty.',
         'status.required' => 'The status cannot be empty.',
+        'type.required' => 'The type cannot be empty.',
     ];
 
     public function render()
@@ -92,6 +95,7 @@ class AddLead extends Component
                 'contact_time' => $this->contactTime,
                 'priority' => $this->priority,
                 'status' => $this->status,
+                'type' => $this->type,
                 'assign_to' => $assignTo,
                 'inquiry' => $this->inquiry,
                 'created_by' => Auth::user()->id

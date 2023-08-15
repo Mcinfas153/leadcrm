@@ -13,8 +13,8 @@
                 <a type="button" href="{{ URL::to('lead/activities/'.$leadId) }}" class="btn mb-1 waves-effect waves-light btn-rounded btn-primary">
                     View Activities
                 </a>
-            </div> 
-            <div class="card">                
+            </div>
+            <div class="card">
                 <div class="card-header text-center bg-info">
                     <h5 class="card-title text-light"><i class="ti ti-user-circle me-1 fs-6"></i> User Informations</h5>
                 </div>
@@ -63,8 +63,9 @@
                     <form wire:submit.prevent="updateLead">
                         <div class="row">
                             <div class="form-group mb-3 col-md-6">
-                                <small id="campaign" class="form-text text-muted">Campaign Name</small>
+                                <small id="campaign" class="form-text text-muted">Campaign Name *</small>
                                 <input type="text" class="form-control mt-1"aria-describedby="campaign" placeholder="Campaign Name" wire:model.defer="campaignName">
+                                @error('campaignName') <span class="error">{{ $message }}</span> @enderror
                             </div>
                             <div class="form-group mb-3 col-md-6">
                                 <small id="purpose" class="form-text text-muted">Purpose</small>
@@ -73,10 +74,10 @@
                             <div class="form-group mb-3 col-md-4">
                                 <small id="budget" class="form-text text-muted">Budget</small>
                                 <input type="text" class="form-control mt-1" aria-describedby="budget" placeholder="Budget" wire:model.defer="budget">
-                            </div>                           
+                            </div>
                             <div class="form-group mb-3 col-md-4">
-                                <small id="propertytype" class="form-text text-muted">Property Type</small>
-                                <input type="text" class="form-control mt-1" aria-describedby="propertytype" placeholder="Property Type" wire:model.defer="propertyType">
+                                <small id="propertyType" class="form-text text-muted">Property Type</small>
+                                <input type="text" class="form-control mt-1" aria-describedby="propertyType" placeholder="Property Type" wire:model.defer="propertyType">
                             </div>
                             <div class="form-group mb-3 col-md-4">
                                 <small id="bedroom" class="form-text text-muted">Bedrooms</small>
@@ -94,37 +95,48 @@
                                 <small id="source" class="form-text text-muted">Source</small>
                                 <input type="text" class="form-control mt-1" aria-describedby="source" placeholder="Source" wire:model.defer="source">
                             </div>
-                            <div class="form-group mb-3 col-md-4">
-                                <small id="status" class="form-text text-muted">Status</small>
-                                <select class="form-select mr-sm-2 mt-1" id="inlineFormCustomSelect" wire:model="status">
+                            <div class="form-group mb-3 col-md-3">
+                                <small id="type" class="form-text text-muted">Lead Type *</small>
+                                <select class="form-select mr-sm-2 mt-1" wire:model="type">
+                                    @foreach ($types as $type)
+                                        <option value="{{ $type->id }}">{{ Str::title($type->name) }}</option>
+                                    @endforeach
+                                </select>
+                                @error('type') <span class="error">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="form-group mb-3 col-md-3">
+                                <small id="status" class="form-text text-muted">Status *</small>
+                                <select class="form-select mr-sm-2 mt-1" wire:model="status">
                                     @foreach ($statusList as $sl)
                                         <option value="{{ $sl->id }}">{{ $sl->name }}</option>
                                     @endforeach
                                 </select>
-                            </div>                            
+                                @error('status') <span class="error">{{ $message }}</span> @enderror
+                            </div>
                             @if (Auth::user()->user_type === (int)config('custom.USER_ADMIN'))
-                            <div class="form-group mb-3 col-md-4">
-                                <small id="bedroom" class="form-text text-muted">Priority</small>
-                                <select class="form-select mr-sm-2 mt-1" id="inlineFormCustomSelect" wire:model="priority">
+                            <div class="form-group mb-3 col-md-3">
+                                <small id="bedroom" class="form-text text-muted">Priority *</small>
+                                <select class="form-select mr-sm-2 mt-1" wire:model="priority">
                                     @foreach ($priorityList as $pl)
                                         <option value="{{ $pl->id }}">{{ $pl->name }}</option>
                                     @endforeach
                                 </select>
+                                @error('priority') <span class="error">{{ $message }}</span> @enderror
                             </div>
-                            <div class="form-group mb-3 col-md-4">
+                            <div class="form-group mb-3 col-md-3">
                                 <small id="bedroom" class="form-text text-muted">Assigned To</small>
-                                <select class="form-select mr-sm-2 mt-1" id="inlineFormCustomSelect" wire:model="assignTo">
+                                <select class="form-select mr-sm-2 mt-1" wire:model="assignTo">
                                     @foreach ($usersList as $ul)
                                         <option value="{{ $ul->id }}">{{ $ul->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            @endif                            
+                            @endif
                             <div class="form-group mb-3 col-md-12">
                                 <small id="inquiry" class="form-text text-muted">Inquiry</small>
                                 <textarea class="form-control mt-1"aria-describedby="inquiry" rows="4" wire:model.defer="inquiry"></textarea>
                             </div>
-                            
+
                             <div class="col-12">
                                 <div class="d-md-flex align-items-center mt-3">
                                     <div class="ms-auto mt-3 mt-md-0">
@@ -142,7 +154,7 @@
                             </div>
                         </div>
                     </form>
-                </div>                
+                </div>
             </div>
         </div>
     </div>

@@ -1,5 +1,5 @@
 <div>
-    <header class="app-header"> 
+    <header class="app-header">
         <nav class="navbar navbar-expand-lg navbar-light">
           <ul class="navbar-nav">
             <li class="nav-item">
@@ -137,7 +137,7 @@
                         </li>
                         <li class="mb-3">
                           <a class="fw-semibold text-dark bg-hover-primary    " href="page-user-profile.html">User Application</a>
-                        </li>   
+                        </li>
                         <li class="mb-3">
                           <a class="fw-semibold text-dark bg-hover-primary    " href="page-account-settings.html">Account Settings</a>
                         </li>
@@ -158,8 +158,8 @@
             </li>
           </ul>
           <div class="d-block d-lg-none">
-            <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/dark-logo.svg" class="dark-logo" width="180" alt="" />
-            <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/light-logo.svg" class="light-logo"  width="180" alt="" />
+            <img src="{{ asset('dist/images/logos/logo.png') }}" class="dark-logo" width="180" alt="" />
+            <img src="{{ asset('dist/images/logos/logo.png') }}" class="light-logo"  width="180" alt="" />
           </div>
           <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="p-2">
@@ -172,7 +172,7 @@
                 <i class="ti ti-align-justified fs-7"></i>
               </a>
               <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
-                
+
                 <li class="nav-item dropdown">
                   <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="ti ti-bell-ringing"></i>
