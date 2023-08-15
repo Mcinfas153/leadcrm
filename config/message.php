@@ -17,4 +17,5 @@ return [
     'SOMETHING_HAPPENED' => 'Something went wrong. Please try again later',
     'LEAD_CREATED_SUCCESS' => 'Lead created successfully',
     'USER_CREATED_SUCCESS' => 'User created successfully',
+    'SETTING_UPDATE_SUCCESS' => 'Setting updated successfully',
 ];

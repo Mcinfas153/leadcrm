@@ -16,9 +16,9 @@ class ReportPeriodSeeder extends Seeder
     public function run()
     {
         DB::table('report_periods')->insert([
-            ['name' => 'daily', 'period' => 'daily'],
-            ['name' => 'weekly', 'period' => 'weekly'],
-            ['name' => 'monthly', 'period' => 'monthly'],
+            ['name' => 'daily', 'period' => 1],
+            ['name' => 'weekly', 'period' => 2],
+            ['name' => 'monthly', 'period' => 3],
         ]);
     }
 }

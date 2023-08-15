@@ -11,12 +11,12 @@
                         <div class="accordion" id="accordionExample">
                             <!-- Security Setting -->
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
+                                <h2 class="accordion-header bg-success" id="headingOne">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#security" aria-expanded="true" aria-controls="security">
                                         Security Settings
                                     </button>
                                 </h2>
-                                <div id="security" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div id="security" class="accordion-collapse collapse {{ $security }}" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <div class="form-group">
                                             <div class="mb-3">
@@ -64,17 +64,17 @@
 
                             <!-- Other Setting -->
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
+                                <h2 class="accordion-header bg-warning" id="headingOne">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#automation" aria-expanded="true" aria-controls="automation">
                                         Automation Settings
                                     </button>
                                 </h2>
-                                <div id="automation" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div id="automation" class="accordion-collapse collapse {{ $automation }}" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <div class="d-flex justify-content-between my-3">
                                             <label for="reoprtMail" class="form-check-label">Send reports via mail</label>
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="reoprtMail" size="large"/>
+                                                <input class="form-check-input" type="checkbox" id="reoprtMail" size="large" wire:model="reportViaEmail"/>
                                             </div>
                                         </div>
 
@@ -84,10 +84,10 @@
                                                     <label>Send reports </label>
                                                 </div>
                                                 <div class="col-sm-5 col-md-4">
-                                                    <select class="form-control form-select">
-                                                        <option>Daily</option>
-                                                        <option>Weekly</option>
-                                                        <option>Monthly</option>
+                                                    <select class="form-control form-select" wire:model="reportPeriod">
+                                                        @foreach ($reportPeriods as $reportPeriod)
+                                                        <option value="{{ $reportPeriod->id }}">{{ $reportPeriod->name }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -98,7 +98,7 @@
                                         <div class="d-flex justify-content-between my-3">
                                             <label for="autoShuffle" class="form-check-label">Auto Reshuffle Mode</label>
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="autoShuffle" size="large"/>
+                                                <input class="form-check-input" type="checkbox" id="autoShuffle" size="large" wire:model="leadReshuffle"/>
                                             </div>
                                         </div>
 
@@ -108,12 +108,10 @@
                                                     <label>Reshuffle in </label>
                                                 </div>
                                                 <div class="col-sm-5 col-md-4">
-                                                    <select class="form-control form-select">
-                                                        <option>Every 5 Minutes</option>
-                                                        <option>Every 10 Minutes</option>
-                                                        <option>Every 20 Minutes</option>
-                                                        <option>Every 30 Minutes</option>
-                                                        <option>Every 60 Minutes</option>
+                                                    <select class="form-control form-select" wire:model="reshufflePeriod">
+                                                        @foreach ($reshufflePeriods as $reshufflePeriod)
+                                                            <option value="{{ $reshufflePeriod->id }}">{{ $reshufflePeriod->name }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>

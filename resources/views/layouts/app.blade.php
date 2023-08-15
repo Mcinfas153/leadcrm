@@ -141,6 +141,9 @@
       };
     </script>
     @endif
+    @if ($title == 'account settings')
+    <script src="{{ asset('dist/js/pages/account-setting.js') }}"></script>
+    @endif
 
     <script>
       window.addEventListener('pushToast', event => {
