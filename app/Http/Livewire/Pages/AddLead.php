@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pages;
 
 use App\Models\Lead;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -98,7 +99,8 @@ class AddLead extends Component
                 'type' => $this->type,
                 'assign_to' => $assignTo,
                 'inquiry' => $this->inquiry,
-                'created_by' => Auth::user()->id
+                'created_by' => Auth::user()->id,
+                'assign_time' => Carbon::now()
             ]);
 
             DB::commit();

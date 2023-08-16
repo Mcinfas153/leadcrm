@@ -11,7 +11,9 @@ use Livewire\WithPagination;
 use App\Http\Traits\ActivityTrait;
 use App\Models\LeadType;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\LeadAssign;
 
 class OldDataLeads extends Component
 {
@@ -150,7 +152,7 @@ class OldDataLeads extends Component
 
             DB::table('leads')
               ->where('id', $this->leadId)
-              ->update(['assign_to' => $this->userId]);
+              ->update(['assign_to' => $this->userId, 'assign_time' => Carbon::now()]);
 
             DB::commit();
 
@@ -183,7 +185,7 @@ class OldDataLeads extends Component
             foreach($this->selectedLeads as $leadId){
                 DB::table('leads')
                     ->where('id', $leadId)
-                    ->update(['assign_to' => $this->bulkAssignUserId]);
+                    ->update(['assign_to' => $this->bulkAssignUserId, 'assign_time' => Carbon::now()]);
             }
 
             DB::commit();

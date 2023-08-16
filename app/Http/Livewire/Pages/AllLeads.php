@@ -12,6 +12,7 @@ use App\Mail\LeadAssign;
 use App\Models\LeadType;
 use App\Models\Note;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 
 class AllLeads extends Component
@@ -151,7 +152,7 @@ class AllLeads extends Component
 
             DB::table('leads')
               ->where('id', $this->leadId)
-              ->update(['assign_to' => $this->userId]);
+              ->update(['assign_to' => $this->userId, 'assign_time' => Carbon::now()]);
 
             DB::commit();
 
@@ -193,7 +194,7 @@ class AllLeads extends Component
             foreach($this->selectedLeads as $leadId){
                 DB::table('leads')
                     ->where('id', $leadId)
-                    ->update(['assign_to' => $this->bulkAssignUserId]);
+                    ->update(['assign_to' => $this->bulkAssignUserId, 'assign_time' => Carbon::now()]);
             }
 
             DB::commit();

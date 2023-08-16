@@ -62,8 +62,8 @@ Route::middleware(['guestUser'])->group(function () {
 });
 
 //testting purposr only
-// Route::get('/test', function(){
-//     $lead = new LeadReshuffle;
-//     dd($lead());
-// });
+Route::get('/test', function(){
+    $lead = new LeadReshuffle;
+    dd($lead());
+});
 

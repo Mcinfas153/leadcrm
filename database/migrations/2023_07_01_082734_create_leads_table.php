@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -37,6 +38,7 @@ return new class extends Migration
             $table->string('attachment')->nullable();
             $table->integer('assign_to')->nullable()->constrained('users');
             $table->integer('created_by')->constrained('users');
+            $table->dateTime('assign_time')->default(Carbon::now())->nullable();
             $table->timestamps();
         });
     }
