@@ -1,13 +1,20 @@
 <?php
 
 namespace App\Http\Traits;
+
 use App\Http\Traits\DateTrait;
 use App\Models\Lead;
+use App\Models\LeadActivity;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
+use App\Http\Traits\UserTrait;
+use App\Models\Organization;
 
 trait LeadTrait{
 
     use DateTrait;
+    use UserTrait;
 
     public static function getLeadsCountByDay(int $numberOfDays):array
     {
@@ -31,5 +38,33 @@ trait LeadTrait{
         }
 
         return $leadCounts;
+    }
+
+    public static function getEligibleReshuffleLeads():void
+    {
+        $organizations = Organization::where(['organizations.is_active' => 1, 'organizations.lead_reshuffle' => 1])->get();
+
+        foreach($organizations as $organization){
+            
+            $users = UserTrait::bestPerformer($organization->id);
+            
+            $leads = Lead::doesntHave('activities')
+                        ->select('leads.*')
+                        ->where('created_by', $organization->created_by)
+                        ->whereBetween('leads.created_at', [Carbon::now()->subHours(72), Carbon::now()])
+                        ->get();
+                        // //->lazyById(100, function ($leads) {
+                            foreach ($leads as $lead) {
+                                $currentLeadActivity = LeadActivity::where([['lead_id', '=', $lead->id],['user_id', '!=', $lead->created_by],])->get();
+                                if($currentLeadActivity->isEmpty()){
+                                    //lead assign to most active user today or there is no one active doesn't change anything
+                                    if(!$users->isEmpty()){
+                                        $lead->assign_to = $users->random()->id;
+                                        $lead->save();
+                                    }                                    
+                                }
+                            }
+                        //});
+        }
     }
 }

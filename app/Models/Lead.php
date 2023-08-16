@@ -60,4 +60,8 @@ class Lead extends Model
     {
         return $this->hasMany(Note::class);
     }
+
+    public function activities(): HasMany{
+        return $this->hasMany(LeadActivity::class, 'lead_id', 'id');
+    }
 }

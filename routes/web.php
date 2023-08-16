@@ -1,5 +1,6 @@
 <?php
 
+use App\Classes\Automation\LeadReshuffle;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\ReportController;
 use App\Http\Livewire\Pages\AccountSettings;
@@ -58,9 +59,11 @@ Route::middleware(['guestUser'])->group(function () {
     Route::get('/login', LoginPage::class)->name('login');
     Route::get('/register', RegisterPage::class)->name('register');
     Route::get('/forgot-password', ForgotPasswordPage::class)->name('forgot-password');
-    // Route::get('/send', function(){
-    //     $user = User::find(5);
-    //     Mail::to('mcinfas9394@gmail.com')->send(new WelcomeNewUser($user));
-    // });
 });
+
+//testting purposr only
+// Route::get('/test', function(){
+//     $lead = new LeadReshuffle;
+//     dd($lead());
+// });
 

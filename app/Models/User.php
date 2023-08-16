@@ -79,4 +79,9 @@ class User extends Authenticatable
         return $this->hasMany(Note::class, 'created_by');
     }
 
+    public function activities(): HasMany
+    {
+        return $this->hasMany(UserActivity::class, 'user_id');
+    }
+
 }

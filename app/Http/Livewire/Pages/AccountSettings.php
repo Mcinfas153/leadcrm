@@ -33,7 +33,7 @@ class AccountSettings extends Component
     {
         return view('livewire.pages.account-settings',[
             'reshufflePeriods' => ReshufflePeriod::where('is_active', 1)->get(),
-            'reportPeriods' => ReportPeriod::where('is_active', 1)->get()
+            'reportPeriods' => ReportPeriod::where('is_active', 1)->get(),
         ])->layout('layouts.app',[
             'title' => 'account settings'
         ]);
