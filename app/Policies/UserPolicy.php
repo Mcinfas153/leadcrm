@@ -40,7 +40,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->user_type != config('custom.USER_NORMAL');
     }
 
     /**

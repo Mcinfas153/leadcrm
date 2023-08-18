@@ -7,16 +7,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
+use App\Http\Traits\ActivityTrait;
+use App\Mail\WelcomeNewUser;
+use Illuminate\Support\Facades\Mail;
 
 class AddUser extends Component
 {
+
+    use ActivityTrait;
+
     public $name;
     public $email;
     public $phone;
     public $whatsapp;
     public $designation;
-    public $type;
-    public $role;
+    public $userType;
+    public $userRole;
     public $bio;
     public $password;
     public $passwordConfirmation;
@@ -26,6 +32,8 @@ class AddUser extends Component
         'email' => 'required|email|unique:users',
         'password' => 'required|min:6',
         'passwordConfirmation' => 'required|same:password',
+        'userType' => 'required',
+        'userRole' => 'required',
     ];
 
     protected $messages = [
@@ -37,19 +45,26 @@ class AddUser extends Component
         'password.min' => 'The password should be minimum 6 charactors',
         'passwordConfirmation.required' => 'The confirm password cannot be empty',
         'passwordConfirmation.same' => 'Password doesn\'t match',
+        'userType.required' => 'The user type cannot be empty',
+        'userRole.required' => 'The user role cannot be empty',
     ];
 
     public function render()
     {
         return view('livewire.pages.add-user', [
-            'types' => DB::table('user_types')->get(),
-            'roles' => DB::table('user_roles')->get(),
+            'types' => DB::table('user_types')->where('id', 3)->get(),
+            'roles' => DB::table('user_roles')->whereNotIn('id', [1, 2])->get(),
         ])->layout('layouts.app', [
             'title' => 'add user'
         ]);
     }
 
     public function addUser() {
+
+        if (Auth::user()->cannot('create', User::class)) {
+            abort(403);
+        }
+
         $this->validate();
 
         DB::beginTransaction();
@@ -59,19 +74,20 @@ class AddUser extends Component
                 'name' => $this->name,
                 'email' => $this->email,
                 'password' => Hash::make($this->password),
-                'phone' => $this->phone,
-                'whatsapp' => $this->whatsapp,
-                'designation' => $this->designation,
-                'bio' => $this->bio,
-                'user_type' => config('custom.USER_ADMIN'),
-                'user_role' => config('custom.USER_ADMIN_ROLE'),
+                'user_type' => $this->userType,
+                'user_role' => $this->userRole,
                 'business_id' => Auth::user()->business_id,
                 'created_by' => Auth::user()->id,
             ]);
 
             DB::commit();
 
-            return redirect('/')->with([
+            ActivityTrait::add(Auth::user()->id,config('custom.ACTION_ADD_USER'),Auth::user()->name.' create new user called ' .$this->name);
+
+             //notify to new user
+             Mail::to($this->email)->later(now()->addMinutes(2),new WelcomeNewUser($user));
+
+            return redirect('/users')->with([
                 'status' => 'success',
                 'icon' => 'success',
                 'title' => config('message.USER_CREATED_SUCCESS')

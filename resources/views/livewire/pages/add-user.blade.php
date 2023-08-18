@@ -46,50 +46,29 @@
 
                         <div class="col-md-6 form-group mb-3">
                             <label for="type">User Type</label>
-                            <select type="text" class="form-control" wire:model.defer="type" aria-describedby="type">
+                            <select type="text" class="form-control" wire:model.defer="userType" aria-describedby="type">
                                 <option selected hidden>Select the type</option>
                                 @foreach ($types as $type)
                                     <option value="{{ $type->id }}">{{ Str::title($type->name) }}</option>
                                 @endforeach
                             </select>
-                            @error('type')
+                            @error('userType')
                                 <span class="error">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="col-md-6 form-group mb-3">
                             <label for="role">User Role</label>
-                            <select type="text" class="form-control" wire:model.defer="role" aria-describedby="role">
+                            <select type="text" class="form-control" wire:model.defer="userRole" aria-describedby="role">
                                 <option selected hidden>Select the role</option>
                                 @foreach ($roles as $role)
                                     <option value="{{ $role->id }}">{{ Str::title($role->name) }}</option>
                                 @endforeach
                             </select>
-                            @error('role')
+                            @error('userRole')
                                 <span class="error">{{ $message }}</span>
                             @enderror
                         </div>
-
-                        <div class="col-md-4 form-group mb-3">
-                            <label for="phone">Phone </label>
-                            <input type="text" class="form-control" wire:model.defer="phone" aria-describedby="phone" placeholder="+971 - *** ****">
-                        </div>
-
-                        <div class="col-md-4 form-group mb-3">
-                            <label for="whatsapp">Whatsapp No </label>
-                            <input type="text" class="form-control" wire:model.defer="whatsapp" aria-describedby="whatsapp" placeholder="+971 - *** ****">
-                        </div>
-
-                        <div class="col-md-4 form-group mb-3">
-                            <label for="designation">Designation </label>
-                            <input type="text" class="form-control" wire:model.defer="designation" aria-describedby="designation" placeholder="Manager">
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="bio">Bio </label>
-                            <textarea class="form-control" wire:model.defer="bio" aria-describedby="bio" rows="6" placeholder="Write Something..."></textarea>
-                        </div>
-
                     </div>
 
                     <div class="d-flex justify-content-end">
