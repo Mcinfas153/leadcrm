@@ -66,7 +66,7 @@ class User extends Authenticatable
 
     public function leads() :HasMany
     {
-        return $this->hasMany(Lead::class, 'created_by');
+        return $this->hasMany(Lead::class, 'created_by')->orWhere('assign_to', $this->id);
     }
 
     public function assignLeads(): HasMany

@@ -15,6 +15,8 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
+                            <th>Role</th>
+                            <th>Total Leads</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -31,6 +33,12 @@
                             </td>
                             <td>
                                 {{ $user->phone }}
+                            </td>
+                            <td>
+                                {{ $user->role->name }}
+                            </td>
+                            <td>
+                                {{ count($user->leads) }}
                             </td>
                             <td>
                                 <div class="form-check form-switch">
