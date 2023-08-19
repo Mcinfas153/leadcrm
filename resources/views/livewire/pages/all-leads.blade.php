@@ -1,14 +1,14 @@
 <div class="container-fluid">
     <livewire:components.navigator title="all leads"/>
-    <div wire:loading wire:target="changeLeadStatus,changeAgent,bulkAssign">
+    <div wire:loading wire:target="changeLeadStatus,changeAgent,bulkAssign,filterUserId,filterStatusID">
       <livewire:components.progress-loader/>
     </div>
     <div class="row">
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <div class="row">
-                <div class="col-md-8">
+              <div class="row mb-3">
+                <div class="col-md-12">
                   <button type="button" data-bs-toggle="modal" data-bs-target="#import-modal" class="btn btn-primary">Import Leads</button>
                   <button type="button" onclick="exportLeads('{{ route('export-leads') }}')" class="btn btn-secondary">Export Leads</button>
                   @if (Auth::user()->can('changeAgent',App\Models\Lead::class))
@@ -16,6 +16,26 @@
                   @endif
                   <button type="button" onclick="bulkDelete()" class="btn btn-danger" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Delete</button>
                 </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  @can('isAdmin', App\Models\User::class)
+                  <select class="form-select" aria-label="filter-user-id" wire:model="filterUserId">
+                    <option selected hidden>Select an Agent to view Assign Leads</option>
+                    @foreach ($users as $user)
+                      <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                  </select>
+                  @endcan 
+                </div>
+                <div class="col-md-4">
+                  <select class="form-select" aria-label="filter-status-id" wire:model="filterStatusID">
+                    <option selected hidden>Select Status</option>
+                    @foreach ($lead_status as $ls)
+                      <option value="{{ $ls->id }}">{{ $ls->name }}</option>
+                    @endforeach
+                  </select>                 
+                </div>                
                 <div class="col-md-4">
                   <input class="form-control" type="text" placeholder="Search Here" wire:model="search">
                 </div>
@@ -38,7 +58,12 @@
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
-                    <tbody>    
+                    <tbody>
+                      @if ($leads->isEmpty())
+                        <tr>
+                          <td colspan="9"><h6 class="text-center">There is No Data Available</h6></td>
+                        </tr>
+                      @endif    
                         @foreach ($leads as $lead)                                  
                         <tr>
                             <td>
@@ -144,7 +169,7 @@
          <div class="modal-body">
           <input type="hidden" value="" id="leadIdHidden"/>
           <select class="form-select" aria-label="Default select example" wire:model.defer="statusId">
-            <option selected>Select the status</option>
+            <option selected hidden>Select the status</option>
             @foreach ($lead_status as $ls)
             <option value="{{ $ls->id }}">{{ $ls->name }}</option>
             @endforeach
@@ -198,7 +223,7 @@
         <div class="modal-body">
           <input type="hidden" value="" id="leadIdHidden"/>
           <select class="form-select" aria-label="Default select example" wire:model.defer="userId">
-            <option selected>Select a user</option>
+            <option selected hidden>Select a user</option>
             @foreach ($users as $user)
             <option value="{{ $user->id }}">{{ $user->name }}</option>
             @endforeach

@@ -28,6 +28,8 @@ class AllLeads extends Component
     public $bulkAssignUserId;
     public $selectedLeads = [];
     public $search = '';
+    public $filterUserId;
+    public $filterStatusID;
  
     protected $paginationTheme = 'bootstrap';
 
@@ -68,6 +70,10 @@ class AllLeads extends Component
                                 ->orWhere('leads.phone', 'like', '%'.$this->search.'%')
                                 ->orWhere('leads.email', 'like', '%'.$this->search.'%')
                                 ->orWhere('leads.campaign_name', 'like', '%'.$this->search.'%');
+                        })->when($this->filterUserId, function ($query, $filterUserId) {
+                            $query->where('assign_to', $filterUserId);
+                        })->when($this->filterStatusID, function ($query, $filterStatusID) {
+                            $query->where('status', $filterStatusID);
                         })                                               
                         ->paginate(5);
 
@@ -88,6 +94,8 @@ class AllLeads extends Component
                                 ->orWhere('leads.phone', 'like', '%'.$this->search.'%')
                                 ->orWhere('leads.email', 'like', '%'.$this->search.'%')
                                 ->orWhere('leads.campaign_name', 'like', '%'.$this->search.'%');
+                        })->when($this->filterStatusID, function ($query, $filterStatusID) {
+                            $query->where('status', $filterStatusID);
                         })
                         ->paginate(5);
                         
