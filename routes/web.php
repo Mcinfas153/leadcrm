@@ -11,6 +11,7 @@ use App\Http\Livewire\Pages\AllLeads;
 use App\Http\Livewire\Pages\BusinessInactive;
 use App\Http\Livewire\Pages\DailyUserReport;
 use App\Http\Livewire\Pages\Dashboard;
+use App\Http\Livewire\Pages\DumpLeadsPage;
 use App\Http\Livewire\Pages\ForgotPasswordPage;
 use App\Http\Livewire\Pages\FreshLeads;
 use App\Http\Livewire\Pages\LeadActivities;
@@ -50,6 +51,7 @@ Route::middleware(['loggedUser'])->group(function () {
         Route::get('/lead/activities/{leadId}', LeadActivities::class)->name('lead.activities');
         Route::get('/cold/leads', OldDataLeads::class)->name('old-data.leads');
         Route::get('/active-leads', ActiveLeadsPage::class)->name('active.leads');
+        Route::get('/dump-leads', DumpLeadsPage::class)->name('dump.leads');
         Route::post('/import',[LeadController::class,'importLeads'])->name('import.leads');
         Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export-leads');
     });

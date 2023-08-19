@@ -84,6 +84,30 @@
 
               <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                <span class="hide-menu">Dump Leads</span>
+              </li>
+
+              <li class="sidebar-item">
+                <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
+                  <span class="d-flex">
+                    <i class="ti ti-trash-off"></i>
+                  </span>
+                  <span class="hide-menu">Leads</span>
+                </a>
+                <ul aria-expanded="false" class="collapse first-level">
+                  <li class="sidebar-item">
+                    <a href="{{ URL::to('dump-leads') }}" class="sidebar-link">
+                      <div class="round-16 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-circle"></i>
+                      </div>
+                      <span class="hide-menu">All Leads</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="nav-small-cap">
+                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">COLD DATA LEADS</span>
               </li>
 
