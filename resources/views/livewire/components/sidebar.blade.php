@@ -170,6 +170,8 @@
                         </li>
                     </ul>
                 </li>
+              @endcan
+
                 <li class="nav-small-cap">
                   <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                   <span class="hide-menu">OTHERS</span>
@@ -183,7 +185,6 @@
                   <span class="hide-menu">Account Setting</span>
                   </a>
                 </li>
-              @endcan
 
                 @can('isAdmin', App\Http\User::class)
                 <li class="sidebar-item">

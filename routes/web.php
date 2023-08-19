@@ -40,7 +40,6 @@ Route::middleware(['loggedUser'])->group(function () {
             Route::get('/user/add', AddUser::class)->name('add.user');
             Route::get('/user/daily-report', DailyUserReport::class)->name('user.daily.report');
             Route::get('/user/report/{userId}/{period}', [ReportController::class, 'userReportExport'])->name('user.report.download');
-            Route::get('/account-settings', AccountSettings::class)->name('settings');
         });
         Route::get('/', Dashboard::class)->name('dashboard');
         Route::get('/download-leads', FreshLeads::class)->name('fresh.leads');
@@ -54,6 +53,7 @@ Route::middleware(['loggedUser'])->group(function () {
         Route::get('/dump-leads', DumpLeadsPage::class)->name('dump.leads');
         Route::post('/import',[LeadController::class,'importLeads'])->name('import.leads');
         Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export-leads');
+        Route::get('/account-settings', AccountSettings::class)->name('settings');
     });
 
     Route::get('/businss/inactive', BusinessInactive::class)->name('business.inactive')->middleware('inactiveBusiness');

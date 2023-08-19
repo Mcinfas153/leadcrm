@@ -11,8 +11,8 @@
                         <div class="accordion" id="accordionExample">
                             <!-- Security Setting -->
                             <div class="accordion-item">
-                                <h2 class="accordion-header bg-success" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#security" aria-expanded="true" aria-controls="security">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#security" aria-expanded="true" aria-controls="security">
                                         Security Settings
                                     </button>
                                 </h2>
@@ -49,7 +49,7 @@
                                             </div>
 
                                             <hr class="my-4">
-
+                                            @can('isAdmin', App\Models\User::class)
                                             <div class="mb-3">
                                                 <label for="authKey" class="mb-2">Authentication Key:</label>
                                                 <div class="input-group mb-1">
@@ -62,15 +62,16 @@
                                                     <small id="name13" class="badge badge-default text-warning font-medium bg-light-warning form-text"><i class="ti ti-alert"></i> Don't share this code with others</small>
                                                 </div>
                                             </div>
+                                            @endcan                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Other Setting -->
+                            @can('isAdmin', App\Models\User::class)
                             <div class="accordion-item">
-                                <h2 class="accordion-header bg-warning" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#automation" aria-expanded="true" aria-controls="automation">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button bg-warning" type="button" data-bs-toggle="collapse" data-bs-target="#automation" aria-expanded="true" aria-controls="automation">
                                         Automation Settings
                                     </button>
                                 </h2>
@@ -124,6 +125,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endcan                           
                         </div>
                     </div>
                 </div>
