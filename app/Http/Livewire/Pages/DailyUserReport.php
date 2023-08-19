@@ -8,9 +8,14 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class DailyUserReport extends Component
 {
+
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
 
     public $userId;
     public $activityLimitPerPage = 10;
@@ -18,13 +23,13 @@ class DailyUserReport extends Component
 
     protected $listeners = [
         'selectUser',
-        'load-more-activities' => 'loadMore',
     ];
 
-    public function mount()
+    public function mount($userId = 0)
     {
         $this->period = "daily";
-        $this->userId = 0;
+        $this->userId = $userId;
+        
     }
 
     public function render()
@@ -34,7 +39,7 @@ class DailyUserReport extends Component
             $activities = UserActivity::where('user_id', $this->userId)
                             ->whereDate('created_at', timeZoneChange(config('custom.LOCAL_TIMEZONE')))
                             ->orderByDesc('created_at')
-                            ->paginate($this->activityLimitPerPage);
+                            ->paginate(10);
 
             $activityStats = DB::table('user_activities')
                             ->select('user_activities.*', 'actions.name as action_name')
@@ -51,7 +56,7 @@ class DailyUserReport extends Component
             $activities = UserActivity::where('user_id', $this->userId)
                             ->whereBetween('user_activities.created_at', [timeZoneChange(config('custom.LOCAL_TIMEZONE'))->startOfWeek()->format('Y-m-d H:i:s'), timeZoneChange(config('custom.LOCAL_TIMEZONE'))->endOfWeek()->format('Y-m-d H:i:s')])
                             ->orderByDesc('created_at')
-                            ->paginate($this->activityLimitPerPage);
+                            ->paginate(10);
 
             $activityStats = DB::table('user_activities')
                             ->select('user_activities.*', 'actions.name as action_name')
@@ -68,7 +73,7 @@ class DailyUserReport extends Component
             $activities = UserActivity::where('user_id', $this->userId)
                             ->whereBetween('user_activities.created_at', [timeZoneChange(config('custom.LOCAL_TIMEZONE'))->startOfMonth()->format('Y-m-d H:i:s'), timeZoneChange(config('custom.LOCAL_TIMEZONE'))->endOfMonth()->format('Y-m-d H:i:s')])
                             ->orderByDesc('created_at')
-                            ->paginate($this->activityLimitPerPage);
+                            ->paginate(10);
 
             $activityStats = DB::table('user_activities')
                             ->select('user_activities.*', 'actions.name as action_name')
@@ -99,15 +104,5 @@ class DailyUserReport extends Component
         ])->layout('layouts.app',[
             'title' => 'user report'
         ]);
-    }
-
-    public function selectUser($userId)
-    {
-        $this->userId = $userId;
-    }
-
-    public function loadMore()
-    {
-        $this->activityLimitPerPage = $this->activityLimitPerPage + 5;
     }
 }

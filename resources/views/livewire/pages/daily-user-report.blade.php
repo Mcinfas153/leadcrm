@@ -1,6 +1,8 @@
 <div class="container-fluid">
     <livewire:components.navigator title="user report"/>
-    
+    <div wire:loading wire:target="userId,period">
+        <livewire:components.progress-loader/>
+    </div>
     <div class="row">
         <div class="col-12">
           <div class="card">
@@ -8,17 +10,11 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <label for="exampleFormControlInput1" class="form-label">Please Select a User to View Report</label>
-                        <select
-                            class="select2 form-control"
-                            style="width: 100%; height: 36px"
-                            id="user"
-                            >
-                            <option>Select a User</option>
-                            <optgroup label="Company Users">
-                                @foreach ($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                @endforeach
-                            </optgroup>
+                        <select class="form-control" wire:model="userId">
+                            <option selected hidden>Select a User</option>
+                            @foreach ($users as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @endforeach                            
                         </select>
                     </div>
                     <div class="col-6 d-flex flex-column align-items-end">
@@ -63,7 +59,10 @@
                             <livewire:components.activity-panel :activity="$activity" :wire:key="$activity->id"/>
                         @endforeach
                     </ul> 
-                </div>                
+                </div>
+                <div class="mt-5">
+                    {{ $activities->links() }}    
+                </div>                            
             </div>            
           </div>
         </div>

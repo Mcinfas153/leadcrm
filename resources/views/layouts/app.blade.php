@@ -133,13 +133,6 @@
     <script src="{{ asset('dist/libs/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('dist/libs/select2/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('dist/js/pages/reports.js') }}"></script>
-    <script type="text/javascript">
-      window.onscroll = function (ev) {
-          if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 15) {
-              window.livewire.emit('load-more-activities');
-          }
-      };
-    </script>
     @endif
     @if ($title == 'account settings')
     <script src="{{ asset('dist/js/pages/account-setting.js') }}"></script>

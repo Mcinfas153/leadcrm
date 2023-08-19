@@ -46,6 +46,9 @@
                                 </div>
                             </td>
                             <td>
+                                <a target="_BLANK" href="{{ URL::to('user/daily-report') }}/{{ $user->id }}" class="btn mb-1 btn-sm btn-info">
+                                    User Activity
+                                </a>
                                 <button type="button" class="btn mb-1 btn-sm btn-danger" onclick="deleteUser({{ $user->id }},'{{ $user->name }}')">
                                     Delete
                                   </button>

@@ -38,7 +38,7 @@ Route::middleware(['loggedUser'])->group(function () {
         Route::middleware(['adminUser'])->group(function () {
             Route::get('/users', UsersList::class)->name('users');
             Route::get('/user/add', AddUser::class)->name('add.user');
-            Route::get('/user/daily-report', DailyUserReport::class)->name('user.daily.report');
+            Route::get('/user/daily-report/{userId?}', DailyUserReport::class)->name('user.daily.report');
             Route::get('/user/report/{userId}/{period}', [ReportController::class, 'userReportExport'])->name('user.report.download');
         });
         Route::get('/', Dashboard::class)->name('dashboard');
