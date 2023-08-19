@@ -20,18 +20,22 @@
                                     <div class="accordion-body">
                                         <div class="form-group">
                                             <div class="mb-3">
+                                                <form wire:submit.prevent="changePassword">
                                                 <h4 class="my-3">Change Password</h4>
                                                 <div class="mb-3">
-                                                    <label class="form-control-label mb-1" for="oldPassword">Current Password:</label>
-                                                    <input type="password" id="oldPassword" class="form-control" placeholder="Current Password *">
+                                                    <label class="form-control-label mb-1" for="oldPassword">Current Password*:</label>
+                                                    <input type="password" id="oldPassword" class="form-control" placeholder="Current Password *" wire:model.defer="oldPassword">
+                                                    @error('oldPassword') <span class="error">{{ $message }}</span> @enderror
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label class="form-control-label mb-1" for="oldPassword">New Password:</label>
-                                                    <input type="password" id="newPassword" class="form-control" placeholder="New Password *">
+                                                    <label class="form-control-label mb-1" for="oldPassword">New Password*:</label>
+                                                    <input type="password" id="newPassword" class="form-control" placeholder="New Password" wire:model.defer="newPassword">
+                                                    @error('newPassword') <span class="error">{{ $message }}</span> @enderror
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label class="form-control-label mb-1" for="oldPassword">Confirm Password:</label>
-                                                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password *">
+                                                    <label class="form-control-label mb-1" for="oldPassword">Confirm Password*:</label>
+                                                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password" wire:model.defer="conPassword">
+                                                    @error('conPassword') <span class="error">{{ $message }}</span> @enderror
                                                 </div>
 
                                                 <div class="d-flex justify-content-end mt-3 mt-md-0">
@@ -41,6 +45,7 @@
                                                         </div>
                                                     </button>
                                                 </div>
+                                                </form>
                                             </div>
 
                                             <hr class="my-4">

@@ -8,9 +8,15 @@ use App\Models\ReshufflePeriod;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Traits;
+use App\Http\Traits\ActivityTrait;
+use App\Models\User;
 
 class AccountSettings extends Component
 {
+
+    use ActivityTrait;
 
     public $reportViaEmail;
     public $leadReshuffle;
@@ -18,6 +24,9 @@ class AccountSettings extends Component
     public $reshufflePeriod;
     public $security;
     public $automation;
+    public $oldPassword;
+    public $newPassword;
+    public $conPassword;
 
     public function mount()
     {
@@ -145,5 +154,61 @@ class AccountSettings extends Component
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
 
         }
+    }
+
+    public function changePassword()
+    {
+        $validatedData = $this->validate(
+            [
+            'oldPassword' => 'required',
+            'newPassword' => 'required|min:6',
+            'conPassword' => 'required|same:newPassword',
+            ],
+            [
+                'oldPassword.required' => 'The :attribute cannot be empty.',
+                'newPassword.required' => 'The :attribute cannot be empty.',
+                'newPassword.min:6' => 'The :attribute should be minimum 6 charactors.',
+                'conPassword.required' => 'The :attribute cannot be empty.',
+                'conPassword.same:newPassword' => 'New password doesn\'t match with confirm password.',
+            ],
+            [
+                'oldPassword' => 'current password',
+                'newPassword' => 'new password',
+                'conPassword' => 'confirm password'
+            ]
+        );
+
+        if (Hash::check($this->oldPassword, Auth::user()->password)) {
+            
+            DB::beginTransaction();
+
+            try {
+                
+                $user = User::find(Auth::user()->id);
+                $user->password = Hash::make($this->newPassword);
+                $user->save();
+
+                $this->oldPassword = $this->newPassword = $this->conPassword = null;
+    
+                DB::commit();
+    
+                ActivityTrait::add(Auth::user()->id,config('custom.ACTION_CHANGE_PASSWORD'),Auth::user()->name.' change his password');
+    
+                $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.USER_PASSWORD_CHANGE_SUCCESS')]);
+    
+              } catch (\Exception $e) {
+    
+                DB::rollBack();
+    
+                $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+    
+            }
+
+        } else {
+            $this->addError('conPassword', config('message.USER_PASSWORD_CHANGE_FAILED'));
+        } 
+
+        $this->automation = "";
+        $this->security = "show";
     }
 }

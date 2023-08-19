@@ -4,6 +4,8 @@ return [
     'USER_NOT_FOUND' => 'The provided credentials do not match with our records',
     'USER_LOGIN_SUCCESS' => 'Welcome back, ',
     'USER_REGISTER_SUCCESS' => 'Welcome to Lead CRM, ',
+    'USER_PASSWORD_CHANGE_SUCCESS' => 'Password changed successfully',
+    'USER_PASSWORD_CHANGE_FAILED' => 'The current password is incorrect. Please enter your valid password to change',
     'LEAD_STATUS_CHANGE_SUCCESS' => 'Lead status changed successfully',
     'LEAD_PRIORITY_CHANGE_SUCCESS' => 'Lead priority changed successfully',
     'LEAD_IMPORT_SUCCESS' => 'Lead imports successfully',

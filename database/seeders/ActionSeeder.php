@@ -35,6 +35,7 @@ class ActionSeeder extends Seeder
             ['name' => 'add user'],
             ['name' => 'modify user'],
             ['name' => 'delete user'],
+            ['name' => 'change password'],
         ]);
     }
 }
