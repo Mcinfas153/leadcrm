@@ -64,6 +64,14 @@
                     </a>
                   </li>
                   <li class="sidebar-item">
+                    <a href="{{ URL::to('active-leads') }}" class="sidebar-link">
+                      <div class="round-16 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-circle"></i>
+                      </div>
+                      <span class="hide-menu">Active Leads</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-item">
                     <a href="{{ URL::to('leads') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>

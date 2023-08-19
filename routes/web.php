@@ -4,6 +4,7 @@ use App\Classes\Automation\LeadReshuffle;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\ReportController;
 use App\Http\Livewire\Pages\AccountSettings;
+use App\Http\Livewire\Pages\ActiveLeadsPage;
 use App\Http\Livewire\Pages\AddLead;
 use App\Http\Livewire\Pages\AddUser;
 use App\Http\Livewire\Pages\AllLeads;
@@ -48,6 +49,7 @@ Route::middleware(['loggedUser'])->group(function () {
         Route::get('/lead/comments/{leadId}', LeadComments::class)->name('lead.comments');
         Route::get('/lead/activities/{leadId}', LeadActivities::class)->name('lead.activities');
         Route::get('/cold/leads', OldDataLeads::class)->name('old-data.leads');
+        Route::get('/active-leads', ActiveLeadsPage::class)->name('active.leads');
         Route::post('/import',[LeadController::class,'importLeads'])->name('import.leads');
         Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export-leads');
     });
