@@ -78,10 +78,14 @@ class RegisterPage extends Component
             Auth::login($user, $remember = true);
 
             //send welcome mail to user
-            Mail::to($user->email)->send(new WelcomeNewUser($user));
+            if(config('custom.IS_MAIL_ON')){
+                Mail::to($user->email)->send(new WelcomeNewUser($user));
+            }
 
             //send mail to super admin
-            Mail::to(config('custom.SP_EMAIL'))->send(new NotifyNewUserToSP($user));
+            if(config('custom.IS_MAIL_ON')){
+                Mail::to(config('custom.SP_EMAIL'))->send(new NotifyNewUserToSP($user));
+            }
 
             DB::commit();
 

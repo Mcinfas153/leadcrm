@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\Lead;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -10,15 +9,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class LeadAssign extends Mailable
+class BulkLeadsAssign extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $lead;
-
-    public function __construct(Lead $lead)
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        $this->lead = $lead;
+        //
     }
 
     /**
@@ -29,7 +31,7 @@ class LeadAssign extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'You Recieved a New Lead',
+            subject: 'You have recieved bulk leads',
         );
     }
 
@@ -41,10 +43,9 @@ class LeadAssign extends Mailable
     public function content()
     {
         return new Content(
-            markdown: 'emails.leads.assign',
+            markdown: 'emails.leads.bulkAssign',
             with: [
-                'url' => config('app.url').'lead/view/'.$this->lead->id,
-                'lead' => $this->lead
+                'url' => config('app.url').'leads',
             ],
         );
     }

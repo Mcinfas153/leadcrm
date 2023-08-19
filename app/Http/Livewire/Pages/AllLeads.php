@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Http\Traits\ActivityTrait;
+use App\Mail\BulkLeadsAssign;
 use App\Mail\LeadAssign;
 use App\Models\LeadType;
 use App\Models\Note;
@@ -76,7 +77,7 @@ class AllLeads extends Component
                         ->join('lead_statuses', 'leads.status', '=', 'lead_statuses.id')
                         ->join('users', 'leads.assign_to', '=', 'users.id')
                         ->select('leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
-                        ->orderByDesc('leads.created_at')
+                        ->orderByDesc('leads.assign_time')
                         ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
                         ->where(function($query) {
                             $query->where('leads.assign_to', Auth::user()->id)
@@ -161,7 +162,9 @@ class AllLeads extends Component
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.USER_ASSIGN_CHANGE_SUCCESS')]);
 
             //notify agent
-            Mail::to(User::find($this->userId)->email)->queue(new LeadAssign(Lead::find($this->leadId)));
+            if(config('custom.IS_MAIL_ON')){
+                Mail::to(User::find($this->userId)->email)->queue(new LeadAssign(Lead::find($this->leadId)));
+            }            
 
         } catch (\Exception $e) {
 
@@ -206,7 +209,9 @@ class AllLeads extends Component
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LAED_MASS_ASSIGN_SUCCESS')]);
 
             //notify agent
-            Mail::to(User::find($this->userId)->email)->queue(new LeadAssign(Lead::find($this->leadId)));
+            if(config('custom.IS_MAIL_ON')){
+                Mail::to(User::find($this->bulkAssignUserId)->email)->queue(new BulkLeadsAssign);
+            }
 
         } catch (\Exception $e) {
 
@@ -214,6 +219,7 @@ class AllLeads extends Component
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
 
+            dd($e->getMessage());
         }
 
     }

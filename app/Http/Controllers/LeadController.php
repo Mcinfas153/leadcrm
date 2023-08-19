@@ -77,7 +77,7 @@ class LeadController extends Controller
 
         try {
 
-            Excel::import(new LeadImport($userAssignId, $request->leadType), $request->file);
+            Excel::import(new LeadImport($userAssignId, $request->input('leadType')), $request->file);
 
 
             return redirect()->back()->with([
@@ -88,7 +88,7 @@ class LeadController extends Controller
             
           
           } catch (\Exception $e) {
-
+ 
             return back()->with([
                 'status' => 'error',
                 'icon' => 'error',

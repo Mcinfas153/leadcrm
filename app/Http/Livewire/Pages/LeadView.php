@@ -49,6 +49,7 @@ class LeadView extends Component
 
     public function mount($leadId)
     {
+        
         $this->leadId = $leadId;
         $lead = Lead::find($this->leadId);
         $this->lead = $lead;
@@ -75,15 +76,16 @@ class LeadView extends Component
         $this->attachment = $lead->attachment;
         $this->assignTo = $lead->assign_to;
 
+        if (Auth::user()->cannot('view', $this->lead)) {
+            abort(403);
+        }
+
         ActivityTrait::add(Auth::user()->id, config('custom.ACTION_OPEN_LEAD'),Auth::user()->name.' open the lead', $this->leadId);
 
     }
 
     public function render()
     {
-        if (Auth::user()->cannot('view', $this->lead)) {
-            abort(403);
-        }
 
         return view('livewire.pages.lead-view', [
             'statusList' => LeadStatus::where('is_active', 1)->get(),

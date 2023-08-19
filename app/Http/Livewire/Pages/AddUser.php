@@ -85,7 +85,9 @@ class AddUser extends Component
             ActivityTrait::add(Auth::user()->id,config('custom.ACTION_ADD_USER'),Auth::user()->name.' create new user called ' .$this->name);
 
              //notify to new user
-             Mail::to($this->email)->later(now()->addMinutes(2),new WelcomeNewUser($user));
+             if(config('custom.IS_MAIL_ON')){
+                Mail::to($this->email)->later(now()->addMinutes(2),new WelcomeNewUser($user));
+             }
 
             return redirect('/users')->with([
                 'status' => 'success',
