@@ -15,12 +15,7 @@ class FreshLeads extends Component
     {
         if(Auth::user()->user_type == config('custom.USER_SUPERADMIN')){
 
-            $leads = DB::table('leads')
-                    ->join('lead_statuses', 'leads.status', '=', 'lead_statuses.id')
-                    ->join('users', 'leads.assign_to', '=', 'users.id')
-                    ->select('leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
-                    ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
-                    ->orderByDesc('leads.created_at')->get();
+            $leads = [];
 
         } elseif(Auth::user()->user_type == config('custom.USER_ADMIN')){
 
@@ -30,13 +25,7 @@ class FreshLeads extends Component
                         ->select('leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
                         ->orderByDesc('leads.created_at')
                         ->where('leads.created_by', Auth::user()->id)
-                        ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
-                        ->where(function($query) {
-                            $query->where('leads.fullname', 'like', '%'.$this->search.'%')
-                                ->orWhere('leads.phone', 'like', '%'.$this->search.'%')
-                                ->orWhere('leads.email', 'like', '%'.$this->search.'%')
-                                ->orWhere('leads.campaign_name', 'like', '%'.$this->search.'%');
-                        })                                               
+                        ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))                                              
                         ->get();
 
         } else{
@@ -45,17 +34,11 @@ class FreshLeads extends Component
                         ->join('lead_statuses', 'leads.status', '=', 'lead_statuses.id')
                         ->join('users', 'leads.assign_to', '=', 'users.id')
                         ->select('leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
-                        ->orderByDesc('leads.created_at')
+                        ->orderByDesc('leads.assign_time')
                         ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
                         ->where(function($query) {
                             $query->where('leads.assign_to', Auth::user()->id)
                                 ->orWhere('leads.created_by', Auth::user()->id);
-                        })
-                        ->where(function($query) {
-                            $query->where('leads.fullname', 'like', '%'.$this->search.'%')
-                                ->orWhere('leads.phone', 'like', '%'.$this->search.'%')
-                                ->orWhere('leads.email', 'like', '%'.$this->search.'%')
-                                ->orWhere('leads.campaign_name', 'like', '%'.$this->search.'%');
                         })
                         ->get();
                         

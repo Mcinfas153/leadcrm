@@ -56,7 +56,7 @@
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="{{ URL::to('recent-leads') }}" class="sidebar-link">
+                    <a href="{{ URL::to('download-leads') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>

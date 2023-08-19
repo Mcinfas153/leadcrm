@@ -42,7 +42,7 @@ Route::middleware(['loggedUser'])->group(function () {
             Route::get('/account-settings', AccountSettings::class)->name('settings');
         });
         Route::get('/', Dashboard::class)->name('dashboard');
-        Route::get('/recent-leads', FreshLeads::class)->name('fresh.leads');
+        Route::get('/download-leads', FreshLeads::class)->name('fresh.leads');
         Route::get('/leads', AllLeads::class)->name('leads');
         Route::get('/lead/add', AddLead::class)->name('add.lead');
         Route::get('/lead/view/{leadId}', LeadView::class)->name('lead.view');

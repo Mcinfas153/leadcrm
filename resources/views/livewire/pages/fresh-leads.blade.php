@@ -9,7 +9,7 @@
               <table class="table data-table display text-nowrap" id="leads">
                 <thead>
                     <tr>
-                        <th>#</th>
+                      <th>#ID</th>
                         <th class="fixedCol">Name</th>
                         <th>Date</th>
                         <th class="text-center">Phone</th>
@@ -26,12 +26,10 @@
                     @foreach ($leads as $lead)                                  
                     <tr>
                         <td>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="{{ $lead->id }}" id="flexCheckDefault">
-                          </div>
+                          #{{ $lead->id }}
                         </td>
                         <td class="fixedCol text-black"><a href="{{ URL::to('lead/view') }}/{{ $lead->id }}" target="_BLANK">{{ $lead->fullname }}</a></td>
-                        <td>{{ getDateFormat($lead->created_at,'YYYY-MM-DD, h:mm a',config('custom.LOCAL_TIMEZONE')) }}</td>
+                        <td>{{ Auth::user()->user_type == config('custom.USER_ADMIN') ? getDateFormat($lead->created_at,'YYYY-MM-DD, h:mm a',config('custom.LOCAL_TIMEZONE')) : getDateFormat($lead->assign_time,'YYYY-MM-DD, h:mm a',config('custom.LOCAL_TIMEZONE')) }}</td>
                         <td class="text-center"><a>{{ $lead->phone }}</a></td>
                         <td class="text-center"><a>{{ $lead->email }}</a></td>
                         <td class="text-center"><span style="background-color:{{ $lead->color_code }}" class="badge fw-semibold py-2 px-3 text-white fs-2">{{ Str::title($lead->lead_status) }}</span></td>
