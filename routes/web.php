@@ -54,6 +54,7 @@ Route::middleware(['loggedUser'])->group(function () {
         Route::get('/dump-leads', DumpLeadsPage::class)->name('dump.leads');
         Route::get('/old-leads', OldCrmLeads::class)->name('old.crm.leads');
         Route::post('/import',[LeadController::class,'importLeads'])->name('import.leads');
+        Route::post('/import/old-crm-leads',[LeadController::class,'importOldCrmLeads'])->name('import.oldcrm.leads');
         Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export-leads');
         Route::get('/account-settings', AccountSettings::class)->name('settings');
     });

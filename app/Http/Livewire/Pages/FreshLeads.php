@@ -25,7 +25,8 @@ class FreshLeads extends Component
                         ->select('leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
                         ->orderByDesc('leads.created_at')
                         ->where('leads.created_by', Auth::user()->id)
-                        ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))                                              
+                        ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
+                        ->where('leads.is_migrate_lead', 0)                                             
                         ->get();
 
         } else{
@@ -36,6 +37,7 @@ class FreshLeads extends Component
                         ->select('leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
                         ->orderByDesc('leads.assign_time')
                         ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
+                        ->where('leads.is_migrate_lead', 0)
                         ->where(function($query) {
                             $query->where('leads.assign_to', Auth::user()->id)
                                 ->orWhere('leads.created_by', Auth::user()->id);

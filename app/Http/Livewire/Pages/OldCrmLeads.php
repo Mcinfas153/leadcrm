@@ -9,9 +9,9 @@ use Livewire\WithPagination;
 use App\Http\Traits\ActivityTrait;
 use App\Mail\BulkLeadsAssign;
 use App\Mail\LeadAssign;
+use App\Models\Lead;
 use App\Models\LeadType;
 use App\Models\Note;
-use App\Models\OldCrmLead;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -50,53 +50,50 @@ class OldCrmLeads extends Component
 
         if(Auth::user()->user_type == config('custom.USER_SUPERADMIN')){
 
-            $leads = DB::table('leads')
-                    ->join('lead_statuses', 'old_crm_leads.status', '=', 'lead_statuses.id')
-                    ->join('users', 'old_crm_leads.assign_to', '=', 'users.id')
-                    ->select('old_crm_leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
-                    ->where('old_crm_leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
-                    ->orderByDesc('old_crm_leads.created_at')->paginate(5);
+            $leads = [];
 
         } elseif(Auth::user()->user_type == config('custom.USER_ADMIN')){
 
-            $leads = DB::table('old_crm_leads')
-                        ->join('lead_statuses', 'old_crm_leads.status', '=', 'lead_statuses.id')
-                        ->join('users', 'old_crm_leads.assign_to', '=', 'users.id')
-                        ->select('old_crm_leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
-                        ->orderByDesc('old_crm_leads.created_at')
-                        ->where('old_crm_leads.created_by', Auth::user()->id)
-                        ->where('old_crm_leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
+            $leads = DB::table('leads')
+                        ->join('lead_statuses', 'leads.status', '=', 'lead_statuses.id')
+                        ->join('users', 'leads.assign_to', '=', 'users.id')
+                        ->select('leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
+                        ->orderByDesc('leads.created_at')
+                        ->where('leads.created_by', Auth::user()->id)
+                        ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
+                        ->where('leads.is_migrate_lead', 1)
                         ->where(function($query) {
-                            $query->where('old_crm_leads.fullname', 'like', '%'.$this->search.'%')
-                                ->orWhere('old_crm_leads.phone', 'like', '%'.$this->search.'%')
-                                ->orWhere('old_crm_leads.email', 'like', '%'.$this->search.'%')
-                                ->orWhere('old_crm_leads.campaign_name', 'like', '%'.$this->search.'%');
+                            $query->where('leads.fullname', 'like', '%'.$this->search.'%')
+                                ->orWhere('leads.phone', 'like', '%'.$this->search.'%')
+                                ->orWhere('leads.email', 'like', '%'.$this->search.'%')
+                                ->orWhere('leads.campaign_name', 'like', '%'.$this->search.'%');
                         })->when($this->filterUserId, function ($query, $filterUserId) {
-                            $query->where('old_crm_leads.assign_to', $filterUserId);
+                            $query->where('leads.assign_to', $filterUserId);
                         })->when($this->filterStatusID, function ($query, $filterStatusID) {
-                            $query->where('old_crm_leads.status', $filterStatusID);
+                            $query->where('leads.status', $filterStatusID);
                         })                                               
                         ->paginate(5);
 
         } else{
 
-            $leads = DB::table('old_crm_leads')
-                        ->join('lead_statuses', 'old_crm_leads.status', '=', 'lead_statuses.id')
-                        ->join('users', 'old_crm_leads.assign_to', '=', 'users.id')
-                        ->select('old_crm_leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
-                        ->orderByDesc('old_crm_leads.assign_time')
-                        ->where('old_crm_leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
+            $leads = DB::table('leads')
+                        ->join('lead_statuses', 'leads.status', '=', 'lead_statuses.id')
+                        ->join('users', 'leads.assign_to', '=', 'users.id')
+                        ->select('leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
+                        ->orderByDesc('leads.assign_time')
+                        ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
+                        ->where('leads.is_migrate_lead', 1)
                         ->where(function($query) {
-                            $query->where('old_crm_leads.assign_to', Auth::user()->id)
-                                ->orWhere('old_crm_leads.created_by', Auth::user()->id);
+                            $query->where('leads.assign_to', Auth::user()->id)
+                                ->orWhere('leads.created_by', Auth::user()->id);
                         })
                         ->where(function($query) {
-                            $query->where('old_crm_leads.fullname', 'like', '%'.$this->search.'%')
-                                ->orWhere('old_crm_leads.phone', 'like', '%'.$this->search.'%')
-                                ->orWhere('old_crm_leads.email', 'like', '%'.$this->search.'%')
-                                ->orWhere('old_crm_leads.campaign_name', 'like', '%'.$this->search.'%');
+                            $query->where('leads.fullname', 'like', '%'.$this->search.'%')
+                                ->orWhere('leads.phone', 'like', '%'.$this->search.'%')
+                                ->orWhere('leads.email', 'like', '%'.$this->search.'%')
+                                ->orWhere('leads.campaign_name', 'like', '%'.$this->search.'%');
                         })->when($this->filterStatusID, function ($query, $filterStatusID) {
-                            $query->where('old_crm_leads.status', $filterStatusID);
+                            $query->where('leads.status', $filterStatusID);
                         })
                         ->paginate(5);
                         
@@ -132,7 +129,7 @@ class OldCrmLeads extends Component
 
         try {
 
-            DB::table('old_crm_leads')
+            DB::table('leads')
               ->where('id', $this->leadId)
               ->update(['status' => $this->statusId]);
 
@@ -160,7 +157,7 @@ class OldCrmLeads extends Component
 
         try {
 
-            DB::table('old_crm_leads')
+            DB::table('leads')
               ->where('id', $this->leadId)
               ->update(['assign_to' => $this->userId, 'assign_time' => Carbon::now()]);
 
@@ -172,7 +169,7 @@ class OldCrmLeads extends Component
 
             //notify agent
             if(config('custom.IS_MAIL_ON')){
-                Mail::to(User::find($this->userId)->email)->queue(new LeadAssign(OldCrmLead::find($this->leadId)));
+                Mail::to(User::find($this->userId)->email)->queue(new LeadAssign(Lead::find($this->leadId)));
             }            
 
         } catch (\Exception $e) {
@@ -204,7 +201,7 @@ class OldCrmLeads extends Component
         try {
 
             foreach($this->selectedLeads as $leadId){
-                DB::table('old_crm_leads')
+                DB::table('leads')
                     ->where('id', $leadId)
                     ->update(['assign_to' => $this->bulkAssignUserId, 'assign_time' => Carbon::now()]);
             }
@@ -242,7 +239,7 @@ class OldCrmLeads extends Component
 
             foreach($this->selectedLeads as $leadId){
 
-                $currentLead = OldCrmLead::find($leadId);
+                $currentLead = Lead::find($leadId);
 
                 if($currentLead->created_by == Auth::user()->id){
 
@@ -277,7 +274,7 @@ class OldCrmLeads extends Component
     public function deleteLead($leadId)
     {
 
-        $lead = OldCrmLead::find($leadId);
+        $lead = Lead::find($leadId);
 
         if (Auth::user()->cannot('delete', $lead)) {
             abort(403);

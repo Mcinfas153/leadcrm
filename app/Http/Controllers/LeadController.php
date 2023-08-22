@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\LeadImport;
+use App\Imports\OldCrmLeadsImport;
 
 class LeadController extends Controller
 {
@@ -101,6 +102,44 @@ class LeadController extends Controller
 
     public function exportLeads(Request $request){
         return Excel::download(new ExportLead, 'leads.xlsx');
+    }
+
+    public function importOldCrmLeads(Request $request)
+    {
+
+        $validated = $request->validate([
+            'file' => 'required',
+            'leadType' => 'required',
+        ]);
+
+        if($request->input('importAssignUserId') == '' || $request->input('importAssignUserId') == null){
+            $userAssignId = Auth::user()->id;
+        } else {
+            $userAssignId = $request->input('importAssignUserId');
+        }
+
+        try {
+
+            Excel::import(new OldCrmLeadsImport($userAssignId, $request->input('leadType')), $request->file);
+
+
+            return redirect()->back()->with([
+                'status' => 'success',
+                'icon' => 'success',
+                'title' => config('message.LEAD_IMPORT_SUCCESS'),
+            ]);
+            
+          
+          } catch (\Exception $e) {
+ 
+            return back()->with([
+                'status' => 'error',
+                'icon' => 'error',
+                'title' => Str::limit($e->getMessage(), 90) 
+            ]);
+
+        }
+
     }
 
     

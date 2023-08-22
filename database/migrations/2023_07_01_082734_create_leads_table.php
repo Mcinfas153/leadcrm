@@ -35,6 +35,7 @@ return new class extends Migration
             $table->integer('priority')->default(1)->constrained('priorities');
             $table->string('developer')->nullable();
             $table->integer('type')->default(1)->constrained('lead_types');
+            $table->boolean('is_migrate_lead')->default(0);
             $table->string('attachment')->nullable();
             $table->integer('assign_to')->nullable()->constrained('users');
             $table->integer('created_by')->constrained('users');

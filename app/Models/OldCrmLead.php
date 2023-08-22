@@ -22,6 +22,20 @@ class OldCrmLead extends Model
         );
     }
 
+    protected function updatedAt(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => timeZoneChange(config('custom.LOCAL_TIMEZONE')),
+        );
+    }
+
+    protected function assignTime(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => timeZoneChange(config('custom.LOCAL_TIMEZONE')),
+        );
+    }
+
     protected function campaignName(): Attribute
     {
         return Attribute::make(

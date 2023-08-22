@@ -18,12 +18,81 @@ class Lead extends Model
     protected function createdAt(): Attribute
     {
         return Attribute::make(
-            //get: fn ($value) => getDateFormat($value,'YYYY-MM-DD, h:mm a',config('custom.LOCAL_TIMEZONE')),
-            //set: fn ($value) => timeZoneChange('UTC'),
+            set: fn ($value) => timeZoneChange(config('custom.LOCAL_TIMEZONE')),
+        );
+    }
+
+    protected function updatedAt(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => timeZoneChange(config('custom.LOCAL_TIMEZONE')),
+        );
+    }
+
+    protected function assignTime(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => timeZoneChange(config('custom.LOCAL_TIMEZONE')),
+        );
+    }
+
+    protected function fullname(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Str::title($value),
+            set: fn ($value) => Str::lower($value),
         );
     }
 
     protected function campaignName(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Str::title($value),
+            set: fn ($value) => Str::lower($value),
+        );
+    }
+
+    protected function city(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Str::title($value),
+            set: fn ($value) => Str::lower($value),
+        );
+    }
+
+    protected function country(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Str::title($value),
+            set: fn ($value) => Str::lower($value),
+        );
+    }
+
+    protected function purpose(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Str::title($value),
+            set: fn ($value) => Str::lower($value),
+        );
+    }
+
+    protected function propertyType(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Str::title($value),
+            set: fn ($value) => Str::lower($value),
+        );
+    }
+
+    protected function source(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Str::title($value),
+            set: fn ($value) => Str::lower($value),
+        );
+    }
+
+    protected function developer(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => Str::title($value),

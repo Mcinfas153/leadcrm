@@ -48,12 +48,7 @@ class ActiveLeadsPage extends Component
     {
         if(Auth::user()->user_type == config('custom.USER_SUPERADMIN')){
 
-            $leads = DB::table('leads')
-                    ->join('lead_statuses', 'leads.status', '=', 'lead_statuses.id')
-                    ->join('users', 'leads.assign_to', '=', 'users.id')
-                    ->select('leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
-                    ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
-                    ->orderByDesc('leads.created_at')->paginate(5);
+            $leads = [];
 
         } elseif(Auth::user()->user_type == config('custom.USER_ADMIN')){
 
@@ -64,6 +59,7 @@ class ActiveLeadsPage extends Component
                         ->orderByDesc('leads.created_at')
                         ->where('leads.created_by', Auth::user()->id)
                         ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
+                        ->where('leads.is_migrate_lead', 0)
                         ->whereNotIn('leads.status', [config('custom.LEAD_STATUS_NOT_INTERESTED'),config('custom.LEAD_STATUS_NOT_QUALIFIED'),config('custom.LEAD_STATUS_JUNK_LEAD')])
                         ->where(function($query) {
                             $query->where('leads.fullname', 'like', '%'.$this->search.'%')
@@ -85,6 +81,7 @@ class ActiveLeadsPage extends Component
                         ->select('leads.*', 'lead_statuses.name as lead_status','lead_statuses.color_code as color_code','users.name as assign_user')
                         ->orderByDesc('leads.assign_time')
                         ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
+                        ->where('leads.is_migrate_lead', 0)
                         ->where(function($query) {
                             $query->where('leads.assign_to', Auth::user()->id)
                                 ->orWhere('leads.created_by', Auth::user()->id);
