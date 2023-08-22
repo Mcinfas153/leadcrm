@@ -2,10 +2,13 @@
 
 namespace App\Http\Livewire\Pages;
 
+use App\Mail\LeadAssign;
 use App\Models\Lead;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class AddLead extends Component
@@ -78,7 +81,7 @@ class AddLead extends Component
         }
 
         try {
-            Lead::create([
+            $lead = Lead::create([
                 'fullname' => $this->fullname,
                 'email' => $this->email,
                 'phone' => $this->phone,
@@ -105,6 +108,12 @@ class AddLead extends Component
 
             DB::commit();
 
+            if(config('custom.IS_MAIL_ON')){
+                if($assignTo != Auth::user()->id){
+                    Mail::to(User::find($assignTo)->email)->queue(new LeadAssign($lead));
+                }                
+            }
+
             return redirect('/leads')->with([
                 'status' => 'success',
                 'icon' => 'success',
@@ -117,7 +126,7 @@ class AddLead extends Component
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
 
-            // dd($e->getMessage());
+             //dd($e->getMessage());
         }
     }
 }
