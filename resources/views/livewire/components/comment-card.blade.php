@@ -1,7 +1,7 @@
 <div class="p-3 mb-1 border">
   <div class="d-flex align-items-center">
     <span class="bg-light-success text-success badge">Approved</span>
-    <span class="fs-3 ms-auto">{{ getDateFormat($note->created_at, 'YYYY-MM-DD, h:mm a', config('custom.LOCAL_TIMEZONE')) }}</span>
+    <span class="fs-3 ms-auto">{{ dateFormater($note->created_at, 'YYYY-MM-DD, h:mm a') }}</span>
   </div>
   <h6 class="mt-3">{{ $note->owner->name }}</h6>
   <span class="fs-3 lh-sm">{{ $note->note }}</span>

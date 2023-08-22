@@ -16,3 +16,9 @@ function timeZoneChange($desireTimeZone = 'UTC')
     $dt = Carbon::parse($serverTime)->tz($desireTimeZone);
     return $dt;
 }
+
+function dateFormater($dateTime, $format = 'YYYY-MM-DD, h:mm a')
+{
+    $date = Carbon::createFromFormat('Y-m-d H:i:s', $dateTime);
+    return $date->isoFormat($format);
+}
