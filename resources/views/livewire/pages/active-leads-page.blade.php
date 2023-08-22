@@ -10,7 +10,6 @@
               <div class="row mb-3">
                 <div class="col-md-12">
                   <button type="button" data-bs-toggle="modal" data-bs-target="#import-modal" class="btn btn-primary">Import Leads</button>
-                  <button type="button" onclick="exportLeads('{{ route('export-leads') }}')" class="btn btn-secondary">Export Leads</button>
                   @if (Auth::user()->can('changeAgent',App\Models\Lead::class))
                   <button type="button" data-bs-toggle="modal" data-bs-target="#bulk-assign-modal" class="btn btn-success" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Assign</button>
                   @endif

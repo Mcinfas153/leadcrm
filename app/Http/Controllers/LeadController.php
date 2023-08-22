@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ExportLead;
-use App\Imports\ActionsImport;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\Auth;
@@ -100,8 +99,8 @@ class LeadController extends Controller
 
     }
 
-    public function exportLeads(Request $request){
-        return Excel::download(new ExportLead, 'leads.xlsx');
+    public function exportLeads($leadType = null){
+        return Excel::download(new ExportLead($leadType), 'leads.xlsx');
     }
 
     public function importOldCrmLeads(Request $request)

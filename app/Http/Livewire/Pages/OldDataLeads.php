@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Http\Traits\ActivityTrait;
+use App\Mail\BulkLeadsAssign;
 use App\Models\LeadType;
 use App\Models\User;
 use Carbon\Carbon;
@@ -128,9 +129,9 @@ class OldDataLeads extends Component
 
             DB::commit();
 
-            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LEAD_STATUS_CHANGE_SUCCESS')]);
-
             ActivityTrait::add(Auth::user()->id,config('custom.ACTION_CHANGE_STATUS'),Auth::user()->name.' changed the lead status', $this->leadId);
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LEAD_STATUS_CHANGE_SUCCESS')]);
 
         } catch (\Exception $e) {
 
@@ -161,7 +162,9 @@ class OldDataLeads extends Component
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.USER_ASSIGN_CHANGE_SUCCESS')]);
 
             //notify agent
-            Mail::to(User::find($this->userId)->email)->queue(new LeadAssign(Lead::find($this->leadId)));
+            if(config('custom.IS_MAIL_ON')){
+                Mail::to(User::find($this->userId)->email)->queue(new LeadAssign(Lead::find($this->leadId)));
+            }            
 
         } catch (\Exception $e) {
 
@@ -169,12 +172,21 @@ class OldDataLeads extends Component
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
 
+            dd($e->getMessage());
+
         }
 
     }
 
     public function bulkAssign()
     {
+        $this->validate(
+            ['bulkAssignUserId' => 'required'],
+            [
+                'bulkAssignUserId.required' => 'The :attribute cannot be empty.',
+            ],
+            ['bulkAssignUserId' => 'user']
+        );
 
         $this->dispatchBrowserEvent('modalClose');
 
@@ -197,7 +209,9 @@ class OldDataLeads extends Component
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LAED_MASS_ASSIGN_SUCCESS')]);
 
             //notify agent
-            Mail::to(User::find($this->userId)->email)->queue(new LeadAssign(Lead::find($this->leadId)));
+            if(config('custom.IS_MAIL_ON')){
+                Mail::to(User::find($this->bulkAssignUserId)->email)->queue(new BulkLeadsAssign);
+            }
 
         } catch (\Exception $e) {
 
@@ -205,6 +219,7 @@ class OldDataLeads extends Component
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
 
+            dd($e->getMessage());
         }
 
     }
@@ -269,15 +284,17 @@ class OldDataLeads extends Component
 
             DB::commit();
 
-            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LEAD_DELETED_SUCCESS')]);
-
             ActivityTrait::add(Auth::user()->id, config('custom.ACTION_DELETE_LEAD'),Auth::user()->name.' delete the lead', $leadId);
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LEAD_DELETED_SUCCESS')]);
 
         } catch (\Exception $e) {
 
             DB::rollBack();
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+            //dd($e->getMessage());
 
         }
 

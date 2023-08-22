@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <livewire:components.navigator title="all data leads"/>
-    <div wire:loading>
+    <div wire:loading wire:target="changeLeadStatus,changeAgent,bulkAssign,filterUserId,filterStatusID">
       <livewire:components.progress-loader/>
     </div>
     <div class="row">
@@ -10,7 +10,7 @@
               <div class="row">
                 <div class="col-md-8">
                   <button type="button" data-bs-toggle="modal" data-bs-target="#import-modal" class="btn btn-primary">Import Leads</button>
-                  <button type="button" onclick="exportLeads('{{ route('export-leads') }}')" class="btn btn-secondary">Export Leads</button>
+                  <button type="button" onclick="exportLeads('{{ route('export-leads', ['leadType' => 3]) }}')" class="btn btn-secondary">Export Leads</button>
                   @if (Auth::user()->can('changeAgent',App\Models\Lead::class))
                   <button type="button" data-bs-toggle="modal" data-bs-target="#bulk-assign-modal" class="btn btn-success" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Assign</button>
                   @endif
@@ -38,7 +38,12 @@
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
-                    <tbody>    
+                    <tbody>
+                      @if ($leads->isEmpty())
+                        <tr>
+                          <td colspan="9"><h6 class="text-center">There is No Data Available</h6></td>
+                        </tr>
+                      @endif     
                         @foreach ($leads as $lead)                                  
                         <tr>
                             <td>
@@ -198,7 +203,7 @@
         <div class="modal-body">
           <input type="hidden" value="" id="leadIdHidden"/>
           <select class="form-select" aria-label="Default select example" wire:model.defer="userId">
-            <option selected>Select a user</option>
+            <option selected hidden>Select a user</option>
             @foreach ($users as $user)
             <option value="{{ $user->id }}">{{ $user->name }}</option>
             @endforeach
@@ -347,11 +352,12 @@ wire:ignore.self
       </div>
       <div class="modal-body">
       <select class="form-select" aria-label="Default select example" wire:model.defer="bulkAssignUserId">
-        <option selected>Select a user</option>
+        <option selected hidden>Select a user</option>
         @foreach ($users as $user)
         <option value="{{ $user->id }}">{{ $user->name }}</option>
         @endforeach
       </select>
+      @error('bulkAssignUserId') <span class="error">{{ $message }}</span> @enderror
       </div>
       <div class="modal-footer">
         <button

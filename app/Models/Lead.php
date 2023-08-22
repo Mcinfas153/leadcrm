@@ -32,7 +32,7 @@ class Lead extends Model
     protected function assignTime(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => timeZoneChange(config('custom.LOCAL_TIMEZONE')),
+            //set: fn ($value) => timeZoneChange(config('custom.LOCAL_TIMEZONE')),
         );
     }
 

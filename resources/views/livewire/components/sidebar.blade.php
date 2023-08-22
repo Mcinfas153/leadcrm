@@ -115,7 +115,7 @@
               <li class="sidebar-item">
                 <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
                   <span class="d-flex">
-                    <i class="ti ti-a-b-2"></i>
+                    <i class="ti ti-trash"></i>
                   </span>
                   <span class="hide-menu">Dump Leads</span>
                 </a>

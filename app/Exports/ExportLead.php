@@ -10,20 +10,13 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class ExportLead implements FromCollection, WithHeadings
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
+    public function __construct(public $leadType){}
+
     public function collection()
     {
         if(Auth::user()->user_type == config('custom.USER_SUPERADMIN')){
 
-            $leads = DB::table('leads')
-                    ->join('lead_statuses', 'leads.status', '=', 'lead_statuses.id')
-                    ->join('users', 'leads.assign_to', '=', 'users.id')
-                    ->select('leads.fullname','leads.phone','leads.secondary_phone', 'leads.email', 'leads.whatsapp', 'leads.city','leads.country', 'leads.budget', 'leads.contact_time', 'leads.purpose', 'leads.inquiry','leads.campaign_name', 'leads.property_type', 'leads.bedroom','lead_statuses.name as lead_status', 'users.name as assign_user')
-                    ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
-                    ->orderByDesc('leads.created_at')
-                    ->get();
+            $leads = [];
 
         } elseif(Auth::user()->user_type == config('custom.USER_ADMIN')){
 
@@ -31,9 +24,13 @@ class ExportLead implements FromCollection, WithHeadings
                         ->join('lead_statuses', 'leads.status', '=', 'lead_statuses.id')
                         ->join('users', 'leads.assign_to', '=', 'users.id')
                         ->select('leads.fullname','leads.phone','leads.secondary_phone', 'leads.email', 'leads.whatsapp', 'leads.city','leads.country', 'leads.budget', 'leads.contact_time', 'leads.purpose', 'leads.inquiry','leads.campaign_name', 'leads.property_type', 'leads.bedroom','lead_statuses.name as lead_status', 'users.name as assign_user')
-                        ->where('leads.assign_to', Auth::user()->id)
-                        ->orWhere('leads.created_by', Auth::user()->id)
-                        ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD')) 
+                        ->where('leads.created_by', Auth::user()->id)
+                        ->where('leads.is_migrate_lead', 0)
+                        ->when($this->leadType, function ($query, $leadType) {
+                            $query->where('leads.type', '=', $leadType);
+                        }, function ($query) {
+                            $query->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'));
+                        }) 
                         ->orderByDesc('leads.created_at')                     
                         ->get();
 
