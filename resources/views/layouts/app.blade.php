@@ -113,7 +113,7 @@
     <script src="{{ asset('dist/js/pages/leads-page.js') }}"></script>
     @endif
 
-    @if ($title == 'all leads' || 'old data leads' || 'active leads' || 'dump leads')
+    @if ($title == 'all leads' || 'old data leads' || 'active leads' || 'dump leads' || 'old crm leads')
     <script src="{{ asset('dist/js/pages/all-leads.js') }}"></script>
     @endif
 

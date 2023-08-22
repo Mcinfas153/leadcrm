@@ -18,6 +18,7 @@ use App\Http\Livewire\Pages\LeadActivities;
 use App\Http\Livewire\Pages\LeadComments;
 use App\Http\Livewire\Pages\LeadView;
 use App\Http\Livewire\Pages\LoginPage;
+use App\Http\Livewire\Pages\OldCrmLeads;
 use App\Http\Livewire\Pages\OldDataLeads;
 use App\Http\Livewire\Pages\RegisterPage;
 use App\Http\Livewire\Pages\UsersList;
@@ -51,6 +52,7 @@ Route::middleware(['loggedUser'])->group(function () {
         Route::get('/cold/leads', OldDataLeads::class)->name('old-data.leads');
         Route::get('/active-leads', ActiveLeadsPage::class)->name('active.leads');
         Route::get('/dump-leads', DumpLeadsPage::class)->name('dump.leads');
+        Route::get('/old-leads', OldCrmLeads::class)->name('old.crm.leads');
         Route::post('/import',[LeadController::class,'importLeads'])->name('import.leads');
         Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export-leads');
         Route::get('/account-settings', AccountSettings::class)->name('settings');
