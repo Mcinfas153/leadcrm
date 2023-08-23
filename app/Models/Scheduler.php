@@ -12,6 +12,8 @@ class Scheduler extends Model
 
     protected $table = "schedulers";
 
+    protected $guarded = [];
+
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner');

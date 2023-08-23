@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use App\Http\Traits\ActivityTrait;
 use App\Models\LeadActivity;
+use App\Models\Scheduler;
+use App\Models\SchedulerType;
+use Carbon\Carbon;
 use Livewire\WithPagination;
 
 class LeadView extends Component
@@ -48,6 +51,9 @@ class LeadView extends Component
     public $assignTo;
     public $lead;
     public $note;
+    public $reminderTime;
+    public $reminderNote;
+    public $reminderType;
 
     protected $rules = [
         'fullname' => 'required',
@@ -58,7 +64,8 @@ class LeadView extends Component
     protected $listeners = [
         'deleteNote' => 'deleteNote',
         'deleteAllActivities' => 'deleteAllActivities',
-        'deleteAllComments' => 'deleteAllComments'
+        'deleteAllComments' => 'deleteAllComments',
+        'setReminderTime' => 'setReminderTime'
     ];
 
     public function mount($leadId)
@@ -108,6 +115,7 @@ class LeadView extends Component
             'notes' => Note::where('lead_id', $this->leadId)->orderByDesc('created_at')->paginate(4),
             'leadActivities' => LeadActivity::where('lead_id', $this->leadId)->orderByDesc('created_at')->paginate(10 ,['*'], 'commentsPage'),
             'types' => DB::table('lead_types')->get(),
+            'schedulerTypes' => SchedulerType::where('is_active', 1)->get()
         ])->layout('layouts.app', [
             'title' => 'lead view',
         ]);
@@ -350,6 +358,59 @@ class LeadView extends Component
             DB::rollBack();
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+        }
+    }
+
+    public function setReminderTime($pickedDate)
+    {
+        $this->reminderTime = $pickedDate;
+    }
+
+    public function addReminder()
+    {
+        $this->validate(
+            [
+                'reminderType' => 'required',
+                'reminderNote' => 'required'
+            ],
+            [
+                'reminderType.required' => 'The :attribute cannot be empty.',
+                'reminderNote.required' => 'The :attribute cannot be empty.',
+            ],
+            [
+                'reminderType' => 'reminder type',
+                'reminderNote' => 'reminder note'
+            ]
+        );
+
+        DB::beginTransaction();
+
+        try {
+
+            Scheduler::create([
+                'reminder_time' => $this->reminderTime,
+                'lead_id' => $this->leadId,
+                'owner' => Auth::user()->id,
+                'type' => $this->reminderType,
+                'note' => $this->reminderNote
+            ]);
+
+            DB::commit();
+
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_SET_REMINDER'),Auth::user()->name.' set a reminder for lead ID: '.$this->leadId, $this->leadId);
+
+            $this->dispatchBrowserEvent('modalClose');
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.REMINDER_ADDED_SUCCESS')]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+            dd($e->getMessage());
 
         }
     }

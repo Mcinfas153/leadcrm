@@ -131,6 +131,7 @@
 
     @if ($title == "lead view")
     <script src="{{ asset('dist/js/pages/lead-comments.js') }}"></script>
+    <script src="{{ asset('dist/js/pages/lead-view.js') }}"></script>
     @endif
 
     @if ($title == 'user report')

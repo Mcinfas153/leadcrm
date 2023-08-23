@@ -7,6 +7,9 @@
         </div>
         <div class="">
             <div class="button-group mb-2 d-flex justify-content-end">
+                <button type="button" onclick="setReminder({{ $leadId }})" class="btn mb-1 waves-effect waves-light btn-rounded btn-primary">
+                    Set Reminder
+                </button>
                 <a type="button" href="{{ URL::to('lead/comments/'.$leadId) }}" class="btn mb-1 waves-effect waves-light btn-rounded btn-primary">
                   View Comments
                 </a>
@@ -216,6 +219,72 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    {{-- reminder modal --}}
+    <div
+    class="modal fade"
+    id="reminder-modal"
+    tabindex="-1"
+    aria-labelledby="mySmallModalLabel"
+    aria-hidden="true"
+    wire:ignore.self
+    >
+        <div class="modal-dialog modal-sm">
+            <form wire:submit.prevent="addReminder">
+                <div class="modal-content">
+                    <div
+                        class="modal-header d-flex align-items-center modal-colored-header bg-success text-white"
+                        >
+                        <h4 class="modal-title" id="myModalLabel">
+                        Set Reminder
+                        </h4>
+                        <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Time</label>
+                            <input type="datetime-local" id="reminder-time" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Reminder Type</label>
+                            <select class="form-select" wire:model.defer="reminderType">
+                                <option selected hidden>Select Reminder Type</option>
+                                    @foreach ($schedulerTypes as $schedulerType)
+                                        <option value="{{ $schedulerType->id }}">{{ $schedulerType->name }}</option>
+                                    @endforeach
+                            </select>
+                            @error('reminderType') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Note</label>
+                            <textarea class="form-control" rows="3" wire:model.defer="reminderNote"></textarea>
+                            @error('reminderNote') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                        type="button"
+                        class="btn btn-danger text-black font-medium waves-effect"
+                        data-bs-dismiss="modal"
+                        >
+                        Close
+                        </button>
+                        <button
+                        type="submit"
+                        class="btn btn-success text-black font-medium waves-effect"
+                        id="status-change-save"
+                        >
+                        Save changes
+                    </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

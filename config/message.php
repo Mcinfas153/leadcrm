@@ -18,6 +18,7 @@ return [
     'NOTE_DELETED_SUCCESS' => 'Comment deleted successfully',
     'NOTES_DELETED_SUCCESS' => 'Comments deleted successfully',
     'ACTIVITIES_DELETED_SUCCESS' => 'Activities deleted successfully',
+    'REMINDER_ADDED_SUCCESS' => 'Reminder added successfully',
     'SOMETHING_HAPPENED' => 'Something went wrong. Please try again later',
     'LEAD_CREATED_SUCCESS' => 'Lead created successfully',
     'USER_CREATED_SUCCESS' => 'User created successfully',

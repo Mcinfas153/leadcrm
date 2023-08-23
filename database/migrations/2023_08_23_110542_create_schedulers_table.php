@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('lead_id')->nullable()->constrained('leads');
             $table->integer('owner')->constarined('users');
             $table->integer('type')->constrained('scheduler_types');
+            $table->text('note')->nullable();
             $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
