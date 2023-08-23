@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Note;
+use App\Models\LeadActivity;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class NotePolicy
+class LeadActivityPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class NotePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Note  $note
+     * @param  \App\Models\LeadActivity  $leadActivity
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Note $note)
+    public function view(User $user, LeadActivity $leadActivity)
     {
         //
     }
@@ -48,10 +48,10 @@ class NotePolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Note  $note
+     * @param  \App\Models\LeadActivity  $leadActivity
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Note $note)
+    public function update(User $user, LeadActivity $leadActivity)
     {
         //
     }
@@ -60,22 +60,22 @@ class NotePolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Note  $note
+     * @param  \App\Models\LeadActivity  $leadActivity
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Note $note)
+    public function delete(User $user, LeadActivity $leadActivity)
     {
-        return ($user->id == $note->created_by) || $user->user_type != config('custom.USER_NORMAL');
+        //
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Note  $note
+     * @param  \App\Models\LeadActivity  $leadActivity
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Note $note)
+    public function restore(User $user, LeadActivity $leadActivity)
     {
         //
     }
@@ -84,10 +84,10 @@ class NotePolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Note  $note
+     * @param  \App\Models\LeadActivity  $leadActivity
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Note $note)
+    public function forceDelete(User $user, LeadActivity $leadActivity)
     {
         //
     }

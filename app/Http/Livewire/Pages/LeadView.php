@@ -248,6 +248,10 @@ class LeadView extends Component
 
     public function deleteNote($noteId)
     {
+        if (Auth::user()->cannot('delete', Note::find($noteId))) {
+            abort(403);
+        }
+
         DB::beginTransaction();
 
         try {
@@ -301,6 +305,10 @@ class LeadView extends Component
 
     public function deleteAllActivities($leadId)
     {
+        if (Auth::user()->cannot('massDelete', LeadActivity::class)) {
+            abort(403);
+        }
+
         DB::beginTransaction();
 
         try {
@@ -322,6 +330,11 @@ class LeadView extends Component
 
     public function deleteAllComments($leadId)
     {
+
+        if (Auth::user()->cannot('massDelete', Note::class)) {
+            abort(403);
+        }
+
         DB::beginTransaction();
 
         try {
