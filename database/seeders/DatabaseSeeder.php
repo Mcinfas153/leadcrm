@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
             UserTypeSeeder::class,
             UserRoleSeeder::class,
             ReportPeriodSeeder::class,
-            ReshufflePeriodSeeder::class
+            ReshufflePeriodSeeder::class,
+            SchedulerTypeSeeder::class
         ]);
     }
 }

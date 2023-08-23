@@ -84,4 +84,9 @@ class User extends Authenticatable
         return $this->hasMany(UserActivity::class, 'user_id');
     }
 
+    public function schedulers(): HasMany
+    {
+        return $this->hasMany(Scheduler::class, 'owner');
+    }
+
 }
