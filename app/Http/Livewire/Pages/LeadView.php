@@ -56,7 +56,9 @@ class LeadView extends Component
     ];
 
     protected $listeners = [
-        'deleteNote' => 'deleteNote'
+        'deleteNote' => 'deleteNote',
+        'deleteAllActivities' => 'deleteAllActivities',
+        'deleteAllComments' => 'deleteAllComments'
     ];
 
     public function mount($leadId)
@@ -287,6 +289,48 @@ class LeadView extends Component
             ActivityTrait::add(Auth::user()->id, config('custom.ACTION_DELETE_LEAD'),Auth::user()->name.' leave a note', $this->leadId);
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.NOTE_ADDED_SUCCESS')]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+        }
+    }
+
+    public function deleteAllActivities($leadId)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            DB::table('lead_activities')->where('lead_id', $leadId)->delete();
+
+            DB::commit();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.ACTIVITIES_DELETED_SUCCESS')]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+        }
+    }
+
+    public function deleteAllComments($leadId)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            DB::table('notes')->where('lead_id', $leadId)->delete();
+
+            DB::commit();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.NOTES_DELETED_SUCCESS')]);
 
         } catch (\Exception $e) {
 

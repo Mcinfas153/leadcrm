@@ -159,8 +159,11 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header text-center bg-secondary">
+                        <div class="card-header bg-primary d-flex justify-content-between align-items-center">
                             <h5 class="card-title text-light"><i class="ti ti-checklist me-1 fs-6"></i> Comments</h5>
+                            @can('isAdmin', App\Models\User::class)
+                                <button class="btn btn-danger rounded-pill btn-sm" onclick="deleteAllComments({{ $leadId }})"><i class="ti ti-trash fs-4 me-2"></i>clear all</button>
+                            @endcan
                         </div>
                         <div class="card-body">
                             <form wire:submit.prevent="addComment">
@@ -191,8 +194,11 @@
 
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header text-center bg-danger">
+                        <div class="card-header bg-success d-flex justify-content-between align-items-center">
                             <h5 class="card-title text-light"><i class="ti ti-list-check me-1 fs-6"></i> Activities</h5>
+                            @can('isAdmin', App\Models\User::class)
+                                <button class="btn btn-danger rounded-pill btn-sm" onclick="deleteAllActivities({{ $leadId }})"><i class="ti ti-trash fs-4 me-2"></i>clear all</button>
+                            @endcan
                         </div>
                         <div class="card-body">
                             @if ($leadActivities->isEmpty())
