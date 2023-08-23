@@ -113,7 +113,6 @@
                                 </select>
                                 @error('status') <span class="error">{{ $message }}</span> @enderror
                             </div>
-                            @if (Auth::user()->user_type === (int)config('custom.USER_ADMIN'))
                             <div class="form-group mb-3 col-md-3">
                                 <small id="bedroom" class="form-text text-muted">Priority *</small>
                                 <select class="form-select mr-sm-2 mt-1" wire:model="priority">
@@ -123,6 +122,7 @@
                                 </select>
                                 @error('priority') <span class="error">{{ $message }}</span> @enderror
                             </div>
+                            @can('isAdmin', App\models\User::class)                            
                             <div class="form-group mb-3 col-md-3">
                                 <small id="bedroom" class="form-text text-muted">Assigned To</small>
                                 <select class="form-select mr-sm-2 mt-1" wire:model="assignTo">
@@ -131,7 +131,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            @endif
+                            @endcan
                             <div class="form-group mb-3 col-md-12">
                                 <small id="inquiry" class="form-text text-muted">Inquiry</small>
                                 <textarea class="form-control mt-1"aria-describedby="inquiry" rows="4" wire:model.defer="inquiry"></textarea>
