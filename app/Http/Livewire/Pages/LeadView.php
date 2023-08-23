@@ -11,11 +11,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use App\Http\Traits\ActivityTrait;
+use App\Models\LeadActivity;
+use Livewire\WithPagination;
 
 class LeadView extends Component
 {
 
     use ActivityTrait;
+    use WithPagination;
+
+    use WithPagination;
+ 
+    protected $paginationTheme = 'bootstrap';
 
     public $leadId;
     public $fullname;
@@ -40,11 +47,16 @@ class LeadView extends Component
     public $attachment;
     public $assignTo;
     public $lead;
+    public $note;
 
     protected $rules = [
         'fullname' => 'required',
         'phone' => 'required',
         'email' => 'required'
+    ];
+
+    protected $listeners = [
+        'deleteNote' => 'deleteNote'
     ];
 
     public function mount($leadId)
@@ -91,7 +103,8 @@ class LeadView extends Component
             'statusList' => LeadStatus::where('is_active', 1)->get(),
             'usersList' => User::where('business_id', Auth::user()->business_id)->get(),
             'priorityList' => Priority::where('is_active', 1)->get(),
-            'notes' => DB::table('notes')->get(),
+            'notes' => Note::where('lead_id', $this->leadId)->orderByDesc('created_at')->paginate(4),
+            'leadActivities' => LeadActivity::where('lead_id', $this->leadId)->orderByDesc('created_at')->paginate(10 ,['*'], 'commentsPage'),
             'types' => DB::table('lead_types')->get(),
         ])->layout('layouts.app', [
             'title' => 'lead view',
@@ -221,6 +234,59 @@ class LeadView extends Component
             ActivityTrait::add(Auth::user()->id, config('custom.ACTION_EDIT_LEAD'),Auth::user()->name.' update the lead', $this->leadId);
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.LEAD_UPDATED_SUCCESS')]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+        }
+    }
+
+    public function deleteNote($noteId)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            Note::find($noteId)->delete();
+
+            DB::commit();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.NOTE_DELETED_SUCCESS')]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+        }
+    }
+
+    public function addComment()
+    {
+
+        $this->validate();
+    
+        DB::beginTransaction();
+
+        try {
+
+            Note::create([
+                'note' => $this->note,
+                'lead_id' =>  $this->leadId,
+                'created_by' => Auth::user()->id
+            ]);
+
+            DB::commit();
+
+            $this->note = "";
+
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_DELETE_LEAD'),Auth::user()->name.' leave a note', $this->leadId);
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.NOTE_ADDED_SUCCESS')]);
 
         } catch (\Exception $e) {
 

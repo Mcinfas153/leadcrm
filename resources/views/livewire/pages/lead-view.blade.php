@@ -2,7 +2,7 @@
     <livewire:components.navigator title="Lead Details"/>
 
     <div class="row">
-        <div wire:loading wire:target="status,assignTo,updateLead,priority">
+        <div wire:loading wire:target="status,assignTo,updateLead,priority,addComment">
             <livewire:components.progress-loader/>
         </div>
         <div class="">
@@ -154,6 +154,60 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header text-center bg-secondary">
+                            <h5 class="card-title text-light"><i class="ti ti-checklist me-1 fs-6"></i> Comments</h5>
+                        </div>
+                        <div class="card-body">
+                            <form wire:submit.prevent="addComment">
+                                <div class="mb-3 d-flex flex-column">                            
+                                        <label for="note" class="form-label">Add your comment here...</label>
+                                        <input class="form-control" wire:model.defer="note">
+                                        @error('note') <span class="error">{{ $message }}</span> @enderror
+                                        <div class="align-self-end">
+                                            
+                                            <button type="submit" class="btn rounded-pill waves-effect waves-light btn-primary mt-2">
+                                                Add Comment
+                                            </button>
+                                        </div>                                                  
+                                </div>
+                            </form>
+                            @if ($notes->isEmpty())
+                            <h6 class="text-center">There is No Comments Available</h6>
+                            @endif
+                            @foreach ($notes as $note)
+                                <livewire:components.comment-card :note="$note" :wire:key="'note-'.$note->id"/>
+                            @endforeach
+                            <div class="d-flex justify-content-end">
+                                {{ $notes->links() }}
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header text-center bg-danger">
+                            <h5 class="card-title text-light"><i class="ti ti-list-check me-1 fs-6"></i> Activities</h5>
+                        </div>
+                        <div class="card-body">
+                            @if ($leadActivities->isEmpty())
+                            <h6 class="text-center">There is No Activities Found</h6>
+                            @endif
+                            @foreach ($leadActivities as $activity)
+                            <ul class="timeline-widget mb-0 position-relative">
+                                <livewire:components.activity-panel :activity="$activity" :wire:key="'activity-'.$activity->id"/>
+                            </ul>
+                            @endforeach
+                            <div class="d-flex justify-content-end">
+                                {{ $leadActivities->links() }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
