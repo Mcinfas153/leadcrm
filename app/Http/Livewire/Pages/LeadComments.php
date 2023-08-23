@@ -95,6 +95,11 @@ class LeadComments extends Component
 
     public function deleteNote($noteId)
     {
+
+        if (Auth::user()->cannot('delete', Note::find($noteId))) {
+            abort(403);
+        }
+
         DB::beginTransaction();
 
         try {
