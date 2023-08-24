@@ -7,14 +7,11 @@
         </div>
         <div class="">
             <div class="button-group mb-2 d-flex justify-content-end">
-                <button type="button" onclick="setReminder({{ $leadId }})" class="btn mb-1 waves-effect waves-light btn-rounded btn-primary">
-                    Set Reminder
+                <button type="button" onclick="setReminder({{ $leadId }})" class="btn mb-1 waves-effect waves-light btn-rounded btn-success">
+                    Add Reminder
                 </button>
-                <a type="button" href="{{ URL::to('lead/comments/'.$leadId) }}" class="btn mb-1 waves-effect waves-light btn-rounded btn-primary">
-                  View Comments
-                </a>
-                <a type="button" href="{{ URL::to('lead/activities/'.$leadId) }}" class="btn mb-1 waves-effect waves-light btn-rounded btn-primary">
-                    View Activities
+                <a type="button" onclick="addEntry({{ $leadId }})" class="btn mb-1 waves-effect waves-light btn-rounded btn-warning">
+                    Add Entry
                 </a>
             </div>
             <div class="card">
@@ -237,7 +234,7 @@
                         class="modal-header d-flex align-items-center modal-colored-header bg-success text-white"
                         >
                         <h4 class="modal-title" id="myModalLabel">
-                        Set Reminder
+                            Add Reminder
                         </h4>
                         <button
                         type="button"
@@ -265,6 +262,84 @@
                             <label for="note" class="form-label">Note</label>
                             <textarea class="form-control" rows="3" wire:model.defer="reminderNote"></textarea>
                             @error('reminderNote') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                        type="button"
+                        class="btn btn-danger text-black font-medium waves-effect"
+                        data-bs-dismiss="modal"
+                        >
+                        Close
+                        </button>
+                        <button
+                        type="submit"
+                        class="btn btn-success text-black font-medium waves-effect"
+                        id="status-change-save"
+                        >
+                        Save changes
+                    </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- entry modal --}}
+    <div
+    class="modal fade"
+    id="entry-modal"
+    tabindex="-1"
+    aria-labelledby="mySmallModalLabel"
+    aria-hidden="true"
+    wire:ignore.self
+    >
+        <div class="modal-dialog modal-sm">
+            <form wire:submit.prevent="addEntry">
+                <div class="modal-content">
+                    <div
+                        class="modal-header d-flex align-items-center modal-colored-header bg-success text-white"
+                        >
+                        <h4 class="modal-title" id="myModalLabel">
+                            Add Entry
+                        </h4>
+                        <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Time</label>
+                            <input type="datetime-local" id="entry-time" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Type of Entry</label>
+                            <select class="form-select" wire:model.defer="entryType">
+                                <option selected hidden>select type of entry</option>
+                                <option value="call">call</option>
+                                <option value="mail">mail</option>
+                                <option value="whatsapp">whatsapp</option>
+                                <option value="meeting">meeting</option>                                    
+                            </select>
+                            @error('entryType') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="response" class="form-label">Response</label>
+                            <select class="form-select" wire:model.defer="entryResponse">
+                                <option selected hidden>select response</option>
+                                <option value="positive">positive</option>
+                                <option value="negative">negative</option>
+                                <option value="neutral">neutral</option>                                
+                            </select>
+                            @error('entryResponse') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Note</label>
+                            <textarea class="form-control" rows="3" wire:model.defer="entryNote"></textarea>
+                            @error('entryNote') <span class="error">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="modal-footer">
