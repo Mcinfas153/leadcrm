@@ -15,6 +15,7 @@
                   <button type="button" data-bs-toggle="modal" data-bs-target="#bulk-assign-modal" class="btn btn-success" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Assign</button>
                   @endif
                   <button type="button" onclick="bulkDelete()" class="btn btn-danger" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Delete</button>
+                  <a type="button" onclick="location.reload()" class="btn btn-info">Reset</a>
                 </div>
               </div>
               <div class="row">
@@ -88,10 +89,6 @@
                                 <i class="ti ti-dots-vertical fs-4"></i>
                                 </a>
                                 <ul class="dropdown-menu bg-light bg-gradient" aria-labelledby="nft2" id="action-panel">
-                                  <li class="">
-                                    <a class="dropdown-item d-flex align-items-center text-black" href="#">
-                                    <i class="ti ti-phone me-1 fs-1 text-black"></i>Schedule a Call Back </a>
-                                  </li>
                                   <li class="">
                                     <a class="dropdown-item d-flex align-items-center text-black" target="_BLANK" href="{{ URL::to('lead/activities') }}/{{ $lead->id }}">
                                     <i class="ti ti-link me-1 fs-1 text-black"></i>Lead Activities </a>

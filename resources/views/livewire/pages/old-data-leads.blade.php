@@ -15,6 +15,7 @@
                   <button type="button" data-bs-toggle="modal" data-bs-target="#bulk-assign-modal" class="btn btn-success" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Assign</button>
                   @endif
                   <button type="button" onclick="bulkDelete()" class="btn btn-danger" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Delete</button>
+                  <a type="button" onclick="location.reload()" class="btn btn-info">Reset</a>
                 </div>
                 <div class="col-md-4">
                   <input class="form-control" type="text" placeholder="Search Here" wire:model="search">
