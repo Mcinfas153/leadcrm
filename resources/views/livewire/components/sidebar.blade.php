@@ -203,9 +203,18 @@
                 </li>
 
                 <li class="sidebar-item">
+                  <a class="sidebar-link" href="{{ URL::to('/reminders') }}" aria-expanded="false">
+                  <span>
+                      <i class="ti ti-speakerphone"></i>
+                  </span>
+                  <span class="hide-menu">Reminders & Schedules</span>
+                  </a>
+                </li>
+
+                <li class="sidebar-item">
                   <a class="sidebar-link" href="/account-settings" aria-expanded="false">
                   <span>
-                      <i class="ti ti-user-circle"></i>
+                      <i class="ti ti-adjustments-alt"></i>
                   </span>
                   <span class="hide-menu">Account Setting</span>
                   </a>

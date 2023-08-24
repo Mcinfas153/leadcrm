@@ -21,6 +21,7 @@ use App\Http\Livewire\Pages\LoginPage;
 use App\Http\Livewire\Pages\OldCrmLeads;
 use App\Http\Livewire\Pages\OldDataLeads;
 use App\Http\Livewire\Pages\RegisterPage;
+use App\Http\Livewire\Pages\Reminders;
 use App\Http\Livewire\Pages\UsersList;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +58,7 @@ Route::middleware(['loggedUser'])->group(function () {
         Route::post('/import/old-crm-leads',[LeadController::class,'importOldCrmLeads'])->name('import.oldcrm.leads');
         Route::get('/export-leads/{leadType?}',[LeadController::class,'exportLeads'])->name('export-leads');
         Route::get('/account-settings', AccountSettings::class)->name('settings');
+        Route::get('/reminders', Reminders::class)->name('reminders');
     });
 
     Route::get('/businss/inactive', BusinessInactive::class)->name('business.inactive')->middleware('inactiveBusiness');
