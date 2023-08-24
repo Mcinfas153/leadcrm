@@ -14,8 +14,13 @@ class Scheduler extends Model
 
     protected $guarded = [];
 
-    public function owner(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner');
+    }
+
+    public function reminderType() :BelongsTo
+    {
+        return $this->belongsTo(SchedulerType::class, 'type');
     }
 }

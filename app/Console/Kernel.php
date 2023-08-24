@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Classes\Automation\LeadReshuffle;
+use App\Classes\Automation\ScheduleReminder;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -17,7 +18,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->call(new LeadReshuffle)->everyMinute();
+        $schedule->call(new LeadReshuffle)->hourly();
+        $schedule->call(new ScheduleReminder)->everyMinute();
     }
 
     /**
