@@ -91,4 +91,9 @@ class SchedulerPolicy
     {
         //
     }
+
+    public function massDelete(User $user)
+    {
+        return $user->user_type != config('custom.USER_NORMAL');
+    }
 }

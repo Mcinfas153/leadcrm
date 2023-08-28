@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <livewire:components.navigator title="lead enrties & schedules"/>
+    <livewire:components.navigator title="lead enrties & reminders"/>
     <div class="row">
         <div wire:loading wire:target="">
             <livewire:components.progress-loader/>
@@ -17,14 +17,14 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header bg-primary d-flex justify-content-between align-items-center">
-                            <h5 class="card-title text-light"><i class="ti ti-checklist me-1 fs-6"></i> Schedulers</h5>
+                            <h5 class="card-title text-light"><i class="ti ti-checklist me-1 fs-6"></i> Reminders</h5>
                             @can('isAdmin', App\Models\User::class)
-                                <button class="btn btn-danger rounded-pill btn-sm" onclick="deleteAllComments({{ $leadId }})"><i class="ti ti-trash fs-4 me-2"></i>clear all</button>
+                                <button class="btn btn-danger rounded-pill btn-sm" onclick="deleteAllReminders({{ $leadId }})"><i class="ti ti-trash fs-4 me-2"></i>clear all</button>
                             @endcan
                         </div>
                         <div class="card-body">
                             @if ($schedulers->isEmpty())
-                            <h6 class="text-center">There is No Schdulers Available</h6>
+                            <h6 class="text-center">There is No Reminders Available</h6>
                             @endif
                             @foreach ($schedulers as $scheduler)
                                 <livewire:components.scheduler-card :scheduler="$scheduler" :wire:key="'scheduler-'.$scheduler->id">
@@ -42,7 +42,7 @@
                         <div class="card-header bg-success d-flex justify-content-between align-items-center">
                             <h5 class="card-title text-light"><i class="ti ti-list-check me-1 fs-6"></i> Entries</h5>
                             @can('isAdmin', App\Models\User::class)
-                                <button class="btn btn-danger rounded-pill btn-sm" onclick="deleteAllActivities({{ $leadId }})"><i class="ti ti-trash fs-4 me-2"></i>clear all</button>
+                                <button class="btn btn-danger rounded-pill btn-sm" onclick="deleteAllEntries({{ $leadId }})"><i class="ti ti-trash fs-4 me-2"></i>clear all</button>
                             @endcan
                         </div>
                         <div class="card-body">

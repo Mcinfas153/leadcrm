@@ -31,8 +31,8 @@ class LeadEntries extends Component
 
     protected $listeners = [
         'deleteNote' => 'deleteNote',
-        'deleteAllActivities' => 'deleteAllActivities',
-        'deleteAllComments' => 'deleteAllComments',
+        'deleteAllReminders' => 'deleteAllReminders',
+        'deleteAllEntries' => 'deleteAllEntries',
         'setReminderTime' => 'setReminderTime',
         'setEntryTime' => 'setEntryTime'
     ];
@@ -58,7 +58,7 @@ class LeadEntries extends Component
             'entries' => $entries,
             'schedulerTypes' => SchedulerType::where('is_active', 1)->get()
         ])->layout('layouts.app',[
-            'title' => 'lead enrties & schedules'
+            'title' => 'lead enrties & reminders'
         ]);
     }
 
@@ -173,6 +173,57 @@ class LeadEntries extends Component
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
 
             dd($e->getMessage());
+
+        }
+    }
+
+    public function deleteAllReminders($leadId)
+    {
+        if (Auth::user()->cannot('massDelete', Scheduler::class)) {
+            abort(403);
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+            DB::table('schedulers')->where('lead_id', $leadId)->delete();
+
+            DB::commit();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.REMINDERS_DELETED_SUCCESS')]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+        }
+    }
+
+    public function deleteAllEntries($leadId)
+    {
+
+        if (Auth::user()->cannot('massDelete', LeadEntry::class)) {
+            abort(403);
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+            DB::table('lead_entries')->where('lead_id', $leadId)->delete();
+
+            DB::commit();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.ENTRIES_DELETED_SUCCESS')]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
 
         }
     }

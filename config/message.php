@@ -20,6 +20,8 @@ return [
     'ACTIVITIES_DELETED_SUCCESS' => 'Activities deleted successfully',
     'REMINDER_ADDED_SUCCESS' => 'Reminder added successfully',
     'ENTRY_ADDED_SUCCESS' => 'Entry added successfully',
+    'REMINDERS_DELETED_SUCCESS' => 'Reminders deleted successfully',
+    'ENTRIES_DELETED_SUCCESS' => 'Entries deleted successfully',
     'SOMETHING_HAPPENED' => 'Something went wrong. Please try again later',
     'LEAD_CREATED_SUCCESS' => 'Lead created successfully',
     'USER_CREATED_SUCCESS' => 'User created successfully',

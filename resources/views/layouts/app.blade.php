@@ -134,8 +134,9 @@
     <script src="{{ asset('dist/js/pages/lead-view.js') }}"></script>
     @endif
 
-    @if ($title == "lead enrties & schedules")
+    @if ($title == "lead enrties & reminders")
     <script src="{{ asset('dist/js/pages/lead-view.js') }}"></script>
+    <script src="{{ asset('dist/js/pages/lead-entries.js') }}"></script>
     @endif
 
     @if ($title == 'user report')
