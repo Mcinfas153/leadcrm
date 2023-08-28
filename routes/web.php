@@ -16,6 +16,7 @@ use App\Http\Livewire\Pages\ForgotPasswordPage;
 use App\Http\Livewire\Pages\FreshLeads;
 use App\Http\Livewire\Pages\LeadActivities;
 use App\Http\Livewire\Pages\LeadComments;
+use App\Http\Livewire\Pages\LeadEntries;
 use App\Http\Livewire\Pages\LeadView;
 use App\Http\Livewire\Pages\LoginPage;
 use App\Http\Livewire\Pages\OldCrmLeads;
@@ -59,6 +60,7 @@ Route::middleware(['loggedUser'])->group(function () {
         Route::get('/export-leads/{leadType?}',[LeadController::class,'exportLeads'])->name('export-leads');
         Route::get('/account-settings', AccountSettings::class)->name('settings');
         Route::get('/reminders', Reminders::class)->name('reminders');
+        Route::get('/lead/{leadId}/entries', LeadEntries::class)->name('lead.entries');
     });
 
     Route::get('/businss/inactive', BusinessInactive::class)->name('business.inactive')->middleware('inactiveBusiness');
