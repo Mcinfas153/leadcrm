@@ -134,6 +134,10 @@
     <script src="{{ asset('dist/js/pages/lead-view.js') }}"></script>
     @endif
 
+    @if ($title == "lead enrties & schedules")
+    <script src="{{ asset('dist/js/pages/lead-view.js') }}"></script>
+    @endif
+
     @if ($title == 'user report')
     <script src="{{ asset('dist/libs/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('dist/libs/select2/dist/js/select2.min.js') }}"></script>

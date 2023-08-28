@@ -23,8 +23,6 @@ class LeadView extends Component
 
     use ActivityTrait;
     use WithPagination;
-
-    use WithPagination;
  
     protected $paginationTheme = 'bootstrap';
 

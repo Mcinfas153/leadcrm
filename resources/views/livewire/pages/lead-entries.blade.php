@@ -27,7 +27,7 @@
                             <h6 class="text-center">There is No Schdulers Available</h6>
                             @endif
                             @foreach ($schedulers as $scheduler)
-                                <livewire:components.scheduler-card :scheduler="$scheduler" :wire:key="$scheduler->id">
+                                <livewire:components.scheduler-card :scheduler="$scheduler" :wire:key="'scheduler-'.$scheduler->id">
                             @endforeach
                             
                             <div class="d-flex justify-content-end">
@@ -50,7 +50,7 @@
                             <h6 class="text-center">There is No Entries Found</h6>
                             @endif
                             @foreach ($entries as $entry)
-                                <livewire:components.entry-card :entry="$entry" :wire:key="$entry->id">
+                                <livewire:components.entry-card :entry="$entry" :wire:key="'entry'.$entry->id">
                             @endforeach
                         </div>
                     </div>
