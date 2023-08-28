@@ -186,7 +186,7 @@
                                 <livewire:components.comment-card :note="$note" :wire:key="'note-'.$note->id"/>
                             @endforeach
                             <div class="d-flex justify-content-end">
-                                {{ $notes->links() }}
+                                {{-- {{ $notes->links() }} --}}
                             </div>                            
                         </div>
                     </div>

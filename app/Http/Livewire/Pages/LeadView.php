@@ -113,13 +113,20 @@ class LeadView extends Component
 
     public function render()
     {
+        if(Auth::user()->user_type == config('custom.USER_ADMIN')){
+            $notes = Note::where('lead_id', $this->leadId)->orderByDesc('created_at')->get();
+            $leadActivities = LeadActivity::where('lead_id', $this->leadId)->orderByDesc('created_at')->paginate(10);
+        } else {
+            $notes = Note::where('lead_id', $this->leadId)->where('created_by', Auth::user()->id)->orderByDesc('created_at')->get();
+            $leadActivities = LeadActivity::where('lead_id', $this->leadId)->where('user_id', Auth::user()->id)->orderByDesc('created_at')->paginate(10);
+        }
 
         return view('livewire.pages.lead-view', [
             'statusList' => LeadStatus::where('is_active', 1)->get(),
             'usersList' => User::where('business_id', Auth::user()->business_id)->get(),
             'priorityList' => Priority::where('is_active', 1)->get(),
-            'notes' => Note::where('lead_id', $this->leadId)->orderByDesc('created_at')->paginate(4),
-            'leadActivities' => LeadActivity::where('lead_id', $this->leadId)->orderByDesc('created_at')->paginate(10 ,['*'], 'commentsPage'),
+            'notes' => $notes,
+            'leadActivities' => $leadActivities,
             'types' => DB::table('lead_types')->get(),
             'schedulerTypes' => SchedulerType::where('is_active', 1)->get()
         ])->layout('layouts.app', [
