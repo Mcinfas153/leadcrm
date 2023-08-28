@@ -91,7 +91,7 @@
                                 <ul class="dropdown-menu bg-light bg-gradient" aria-labelledby="nft2" id="action-panel">
                                   <li class="">
                                     <a class="dropdown-item d-flex align-items-center text-black" target="_BLANK" href="{{ URL::to('lead/'.$lead->id.'/entries') }}">
-                                    <i class="ti ti-link me-1 fs-1 text-black"></i>Lead Entries & Schedulers </a>
+                                    <i class="ti ti-link me-1 fs-1 text-black"></i>Lead Entries & Reminders </a>
                                   </li>
                                   <li class="">
                                     <a class="dropdown-item d-flex align-items-center text-black" target="_BLANK" href="{{ URL::to('lead/activities') }}/{{ $lead->id }}">

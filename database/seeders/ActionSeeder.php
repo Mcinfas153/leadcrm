@@ -38,6 +38,9 @@ class ActionSeeder extends Seeder
             ['name' => 'change password'],
             ['name' => 'create reminder'],
             ['name' => 'add entry'],
+            ['name' => 'delete entry'],
+            ['name' => 'delete reminder'],
+            ['name' => 'mass delete'],
         ]);
     }
 }

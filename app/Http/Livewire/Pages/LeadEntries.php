@@ -30,7 +30,8 @@ class LeadEntries extends Component
     public $entryResponse;
 
     protected $listeners = [
-        'deleteNote' => 'deleteNote',
+        'deleteReminder' => 'deleteReminder',
+        'deleteEntry' => 'deleteEntry',
         'deleteAllReminders' => 'deleteAllReminders',
         'deleteAllEntries' => 'deleteAllEntries',
         'setReminderTime' => 'setReminderTime',
@@ -191,6 +192,8 @@ class LeadEntries extends Component
 
             DB::commit();
 
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_MASS_DELETE'),Auth::user()->name.' delete all reminders in lead ID: '.$this->leadId, $this->leadId);
+
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.REMINDERS_DELETED_SUCCESS')]);
 
         } catch (\Exception $e) {
@@ -217,7 +220,63 @@ class LeadEntries extends Component
 
             DB::commit();
 
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_MASS_DELETE'),Auth::user()->name.' delete all entries in lead ID: '.$this->leadId, $this->leadId);
+
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.ENTRIES_DELETED_SUCCESS')]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+        }
+    }
+
+    public function deleteReminder($reminderId)
+    {
+        if (Auth::user()->cannot('delete', Scheduler::find($reminderId))) {
+            abort(403);
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+            Scheduler::find($reminderId)->delete();
+
+            DB::commit();
+
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_DELETE_REMINDER'),Auth::user()->name.' delete a reminder in lead ID: '.$this->leadId, $this->leadId);
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.REMINDER_DELTED_SUCCESS')]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+        }
+    }
+
+    public function deleteEntry($entryId)
+    {
+        if (Auth::user()->cannot('delete', LeadEntry::find($entryId))) {
+            abort(403);
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+            LeadEntry::find($entryId)->delete();
+
+            DB::commit();
+
+            ActivityTrait::add(Auth::user()->id, config('custom.ACTION_DELETE_REMINDER'),Auth::user()->name.' delete a reminder in lead ID: '.$this->leadId, $this->leadId);
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.ENTRY_DELETED_SUCCESS')]);
 
         } catch (\Exception $e) {
 
