@@ -60,7 +60,7 @@ class ActiveLeadsPage extends Component
                         ->where('leads.created_by', Auth::user()->id)
                         ->where('leads.type', '!=', config('custom.LEAD_TYPE_COLD'))
                         ->where('leads.is_migrate_lead', 0)
-                        ->whereNotIn('leads.status', [config('custom.LEAD_STATUS_NOT_INTERESTED'),config('custom.LEAD_STATUS_NOT_QUALIFIED'),config('custom.LEAD_STATUS_JUNK_LEAD')])
+                        ->whereNotIn('leads.status', [config('custom.LEAD_STATUS_NOT_INTERESTED'),config('custom.LEAD_STATUS_NOT_QUALIFIED'),config('custom.LEAD_STATUS_JUNK_LEAD'),config('custom.LEAD_STATUS_DEAL_CLOSED')])
                         ->where(function($query) {
                             $query->where('leads.fullname', 'like', '%'.$this->search.'%')
                                 ->orWhere('leads.phone', 'like', '%'.$this->search.'%')
@@ -124,6 +124,10 @@ class ActiveLeadsPage extends Component
     public function changeLeadStatus()
     {
         $this->dispatchBrowserEvent('modalClose');
+
+        if($this->statusId == config('custom.LEAD_STATUS_DEAL_CLOSED')){
+            return redirect('/close-lead/'.$this->leadId);
+        }
 
         DB::beginTransaction();
 

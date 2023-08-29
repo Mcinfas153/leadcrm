@@ -8,6 +8,7 @@ use App\Models\Lead;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Http\Traits\DateTrait;
+use App\Models\CloseDeal;
 
 class Dashboard extends Component
 {
@@ -48,9 +49,8 @@ class Dashboard extends Component
         $totalLeadsCount = Lead::where('created_by', Auth::user()->id)
                             ->count();
 
-        $closeDealsCount = Lead::where('created_by', Auth::user()->id)
-        ->where('status', config('custom.LEAD_STATUS_DEAL_CLOSED'))
-        ->count();
+        $closeDealsCount = CloseDeal::where('business_id', Auth::user()->business_id)
+                                    ->count();
 
         $latesLeads = Lead::where('created_by', Auth::user()->id)
                             ->limit(5)
@@ -96,11 +96,7 @@ class Dashboard extends Component
                         })
                         ->count();
 
-        $closeDealsCount = Lead::where(function($query) {
-                        $query->where('created_by', Auth::user()->id)
-                            ->orWhere('assign_to', Auth::user()->id);
-                        })
-                        ->where('status', config('custom.LEAD_STATUS_DEAL_CLOSED'))
+        $closeDealsCount = CloseDeal::where('commision_details->user_id', Auth::user()->id)
                         ->count();
 
         $latesLeads = Lead::where(function($query) {

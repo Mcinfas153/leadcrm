@@ -76,7 +76,13 @@
                             <td>{{ Auth::user()->user_type == config('custom.USER_ADMIN') ? getDateFormat($lead->created_at,'YYYY-MM-DD, h:mm a',config('custom.LOCAL_TIMEZONE')) : getDateFormat($lead->assign_time,'YYYY-MM-DD, h:mm a',config('custom.LOCAL_TIMEZONE')) }}</td>
                             <td class="text-center"><a onclick="makeCall('{{ $lead->phone }}')">{{ $lead->phone }}</a></td>
                             <td class="text-center"><a onclick="sentEmail('{{ $lead->email }}')">{{ $lead->email }}</a></td>
-                            <td class="text-center"><span onclick="changeStatus({{ $lead->id }}, {{ $lead->status }})" style="background-color:{{ $lead->color_code }}" class="badge fw-semibold py-2 px-3 text-white fs-2">{{ Str::title($lead->lead_status) }}</span></td>
+                            <td class="text-center">
+                              @if ($lead->status == config('custom.LEAD_STATUS_DEAL_CLOSED'))
+                                <span style="background-color:{{ $lead->color_code }}" class="badge fw-semibold py-2 px-3 text-white fs-2">{{ Str::title($lead->lead_status) }}</span>
+                              @else
+                              <span onclick="changeStatus({{ $lead->id }}, {{ $lead->status }})" style="background-color:{{ $lead->color_code }}" class="badge fw-semibold py-2 px-3 text-white fs-2">{{ Str::title($lead->lead_status) }}</span>
+                              @endif
+                            </td>
                             <td class="text-center">{{ Str::title($lead->campaign_name) }}</td>
                             @if (Auth::user()->can('changeAgent', App\Models\Lead::class))
                             <td class="text-center"><span onclick="changeAgent({{ $lead->id }}, {{ $lead->assign_to }})" class="badge fw-semibold py-2 px-3 bg-success bg-gradient text-black fs-2">{{ Str::title($lead->assign_user) }}</span></td>

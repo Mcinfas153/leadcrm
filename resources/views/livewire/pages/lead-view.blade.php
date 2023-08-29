@@ -1,27 +1,32 @@
 <div class="container-fluid">
     <livewire:components.navigator title="Lead Details"/>
-
     <div class="row">
         <div wire:loading wire:target="status,assignTo,updateLead,priority,addComment">
             <livewire:components.progress-loader/>
         </div>
         <div class="">
             <div class="button-group mb-2 d-flex justify-content-end">
+                @if ($status == config('custom.LEAD_STATUS_DEAL_CLOSED'))
+                <img id="dealclose-img" src="{{ asset('dist/images/backgrounds/deal-closed.png') }}" alt="" class="rounded mx-auto d-block" height="150px">
+                @else
                 <button type="button" onclick="setReminder({{ $leadId }})" class="btn mb-1 waves-effect waves-light btn-rounded btn-danger">
                     Add Reminder
                 </button>
                 <a type="button" onclick="addEntry({{ $leadId }})" class="btn mb-1 waves-effect waves-light btn-rounded btn-warning">
                     Add Entry
                 </a>
+                @can('isAdmin', App\models\User::class)
                 <a type="button" onclick="dealClose({{ $leadId }})" class="btn mb-1 waves-effect waves-light btn-rounded btn-success">
                     Mark as Deal Closed
                 </a>
+                @endcan
+                @endif                
             </div>
             <div class="card">
                 <div class="card-header text-center bg-info">
                     <h5 class="card-title text-light"><i class="ti ti-user-circle me-1 fs-6"></i> User Informations</h5>
                 </div>
-                <div class="card-body">
+                <div class="card-body" id="background--fill">
                     <form>
                         <div class="row">
                             <div class="form-group mb-3 col-md-6">
@@ -107,6 +112,7 @@
                                 </select>
                                 @error('type') <span class="error">{{ $message }}</span> @enderror
                             </div>
+                            @if ($status != config('custom.LEAD_STATUS_DEAL_CLOSED'))
                             <div class="form-group mb-3 col-md-3">
                                 <small id="status" class="form-text text-muted">Status *</small>
                                 <select class="form-select mr-sm-2 mt-1" wire:model="status">
@@ -116,6 +122,7 @@
                                 </select>
                                 @error('status') <span class="error">{{ $message }}</span> @enderror
                             </div>
+                            @endif
                             <div class="form-group mb-3 col-md-3">
                                 <small id="bedroom" class="form-text text-muted">Priority *</small>
                                 <select class="form-select mr-sm-2 mt-1" wire:model="priority">
@@ -125,7 +132,8 @@
                                 </select>
                                 @error('priority') <span class="error">{{ $message }}</span> @enderror
                             </div>
-                            @can('isAdmin', App\models\User::class)                            
+                            @can('isAdmin', App\models\User::class)
+                            @if ($status != config('custom.LEAD_STATUS_DEAL_CLOSED'))                            
                             <div class="form-group mb-3 col-md-3">
                                 <small id="bedroom" class="form-text text-muted">Assigned To</small>
                                 <select class="form-select mr-sm-2 mt-1" wire:model="assignTo">
@@ -134,6 +142,7 @@
                                     @endforeach
                                 </select>
                             </div>
+                            @endif
                             @endcan
                             <div class="form-group mb-3 col-md-12">
                                 <small id="inquiry" class="form-text text-muted">Inquiry</small>

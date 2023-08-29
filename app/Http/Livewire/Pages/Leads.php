@@ -39,6 +39,11 @@ class Leads extends Component
     {
         //dd($this->leadId, $this->statusId);
         $this->dispatchBrowserEvent('modalClose');
+
+        if($this->statusId == config('custom.LEAD_STATUS_DEAL_CLOSED')){
+            return redirect('/close-lead/'.$this->leadId);
+        }
+        
         DB::beginTransaction();
 
         try {

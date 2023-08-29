@@ -53,7 +53,7 @@ class CloseDeals extends Component
 
         $this->validate();
 
-        $commisonDetails = [$this->agentId => $this->agentCommision];
+        $commisonDetails = ['user_id' => $this->agentId, 'commision' => $this->agentCommision];
 
         DB::beginTransaction();
 

@@ -134,6 +134,9 @@ class LeadView extends Component
 
     public function updatedStatus($value)
     {
+        if($value == config('custom.LEAD_STATUS_DEAL_CLOSED')){
+            return redirect('/close-lead/'.$this->leadId);
+        }
 
         DB::beginTransaction();
 
