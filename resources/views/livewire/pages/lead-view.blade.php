@@ -7,11 +7,14 @@
         </div>
         <div class="">
             <div class="button-group mb-2 d-flex justify-content-end">
-                <button type="button" onclick="setReminder({{ $leadId }})" class="btn mb-1 waves-effect waves-light btn-rounded btn-success">
+                <button type="button" onclick="setReminder({{ $leadId }})" class="btn mb-1 waves-effect waves-light btn-rounded btn-danger">
                     Add Reminder
                 </button>
                 <a type="button" onclick="addEntry({{ $leadId }})" class="btn mb-1 waves-effect waves-light btn-rounded btn-warning">
                     Add Entry
+                </a>
+                <a type="button" onclick="dealClose({{ $leadId }})" class="btn mb-1 waves-effect waves-light btn-rounded btn-success">
+                    Mark as Deal Closed
                 </a>
             </div>
             <div class="card">
@@ -362,4 +365,7 @@
             </form>
         </div>
     </div>
+    <script>
+        const baseUrl = "{{ URL::to('/') }}";
+    </script>
 </div>

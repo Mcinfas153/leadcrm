@@ -9,6 +9,7 @@ use App\Http\Livewire\Pages\AddLead;
 use App\Http\Livewire\Pages\AddUser;
 use App\Http\Livewire\Pages\AllLeads;
 use App\Http\Livewire\Pages\BusinessInactive;
+use App\Http\Livewire\Pages\CloseDeals;
 use App\Http\Livewire\Pages\DailyUserReport;
 use App\Http\Livewire\Pages\Dashboard;
 use App\Http\Livewire\Pages\DumpLeadsPage;
@@ -61,6 +62,7 @@ Route::middleware(['loggedUser'])->group(function () {
         Route::get('/account-settings', AccountSettings::class)->name('settings');
         Route::get('/reminders', Reminders::class)->name('reminders');
         Route::get('/lead/{leadId}/entries', LeadEntries::class)->name('lead.entries');
+        Route::get('/close-lead/{leadId}', CloseDeals::class)->name('close-leads');
     });
 
     Route::get('/businss/inactive', BusinessInactive::class)->name('business.inactive')->middleware('inactiveBusiness');

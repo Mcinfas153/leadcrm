@@ -30,4 +30,5 @@ return [
     'USER_STATUS_UPDATED_SUCCESS' => 'User status updated successfully',
     'USER_DELETED_SUCCESS' => 'User deleted successfully',
     'SETTING_UPDATE_SUCCESS' => 'Setting updated successfully',
+    'DEAL_CLOSED_SUCCESS' => 'Deal closed successfully',
 ];
