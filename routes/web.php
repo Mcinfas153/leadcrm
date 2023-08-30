@@ -24,6 +24,8 @@ use App\Http\Livewire\Pages\OldCrmLeads;
 use App\Http\Livewire\Pages\OldDataLeads;
 use App\Http\Livewire\Pages\RegisterPage;
 use App\Http\Livewire\Pages\Reminders;
+use App\Http\Livewire\Pages\ResetCodeConfirmation;
+use App\Http\Livewire\Pages\ResetPassword;
 use App\Http\Livewire\Pages\UsersList;
 use Illuminate\Support\Facades\Route;
 
@@ -72,6 +74,8 @@ Route::middleware(['guestUser'])->group(function () {
     Route::get('/login', LoginPage::class)->name('login');
     Route::get('/register', RegisterPage::class)->name('register');
     Route::get('/forgot-password', ForgotPasswordPage::class)->name('forgot-password');
+    Route::get('/reset-code-confirmation', ResetCodeConfirmation::class)->name('user.reset-code-confirmation');
+    Route::get('/reset-passowrd', ResetPassword::class)->name('reset-password');
 });
 
 //testting purposr only

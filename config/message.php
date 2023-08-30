@@ -33,4 +33,5 @@ return [
     'SETTING_UPDATE_SUCCESS' => 'Setting updated successfully',
     'DEAL_CLOSED_SUCCESS' => 'Deal closed successfully',
     'PASSWORD_RESET_CODE_SENT_SUCCESS' => 'Your password reset code successfully sent to your email',
+    'PASSWORD_RESET_CODE_VALID' => 'Your password reset code is valid. Now you can reset your passowrd',
 ];

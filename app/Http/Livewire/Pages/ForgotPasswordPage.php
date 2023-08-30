@@ -57,7 +57,7 @@ class ForgotPasswordPage extends Component
                 Mail::to($this->email)->queue(new MailPasswordReset($resetRequest));
              }
 
-            return redirect('/register')->with([
+            return redirect('/reset-code-confirmation')->with([
                 'status' => 'success',
                 'icon' => 'success',
                 'title' => config('message.PASSWORD_RESET_CODE_SENT_SUCCESS')
@@ -68,8 +68,6 @@ class ForgotPasswordPage extends Component
             DB::rollBack();
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
-
-            dd($e->getMessage());
 
         }
     }
