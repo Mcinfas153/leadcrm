@@ -22,6 +22,7 @@ return [
     'REMINDER_DELTED_SUCCESS' => 'Reminder deleted successfully',
     'ENTRY_ADDED_SUCCESS' => 'Entry added successfully',
     'ENTRY_DELETED_SUCCESS' => 'Entry deleted successfully',
+    'REMINDERS_UPDATED_SUCCESS' => 'Reminders updated successfully',
     'REMINDERS_DELETED_SUCCESS' => 'Reminders deleted successfully',
     'ENTRIES_DELETED_SUCCESS' => 'Entries deleted successfully',
     'SOMETHING_HAPPENED' => 'Something went wrong. Please try again later',

@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <livewire:components.navigator title="reminders"/>
-    <div wire:loading wire:target="">
+    <div wire:loading>
       <livewire:components.progress-loader/>
     </div>
     <div class="row">
@@ -33,10 +33,12 @@
                             <td>{{ $reminder->note }}</td>
                             <td class="text-center">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" {{ $reminder->is_active ? "checked" : "" }}>
+                                    <input class="form-check-input" onchange="remindersStatusChange({{ $reminder->id }},{{ $reminder->is_active }})" type="checkbox" id="flexSwitchCheckChecked" {{ $reminder->is_active ? "checked" : "" }}>
                                 </div>
                             </td>
-                            <td class="text-center"></td>
+                            <td class="text-center">
+                              <button type="button" class="btn btn-danger btn-sm rounded-pill" onclick="deleteReminder('{{ $reminder->id }}')">Delete</button>
+                            </td>
                         </tr>
                     @endforeach 
                     </tbody>

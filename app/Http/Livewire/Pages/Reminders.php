@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Pages;
 
+use App\Models\Scheduler;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -13,6 +14,11 @@ class Reminders extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
+
+    protected $listeners = [
+        'remindersStatusChange' => 'remindersStatusChange',
+        'deleteReminder' => 'deleteReminder'
+    ];
 
     public function render()
     {
@@ -43,5 +49,49 @@ class Reminders extends Component
         ])->layout('layouts.app',[
             'title' => 'reminders'
         ]);
+    }
+
+    public function remindersStatusChange(int $reminderId, int $currentStatus)
+    {
+       DB::beginTransaction();
+
+       try {
+        
+            Scheduler::where('id', $reminderId)->update([
+                'is_active' => !$currentStatus
+            ]);
+
+            DB::commit();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.REMINDERS_UPDATED_SUCCESS')]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+        }
+    }
+
+    public function deleteReminder(int $reminderId)
+    {
+       DB::beginTransaction();
+
+       try {
+        
+            Scheduler::where('id', $reminderId)->delete();
+
+            DB::commit();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.REMINDER_DELTED_SUCCESS')]);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            $this->dispatchBrowserEvent('pushToast', ['icon' => 'error', 'title' => config('message.SOMETHING_HAPPENED')]);
+
+        }
     }
 }
