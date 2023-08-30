@@ -45,5 +45,6 @@ return [
     'SERVER_TIMEZONE' => env('SERVER_TIMEZONE'),
     'LOCAL_TIMEZONE' => env('LOCAL_TIME_ZONE'),
     'APP_NAME' => 'LEAD CRM',
-    'SP_EMAIL' => 'sp@leadmediaproduction.com'
+    'SP_EMAIL' => 'sp@leadmediaproduction.com',
+    'SUPPORT_EMAIL' => 'support@leadmediaproduction.com'
 ];

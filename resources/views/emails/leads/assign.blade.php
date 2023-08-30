@@ -1,12 +1,22 @@
 <x-mail::message>
+Dear User,
 
-<h1>Hi,</h1>
-<p>You have received a new lead.</p>
+<p>We wanted to inform you that a new lead has been assigned to you. Here are the details:</p>
+
+<p>Lead Name: {{ $lead->fullname }}</p>
+<p>Lead Email: {{ $lead->email }}</p>
+<p>Lead Phone: {{ $lead->phone }}</p>
+<p>Lead Source: {{ $lead->source }}</p>
+<p>Campaign: {{ $lead->campaign_name }}</p>
+
+<p>Additional Information: Any other relevant details about the lead you can view clicking below button</p>
 
 <x-mail::button :url="$url">
-Click Here to View
+click here to view leads
 </x-mail::button>
 
-Thanks,<br>
+<p>Please take appropriate action to follow up with this lead as soon as possible. If you have any questions or need further information, please don't hesitate to reach out to us.</p>
+    
+Thank you for your prompt attention to this matter. <br>
 {{ config('app.name') }}
 </x-mail::message>

@@ -9,17 +9,13 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\URL;
 
 class LeadAssign extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $lead;
-
-    public function __construct(Lead $lead)
-    {
-        $this->lead = $lead;
-    }
+    public function __construct(public Lead $lead){}
 
     /**
      * Get the message envelope.
@@ -29,7 +25,7 @@ class LeadAssign extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'You Recieved a New Lead',
+            subject: 'New Lead Assigned - '.$this->lead->fullname,
         );
     }
 
@@ -43,8 +39,7 @@ class LeadAssign extends Mailable
         return new Content(
             markdown: 'emails.leads.assign',
             with: [
-                'url' => config('app.url').'lead/view/'.$this->lead->id,
-                'lead' => $this->lead
+                'url' => URL::to('lead/view').'/'.$this->lead->id,
             ],
         );
     }

@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\URL;
 
 class BulkLeadsAssign extends Mailable
 {
@@ -31,7 +32,7 @@ class BulkLeadsAssign extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'You have recieved bulk leads',
+            subject: 'Bulk Lead Assignment',
         );
     }
 
@@ -45,7 +46,7 @@ class BulkLeadsAssign extends Mailable
         return new Content(
             markdown: 'emails.leads.bulkAssign',
             with: [
-                'url' => config('app.url').'leads',
+                'url' => URL::to('leads'),
             ],
         );
     }

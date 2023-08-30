@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Scheduler;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -19,7 +20,7 @@ class SendTaskReminder extends Mailable
      *
      * @return void
      */
-    public function __construct(public object $reminder){}
+    public function __construct(public Scheduler $reminder){}
 
     /**
      * Get the message envelope.

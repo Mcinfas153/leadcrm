@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Lead;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -14,7 +15,7 @@ class NewLead extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public array|object $lead){}
+    public function __construct(public Lead $lead){}
     /**
      * Get the message envelope.
      *

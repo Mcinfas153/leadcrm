@@ -14,12 +14,8 @@ class WelcomeNewUser extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
 
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
+    public function __construct(public User $user){}
 
     /**
      * Get the message envelope.
@@ -29,7 +25,7 @@ class WelcomeNewUser extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Welcome New User',
+            subject: 'Welcome to Lead CRM',
         );
     }
 
@@ -43,7 +39,6 @@ class WelcomeNewUser extends Mailable
         return new Content(
             markdown: 'emails.users.new-user',
             with: [
-                'user' => $this->user,
                 'url' => config('app.url'),
             ],
         );
