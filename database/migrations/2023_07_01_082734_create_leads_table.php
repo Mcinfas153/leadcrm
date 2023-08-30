@@ -39,7 +39,7 @@ return new class extends Migration
             $table->string('attachment')->nullable();
             $table->integer('assign_to')->nullable()->constrained('users');
             $table->integer('created_by')->constrained('users');
-            $table->dateTime('assign_time')->default(Carbon::now())->nullable();
+            $table->dateTime('assign_time')->default(Carbon::now()->tz(config('custom.LOCAL_TIMEZONE')))->nullable();
             $table->timestamps();
         });
     }

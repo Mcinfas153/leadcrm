@@ -74,7 +74,7 @@
                               @endcan
                             </td>
                             <td class="fixedCol text-black"><a href="{{ URL::to('lead/view') }}/{{ $lead->id }}" target="_BLANK">{{ $lead->fullname }}</a></td>
-                            <td>{{ Auth::user()->user_type == config('custom.USER_ADMIN') ? $lead->created_at : $lead->assign_time }}</td>
+                            <td>{{ Auth::user()->user_type == config('custom.USER_ADMIN') ? dateFormater($lead->created_at) : dateFormater($lead->assign_time) }}</td>
                             <td class="text-center"><a onclick="makeCall('{{ $lead->phone }}')">{{ $lead->phone }}</a></td>
                             <td class="text-center"><a onclick="sentEmail('{{ $lead->email }}')">{{ $lead->email }}</a></td>
                             <td class="text-center">

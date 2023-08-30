@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -41,7 +42,8 @@ class LeadFactory extends Factory
             'type' => fake()->numberBetween(1,3),
             'assign_to' => $assignTo,
             'created_by' => $createdBy,
-            'created_at' => fake()->dateTimeThisMonth(),
+            //'assign_time' => Carbon::now()->tz(config('custom.LOCAL_TIMEZONE')),
+            'created_at' => fake()->dateTimeThisYear(),
             'updated_at' => fake()->dateTimeThisMonth(),
         ];
     }

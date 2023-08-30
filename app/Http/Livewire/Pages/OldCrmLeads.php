@@ -163,7 +163,7 @@ class OldCrmLeads extends Component
 
             DB::table('leads')
               ->where('id', $this->leadId)
-              ->update(['assign_to' => $this->userId, 'assign_time' => Carbon::now()]);
+              ->update(['assign_to' => $this->userId, 'assign_time' => Carbon::now()->tz(config('custom.LOCAL_TIMEZONE'))]);
 
             DB::commit();
 
@@ -207,7 +207,7 @@ class OldCrmLeads extends Component
             foreach($this->selectedLeads as $leadId){
                 DB::table('leads')
                     ->where('id', $leadId)
-                    ->update(['assign_to' => $this->bulkAssignUserId, 'assign_time' => Carbon::now()]);
+                    ->update(['assign_to' => $this->bulkAssignUserId, 'assign_time' => Carbon::now()->tz(config('custom.LOCAL_TIMEZONE'))]);
             }
 
             DB::commit();

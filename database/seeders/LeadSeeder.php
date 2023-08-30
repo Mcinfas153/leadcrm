@@ -17,6 +17,6 @@ class LeadSeeder extends Seeder
     {
         DB::table('leads')->truncate();
 
-        Lead::factory()->count(1000)->create();
+        Lead::factory()->count(100)->create();
     }
 }
