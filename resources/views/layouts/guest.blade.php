@@ -22,13 +22,13 @@
 </head>
 <body>
 
+    <livewire:components.alart-box/>
+
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
         <div class="position-relative overflow-hidden radial-gradient min-vh-100">
             {{ $slot }}
         </div>
     </div>
-
-    <livewire:components.alart-box/>
 
     <!-- Import Js Files -->
     <script src="{{ asset('dist/libs/jquery/dist/jquery.min.js') }}"></script>
@@ -43,6 +43,8 @@
     <script src="{{ asset('dist/js/sidebarmenu.js') }}"></script>
 
     <script src="{{ asset('dist/js/custom.js') }}"></script>
+    <script src="{{ asset('dist/libs/prismjs/prism.js') }}"></script>
+    
     <script>
         window.addEventListener('pushToast', event => {
             //alert('Name updated to: ' + event.detail.newName);

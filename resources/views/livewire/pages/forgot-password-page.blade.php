@@ -1,4 +1,7 @@
 <div>
+    <div wire:loading wire:target="passwordReset">
+        <livewire:components.progress-loader/>
+    </div>
     <div class="position-relative z-index-5">
         <div class="row">
             <div class="col-lg-6 col-xl-8 col-xxl-9">
@@ -22,10 +25,11 @@
                             <form>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="email" aria-describedby="email">
+                                    <input type="email" class="form-control" id="email" aria-describedby="email" wire:model.defer="email">
+                                    @error('email') <span class="error">{{ $message }}</span> @enderror
                                 </div>
-                                <a href="javascript:void(0)" class="btn btn-primary w-100 py-8 mb-3">Forgot Password</a>
-                                <a href="/login" class="btn btn-light-primary text-primary w-100 py-8">Back to Login</a>
+                                <a type="button" wire:click="passwordReset" class="btn btn-primary w-100 py-8 mb-3">Forgot Password</a>
+                                <a href="{{ URL::to('login') }}" class="btn btn-light-primary text-primary w-100 py-8">Back to Login</a>
                             </form>
                         </div>
                     </div>
