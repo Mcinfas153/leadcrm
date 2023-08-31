@@ -32,7 +32,7 @@ class AgentCommision extends Component
     {
         return view('livewire.pages.agent-commision',[
             'users' => User::where(['is_active' => 1, 'business_id' => Auth::user()->business_id, 'user_type' => config('custom.USER_NORMAL')])->get(),
-            'chart' => $chart->build($this->agentId, $this->startDate, $this->endDate)
+            'chart' => $chart->build([], 0, 0, $this->startDate, $this->endDate,'')
         ])->layout('layouts.app', [
             'title' => 'agent commisions'
         ]);

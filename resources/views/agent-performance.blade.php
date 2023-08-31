@@ -14,12 +14,18 @@
         <a href="{{ URL::to('/agent-commisions') }}" class="px-5 py-2 bg-green-500 text-sm text-white font-medium">Back to CRM</a>
     </div>
     <div class="p-6 m-10 bg-white rounded shadow">
-        {!! $chart->container() !!}
+        @foreach ($charts as $chart)
+        <div class="m-5">
+                {!! $chart->container() !!}
+        </div>
+        <hr>
+        @endforeach
     </div>
 </div>
 
+@foreach ($charts as $chart)
 <script src="{{ $chart->cdn() }}"></script>
-
 {{ $chart->script() }}
+@endforeach
 </body>
 </html>
