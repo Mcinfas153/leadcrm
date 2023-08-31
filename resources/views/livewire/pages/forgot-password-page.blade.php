@@ -22,7 +22,7 @@
                                 Please enter the email address associated with your account and We will email you a link to reset your password.
                                 </p>
                             </div>
-                            <form>
+                           
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email address</label>
                                     <input type="email" class="form-control" id="email" aria-describedby="email" wire:model.defer="email">
@@ -30,7 +30,7 @@
                                 </div>
                                 <a type="button" wire:click="passwordReset" class="btn btn-primary w-100 py-8 mb-3">Forgot Password</a>
                                 <a href="{{ URL::to('login') }}" class="btn btn-light-primary text-primary w-100 py-8">Back to Login</a>
-                            </form>
+                           
                         </div>
                     </div>
                 </div>

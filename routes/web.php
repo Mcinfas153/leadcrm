@@ -65,6 +65,7 @@ Route::middleware(['loggedUser'])->group(function () {
         Route::get('/account-settings', AccountSettings::class)->name('settings');
         Route::get('/reminders', Reminders::class)->name('reminders');
         Route::get('/lead/{leadId}/entries', LeadEntries::class)->name('lead.entries');
+        Route::get('/reset-password', ResetPassword::class)->name('reset-password');
     });
 
     Route::get('/businss/inactive', BusinessInactive::class)->name('business.inactive')->middleware('inactiveBusiness');
@@ -75,7 +76,6 @@ Route::middleware(['guestUser'])->group(function () {
     Route::get('/register', RegisterPage::class)->name('register');
     Route::get('/forgot-password', ForgotPasswordPage::class)->name('forgot-password');
     Route::get('/reset-code-confirmation', ResetCodeConfirmation::class)->name('user.reset-code-confirmation');
-    Route::get('/reset-passowrd', ResetPassword::class)->name('reset-password');
 });
 
 //testting purposr only

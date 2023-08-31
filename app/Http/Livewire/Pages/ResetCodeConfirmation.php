@@ -3,7 +3,9 @@
 namespace App\Http\Livewire\Pages;
 
 use App\Models\PasswordReset;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -47,10 +49,17 @@ class ResetCodeConfirmation extends Component
                 return $this->addError('resetCode', 'Reset code is not valid or expired. Please try to reset again');
             }
 
+            //reset code inactive
+            $resetCollecttion->is_active = 0;
+            $resetCollecttion->save();
+            
+            //log as current user
+            $currentUser = User::where('email', $resetCollecttion->email)->first();
+            Auth::login($currentUser);
+
             DB::commit();
 
-
-            return redirect('/reset-passowrd')->with([
+            return redirect('/reset-password')->with([
                 'status' => 'success',
                 'icon' => 'success',
                 'title' => config('message.PASSWORD_RESET_CODE_VALID')
