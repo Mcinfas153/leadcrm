@@ -38,6 +38,13 @@
     <link rel="stylesheet" href="{{ asset('dist/libs/select2/dist/css/select2.min.css') }}">
     @endif
 
+    @if ($title == 'agent commisions')
+    <link
+      rel="stylesheet"
+      href="{{ asset('dist/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}"
+    />
+    @endif
+
     <!-- --------------------------------------------------- -->
     <!-- Core Css -->
     <!-- --------------------------------------------------- -->
@@ -153,6 +160,11 @@
     @endif
     @if ($title == 'users')
     <script src="{{ asset('dist/js/pages/users.js') }}"></script>
+    @endif
+    @if ($title == 'agent commisions')
+    <script src="{{ asset('dist/libs/moment-js/moment.js') }}"></script>
+    <script src="{{ asset('dist/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('dist/js/pages/agent-commissions.js') }}"></script>
     @endif
 
     <script>

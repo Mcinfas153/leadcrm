@@ -7,6 +7,7 @@ use App\Http\Livewire\Pages\AccountSettings;
 use App\Http\Livewire\Pages\ActiveLeadsPage;
 use App\Http\Livewire\Pages\AddLead;
 use App\Http\Livewire\Pages\AddUser;
+use App\Http\Livewire\Pages\AgentCommision;
 use App\Http\Livewire\Pages\AllLeads;
 use App\Http\Livewire\Pages\BusinessInactive;
 use App\Http\Livewire\Pages\CloseDeals;
@@ -47,6 +48,8 @@ Route::middleware(['loggedUser'])->group(function () {
             Route::get('/user/daily-report/{userId?}', DailyUserReport::class)->name('user.daily.report');
             Route::get('/user/report/{userId}/{period}', [ReportController::class, 'userReportExport'])->name('user.report.download');
             Route::get('/close-lead/{leadId}', CloseDeals::class)->name('close-leads');
+            Route::get('/agent-commisions', AgentCommision::class)->name('agent.commsions');
+            Route::post('/agent-performance-chart',[ReportController::class, 'agentPerformanceChart']);
         });
         Route::get('/', Dashboard::class)->name('dashboard');
         Route::get('/download-leads', FreshLeads::class)->name('fresh.leads');

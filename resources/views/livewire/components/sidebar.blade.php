@@ -163,7 +163,7 @@
                 </ul>
               </li>
 
-              @can('isAdmin', App\Http\User::class)
+              @can('isAdmin', App\Models\User::class)
               <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">USER MANAGEMENT</span>
@@ -202,6 +202,17 @@
                   <span class="hide-menu">OTHERS</span>
                 </li>
 
+                @can('isAdmin', App\Models\User::class)
+                <li class="sidebar-item">
+                  <a class="sidebar-link" href="{{ URL::to('/agent-commisions') }}" aria-expanded="false">
+                  <span>
+                      <i class="ti ti-brand-cashapp"></i>
+                  </span>
+                  <span class="hide-menu">Agent Commisions</span>
+                  </a>
+                </li>
+                @endcan
+
                 <li class="sidebar-item">
                   <a class="sidebar-link" href="{{ URL::to('/reminders') }}" aria-expanded="false">
                   <span>
@@ -220,7 +231,7 @@
                   </a>
                 </li>
 
-                @can('isAdmin', App\Http\User::class)
+                @can('isAdmin', App\Models\User::class)
                 <li class="sidebar-item">
                   <a class="sidebar-link" href="{{ URL::to('/user/daily-report') }}" aria-expanded="false">
                   <span>
