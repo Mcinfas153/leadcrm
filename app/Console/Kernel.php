@@ -4,8 +4,10 @@ namespace App\Console;
 
 use App\Classes\Automation\LeadReshuffle;
 use App\Classes\Automation\ScheduleReminder;
+use App\Models\Lead;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\DB;
 
 class Kernel extends ConsoleKernel
 {
@@ -18,8 +20,18 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            Lead::create([
+                'fullname' => 'Crone',
+                'email' => 'test@test.com',
+                'phone' => '908904894',
+                'campaign_name' => 'Crone Test',
+                'assign_to' => 2,
+                'created_by' => 2
+            ]);
+        })->everyFifteenMinutes();
         $schedule->call(new LeadReshuffle)->hourly();
-        $schedule->call(new ScheduleReminder)->everyMinute();
+        $schedule->call(new ScheduleReminder)->everyFifteenMinutes();
     }
 
     /**
