@@ -25,6 +25,7 @@ return new class extends Migration
             $table->text('bio')->nullable();
             $table->string('phone')->nullable();
             $table->string('whatsapp')->nullable();
+            $table->text('push_notification_data')->nullable();
             $table->boolean('is_active')->default(1);
             $table->timestamp('email_verified_at')->nullable();
             $table->integer('business_id')->nullable()->constrained('organizations');

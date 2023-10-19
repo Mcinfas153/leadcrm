@@ -55,6 +55,64 @@
   </head>
 
   <body>
+    <script>
+      navigator.serviceWorker.register('sw.js');
+
+      function requestPermission() {        
+        if (Notification.permission === "granted") {
+            // Check whether notification permissions have already been granted;
+            // if so, create a notification
+            const notification = new Notification("You have already allowed notifications from Lead CRM");
+            // …
+          } else { 
+            Notification.requestPermission().then((permission) => {
+                if (permission === 'granted') {
+                    
+                    // get service worker
+                    navigator.serviceWorker.ready.then((sw) =>{
+                        
+                        // subscribe
+                        sw.pushManager.subscribe({
+                            userVisibleOnly: true,
+                            applicationServerKey:"BEOvVHUua7zCyFrZiWnfemkU3t3IhlnQTRoLpASAJfzlwkHaVivsTgkRihT1DZIOHyx6Vg0pcJOlnBfqz8KTudw"
+                        }).then((subscription) => {
+
+                            // subscription successful
+                            async function saveBrowser() {
+
+                              const response = await fetch("/api/v1/user/create-push-browser", {
+                                  method: "post",
+                                  headers: {
+                                  "Content-Type": "application/json",
+                                  "userId": userId
+                                  // 'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                  body: JSON.stringify(subscription)
+                              })
+
+                              return response.json();
+                          }
+
+                          saveBrowser().then((response) => {
+                              if(response.status === 201) {
+                                const notification = new Notification("Lead CRM", {
+                                  body: "You have successfully allowed notification from Lead CRM"
+                                });
+                              } else {
+                                const notification = new Notification("Lead CRM", {
+                                  body: "Unsuccessfull opration. Please try again"
+                                });
+                              }
+                          });
+                            
+                        });
+                    });
+                }
+            });
+          }
+        }
+    </script>
+    
     <!-- Preloader -->
     <div class="preloader">
       <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico" alt="loader" class="lds-ripple img-fluid" />
@@ -69,8 +127,11 @@
       <div class="body-wrapper">
 
         <livewire:components.header/>
+        
 
           {{ $slot }}
+
+          <button onclick="requestPermission()">enable</button>
 
       </div>
     </div>
@@ -168,6 +229,7 @@
     @endif
 
     <script>
+      const userId = "{{ Auth::id() }}";
       window.addEventListener('pushToast', event => {
           const Toast = Swal.mixin({
               toast: true,
