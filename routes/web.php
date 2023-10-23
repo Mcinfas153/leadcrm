@@ -1,6 +1,5 @@
 <?php
 
-use App\Classes\Automation\LeadReshuffle;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\ReportController;
 use App\Http\Livewire\Pages\AccountSettings;
@@ -83,6 +82,6 @@ Route::middleware(['guestUser'])->group(function () {
 
 //testting purposr only
 // Route::get('/test', function(){
-//     $lead = new ScheduleReminder();
+//     NotificationTrait::push(3, "test", "https://facebook.com");
 // });
 
