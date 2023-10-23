@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('push_notification_browsers', function (Blueprint $table) {
             $table->id();
             $table->text('data');
-            $table->foreignId('user_id')->constrained('users');
+            $table->integer('user_id')->constrained('users');
             $table->timestamps();
         });
     }
