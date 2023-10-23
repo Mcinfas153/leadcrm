@@ -11,12 +11,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use App\Http\Traits\ActivityTrait;
+use App\Mail\LeadAssign;
 use App\Models\LeadActivity;
 use App\Models\LeadEntry;
 use App\Models\Scheduler;
 use App\Models\SchedulerType;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Livewire\WithPagination;
+use App\Http\Traits\NotificationTrait;
+use App\Models\PushNotificationBrowser;
 
 class LeadView extends Component
 {
@@ -181,6 +185,19 @@ class LeadView extends Component
             ActivityTrait::add(Auth::user()->id, config('custom.ACTION_ASSIGN_USER'),Auth::user()->name.' assign the lead', $this->leadId);
 
             $this->dispatchBrowserEvent('pushToast', ['icon' => 'success', 'title' => config('message.USER_ASSIGN_CHANGE_SUCCESS')]);
+
+            //notify agent
+            if(config('custom.IS_MAIL_ON')){
+                
+                $allBrowsers = PushNotificationBrowser::where('user_id', $value)->get();
+
+                foreach($allBrowsers as $browser){
+                    NotificationTrait::push($browser->id, config('message.NEW_LEAD_RECIEVED'), env('APP_URL').'lead/view/'.$this->leadId);
+                
+                }
+
+                Mail::to(User::find($value)->email)->queue(new LeadAssign(Lead::find($this->leadId)));
+            } 
 
         } catch (\Exception $e) {
 

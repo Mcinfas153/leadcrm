@@ -35,4 +35,5 @@ return [
     'PASSWORD_RESET_CODE_SENT_SUCCESS' => 'Your password reset code successfully sent to your email',
     'PASSWORD_RESET_CODE_VALID' => 'Your password reset code is valid. Now you can reset your passowrd',
     'PASSWORD_RESET_SUCCESS' => 'Your password reset successfully',
+    'NEW_LEAD_RECIEVED' => 'Your have recieved new lead',
 ];

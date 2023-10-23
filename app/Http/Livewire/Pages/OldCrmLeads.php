@@ -15,6 +15,8 @@ use App\Models\Note;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Traits\NotificationTrait;
+use App\Models\PushNotificationBrowser;
 
 class OldCrmLeads extends Component
 {
@@ -173,6 +175,14 @@ class OldCrmLeads extends Component
 
             //notify agent
             if(config('custom.IS_MAIL_ON')){
+                
+                $allBrowsers = PushNotificationBrowser::where('user_id', $this->userId)->get();
+
+                foreach($allBrowsers as $browser){
+                    NotificationTrait::push($browser->id, config('message.NEW_LEAD_RECIEVED'), env('APP_URL').'lead/view/'.$this->leadId);
+                
+                }
+
                 Mail::to(User::find($this->userId)->email)->queue(new LeadAssign(Lead::find($this->leadId)));
             }            
 
@@ -220,6 +230,14 @@ class OldCrmLeads extends Component
 
             //notify agent
             if(config('custom.IS_MAIL_ON')){
+                
+                $allBrowsers = PushNotificationBrowser::where('user_id', $this->bulkAssignUserId)->get();
+
+                foreach($allBrowsers as $browser){
+                    NotificationTrait::push($browser->id, config('message.NEW_LEAD_RECIEVED'), env('APP_URL').'leads');
+                
+                }
+                
                 Mail::to(User::find($this->bulkAssignUserId)->email)->queue(new BulkLeadsAssign);
             }
 
