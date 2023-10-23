@@ -80,6 +80,22 @@ a:hover {
 #action-panel {
     border: 1px solid #34495e;
 }
+.notify-btn {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: #052f5f;
+    color: #e2a208;
+    border-radius: 50px;
+    text-align: center;
+    border: 1px solid #052f5f;
+}
+
+.my-float {
+    margin-top: 22px;
+}
 /* progress loader */
 .loader-wrapper {
     position: fixed;

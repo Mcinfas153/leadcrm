@@ -55,63 +55,6 @@
   </head>
 
   <body>
-    <script>
-      navigator.serviceWorker.register('sw.js');
-
-      function requestPermission() {        
-        if (Notification.permission === "granted") {
-            // Check whether notification permissions have already been granted;
-            // if so, create a notification
-            const notification = new Notification("You have already allowed notifications from Lead CRM");
-            // …
-          } else { 
-            Notification.requestPermission().then((permission) => {
-                if (permission === 'granted') {
-                    
-                    // get service worker
-                    navigator.serviceWorker.ready.then((sw) =>{
-                        
-                        // subscribe
-                        sw.pushManager.subscribe({
-                            userVisibleOnly: true,
-                            applicationServerKey:"BEOvVHUua7zCyFrZiWnfemkU3t3IhlnQTRoLpASAJfzlwkHaVivsTgkRihT1DZIOHyx6Vg0pcJOlnBfqz8KTudw"
-                        }).then((subscription) => {
-
-                            // subscription successful
-                            async function saveBrowser() {
-
-                              const response = await fetch("/api/v1/user/create-push-browser", {
-                                  method: "post",
-                                  headers: {
-                                  "Content-Type": "application/json",
-                                  "userId": userId
-                                  // 'Content-Type': 'application/x-www-form-urlencoded',
-                                },
-                                  body: JSON.stringify(subscription)
-                              })
-
-                              return response.json();
-                          }
-
-                          saveBrowser().then((response) => {
-                              if(response.status === 201) {
-                                const notification = new Notification("Lead CRM", {
-                                  body: "You have successfully allowed notification from Lead CRM"
-                                });
-                              } else {
-                                const notification = new Notification("Lead CRM", {
-                                  body: "Unsuccessfull opration. Please try again"
-                                });
-                              }
-                          });
-                            
-                        });
-                    });
-                }
-            });
-          }
-        }
-    </script>
     
     <!-- Preloader -->
     <div class="preloader">
@@ -131,7 +74,7 @@
 
           {{ $slot }}
 
-          <button onclick="requestPermission()">enable</button>
+          <button class="notify-btn" onclick="requestPermission()"><i class="fa fa-bell"></i></button>
 
       </div>
     </div>
@@ -249,6 +192,63 @@
               title: event.detail.title
           })
       })
+    </script>
+    <script>
+      navigator.serviceWorker.register('sw.js');
+
+      function requestPermission() {        
+        if (Notification.permission === "granted") {
+            // Check whether notification permissions have already been granted;
+            // if so, create a notification
+            const notification = new Notification("You have already allowed notifications from Lead CRM");
+            // …
+          } else { 
+            Notification.requestPermission().then((permission) => {
+                if (permission === 'granted') {
+                    
+                    // get service worker
+                    navigator.serviceWorker.ready.then((sw) =>{
+                        
+                        // subscribe
+                        sw.pushManager.subscribe({
+                            userVisibleOnly: true,
+                            applicationServerKey:"BEOvVHUua7zCyFrZiWnfemkU3t3IhlnQTRoLpASAJfzlwkHaVivsTgkRihT1DZIOHyx6Vg0pcJOlnBfqz8KTudw"
+                        }).then((subscription) => {
+
+                            // subscription successful
+                            async function saveBrowser() {
+
+                              const response = await fetch("/api/v1/user/create-push-browser", {
+                                  method: "post",
+                                  headers: {
+                                  "Content-Type": "application/json",
+                                  "userId": userId
+                                  // 'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                  body: JSON.stringify(subscription)
+                              })
+
+                              return response.json();
+                          }
+
+                          saveBrowser().then((response) => {
+                              if(response.status === 201) {
+                                const notification = new Notification("Lead CRM", {
+                                  body: "You have successfully allowed notification from Lead CRM"
+                                });
+                              } else {
+                                const notification = new Notification("Lead CRM", {
+                                  body: "Unsuccessfull opration. Please try again"
+                                });
+                              }
+                          });
+                            
+                        });
+                    });
+                }
+            });
+          }
+        }
     </script>
     @livewireScripts
   </body>
