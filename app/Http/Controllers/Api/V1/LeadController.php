@@ -10,11 +10,13 @@ use App\Classes\ApiResponse;
 use App\Http\Resources\LeadResource;
 use App\Mail\NewLead;
 use App\Models\Lead;
+use App\Models\PushNotificationBrowser;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use App\Http\Traits\NotificationTrait;
 
 class LeadController extends Controller
 {
@@ -56,7 +58,7 @@ class LeadController extends Controller
                 $lead = Lead::create($inputs);
                 $lead->created_by = $business->created_by;
                 $lead->assign_to = $business->created_by;
-                $lead->assign_time = Carbon::now()->tz(config('custom.LOCAL_TIMEZONE'));
+                $lead->assign_time = timeZoneChange(config('custom.LOCAL_TIMEZONE'));
                 $lead->save();
 
                 DB::commit();
@@ -65,6 +67,15 @@ class LeadController extends Controller
 
                 //notify new lead email
                 if(config('custom.IS_MAIL_ON')){
+
+                    $allBrowsers = PushNotificationBrowser::where('user_id', $lead->created_by)->get();
+
+                    foreach($allBrowsers as $browser){
+                        
+                        NotificationTrait::push($browser->id, config('message.NEW_LEAD_RECIEVED'), env('APP_URL').'lead/view/'.$insertedLead);
+                    
+                    }
+
                         Mail::to(User::find($lead->created_by)->email)->queue(new NewLead($insertedLead));              
                 }
 

@@ -4,12 +4,14 @@ namespace App\Http\Livewire\Pages;
 
 use App\Mail\LeadAssign;
 use App\Models\Lead;
+use App\Models\PushNotificationBrowser;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
+use App\Http\Traits\NotificationTrait;
 
 class AddLead extends Component
 {
@@ -103,13 +105,20 @@ class AddLead extends Component
                 'assign_to' => $assignTo,
                 'inquiry' => $this->inquiry,
                 'created_by' => Auth::user()->id,
-                'assign_time' => Carbon::now()
+                'assign_time' => timeZoneChange(config('custom.LOCAL_TIMEZONE'))
             ]);
 
             DB::commit();
 
             if(config('custom.IS_MAIL_ON')){
                 if($assignTo != Auth::user()->id){
+
+                    $allBrowsers = PushNotificationBrowser::where('user_id', $assignTo)->get();
+
+                    foreach($allBrowsers as $browser){
+                        NotificationTrait::push($browser->id, config('message.NEW_LEAD_RECIEVED'), env('APP_URL').'lead/view/'.$lead->id);
+                    
+                    }
                     Mail::to(User::find($assignTo)->email)->queue(new LeadAssign($lead));
                 }                
             }

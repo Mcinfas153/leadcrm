@@ -7,10 +7,13 @@ use App\Models\Lead;
 use App\Models\LeadActivity;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Arr;
 use App\Http\Traits\UserTrait;
-use App\Models\Organization;
 use Illuminate\Support\Facades\DB;
+use App\Http\Traits\NotificationTrait;
+use App\Mail\LeadAssign;
+use App\Models\PushNotificationBrowser;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 
 trait LeadTrait{
 
@@ -54,17 +57,33 @@ trait LeadTrait{
             
             $leads = Lead::select('leads.*')
                         ->where('created_by', $organization->created_by)
-                        ->whereBetween('leads.created_at', [Carbon::now()->subHours(72), Carbon::now()])
+                        ->whereBetween('leads.created_at', [localTimeConvert(config('custom.LOCAL_TIMEZONE'), Carbon::now()->subHours(72)), localTimeConvert(config('custom.LOCAL_TIMEZONE'),Carbon::now())])
                         ->get();
+                        
                         // //->lazyById(100, function ($leads) {
-                            foreach ($leads as $lead) {                                
-                                if(Carbon::parse($lead->assign_to)->diffInHours(Carbon::now()) > $organization->period){
-                                $currentLeadActivity = LeadActivity::where([['lead_id', '=', $lead->id],['user_id', '!=', $lead->created_by],])->get();
+                            foreach ($leads as $lead) {  
+                                if(Carbon::parse(localTimeConvert(config('custom.LOCAL_TIMEZONE'), Carbon::now()))->diffInHours($lead->assign_time) > $organization->period){
+                                    $currentLeadActivity = LeadActivity::where([['lead_id', '=', $lead->id],['user_id', '!=', $lead->created_by],])->get();
                                     if($currentLeadActivity->isEmpty()){
                                         //lead assign to most active user today or there is no one active doesn't change anything
                                         if(!$users->isEmpty()){
                                             $lead->assign_to = $users->random()->id;
+                                            $lead->assign_time = localTimeConvert(config('custom.LOCAL_TIMEZONE'), Carbon::now());
                                             $lead->save();
+                                            
+                                            //notify agent
+                                            if(config('custom.IS_MAIL_ON')){
+
+                                                $allBrowsers = PushNotificationBrowser::where('user_id', $lead->assign_to)->get();
+
+                                                foreach($allBrowsers as $browser){
+                                                    NotificationTrait::push($browser->id, config('message.NEW_LEAD_RECIEVED'), env('APP_URL').'lead/view/'.$lead->id);
+                                                
+                                                }
+                                                
+                                                Mail::to(User::find($lead->assign_to)->email)->queue(new LeadAssign(Lead::find($lead->id)));
+                                            }
+
                                         }                                    
                                     }
                                 }

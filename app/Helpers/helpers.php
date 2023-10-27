@@ -22,3 +22,10 @@ function dateFormater($dateTime, $format = 'YYYY-MM-DD, h:mm a')
     $date = Carbon::createFromFormat('Y-m-d H:i:s', $dateTime);
     return $date->isoFormat($format);
 }
+
+function localTimeConvert(string $desireTimeZone = 'UTC', $dateTime)
+{
+    $serverTime =  Carbon::parse($dateTime)->tz(config('custom.SERVER_TIMEZONE'));
+    $dt = Carbon::parse($serverTime)->tz($desireTimeZone);
+    return $dt;
+}
