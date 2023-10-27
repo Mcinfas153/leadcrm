@@ -8,7 +8,7 @@
           <div class="card">
             <div class="card-body">
                 <div class="row mb-3">
-                    <div class="col-6">
+                    <div class="col-12 col-md-6">
                         <label for="exampleFormControlInput1" class="form-label">Please Select a User to View Report</label>
                         <select class="form-control" wire:model="userId">
                             <option selected hidden>Select a User</option>
@@ -17,7 +17,7 @@
                             @endforeach                            
                         </select>
                     </div>
-                    <div class="col-6 d-flex flex-column align-items-end">
+                    <div class="col-12 col-md-6 d-flex flex-column">
                         <label for="exampleFormControlInput1" class="form-label">Please Select a Period of Time</label>
                         <select
                             class="form-control"

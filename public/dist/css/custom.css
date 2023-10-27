@@ -72,11 +72,6 @@ a:hover {
 .form-control:focus {
     border-color: #f1a208;
 }
-.tscroll table td:nth-child(2) {
-    position: sticky;
-    left: 0;
-    background-color: #f8f9f9;
-}
 #action-panel {
     border: 1px solid #34495e;
 }
@@ -125,5 +120,22 @@ a:hover {
     }
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@media (min-width: 576px) {
+    .tscroll table td:nth-child(2) {
+        position: sticky;
+        left: 0;
+        background-color: #f8f9f9;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .lead-table-btn {
+        margin: 5px 3px;
+    }
+    .table-filter {
+        margin-bottom: 5px;
     }
 }

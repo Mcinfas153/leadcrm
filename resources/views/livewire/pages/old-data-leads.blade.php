@@ -9,16 +9,16 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-8">
-                  <button type="button" data-bs-toggle="modal" data-bs-target="#import-modal" class="btn btn-primary">Import Leads</button>
-                  <button type="button" onclick="exportLeads('{{ route('export-leads', ['leadType' => 3]) }}')" class="btn btn-secondary">Export Leads</button>
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#import-modal" class="btn btn-primary lead-table-btn">Import Leads</button>
+                  <button type="button" onclick="exportLeads('{{ route('export-leads', ['leadType' => 3]) }}')" class="btn btn-secondary lead-table-btn">Export Leads</button>
                   @if (Auth::user()->can('changeAgent',App\Models\Lead::class))
-                  <button type="button" data-bs-toggle="modal" data-bs-target="#bulk-assign-modal" class="btn btn-success" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Assign</button>
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#bulk-assign-modal" class="btn btn-success lead-table-btn" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Assign</button>
                   @endif
                   <button type="button" onclick="bulkDelete()" class="btn btn-danger" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Delete</button>
-                  <a type="button" onclick="location.reload()" class="btn btn-info">Reset</a>
+                  <a type="button" onclick="location.reload()" class="btn btn-info lead-table-btn">Reset</a>
                 </div>
                 <div class="col-md-4">
-                  <input class="form-control" type="text" placeholder="Search Here" wire:model="search">
+                  <input class="form-control table-filter" type="text" placeholder="Search Here" wire:model="search">
                 </div>
               </div>
               

@@ -10,16 +10,16 @@
               <div class="row mb-3">
                 <div class="col-md-12">
                   @if (Auth::user()->can('changeAgent',App\Models\Lead::class))
-                  <button type="button" data-bs-toggle="modal" data-bs-target="#bulk-assign-modal" class="btn btn-success" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Assign</button>
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#bulk-assign-modal" class="btn btn-success lead-table-btn" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Assign</button>
                   @endif
-                  <button type="button" onclick="bulkDelete()" class="btn btn-danger" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Delete</button>
-                  <a type="button" onclick="location.reload()" class="btn btn-info">Reset</a>
+                  <button type="button" onclick="bulkDelete()" class="btn btn-danger lead-table-btn" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Delete</button>
+                  <a type="button" onclick="location.reload()" class="btn btn-info lead-table-btn">Reset</a>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-4">
                   @can('isAdmin', App\Models\User::class)
-                  <select class="form-select" aria-label="filter-user-id" wire:model="filterUserId">
+                  <select class="form-select table-filter" aria-label="filter-user-id" wire:model="filterUserId">
                     <option selected hidden>Select an Agent to view Assign Leads</option>
                     @foreach ($users as $user)
                       <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -28,7 +28,7 @@
                   @endcan 
                 </div>
                 <div class="col-md-4">
-                  <select class="form-select" aria-label="filter-status-id" wire:model="filterStatusID">
+                  <select class="form-select table-filter" aria-label="filter-status-id" wire:model="filterStatusID">
                     <option selected hidden>Select Status</option>
                     @foreach ($lead_status as $ls)
                       <option value="{{ $ls->id }}">{{ $ls->name }}</option>
@@ -36,7 +36,7 @@
                   </select>                 
                 </div>                
                 <div class="col-md-4">
-                  <input class="form-control" type="text" placeholder="Search Here" wire:model="search">
+                  <input class="form-control table-filter" type="text" placeholder="Search Here" wire:model="search">
                 </div>
               </div>
               
