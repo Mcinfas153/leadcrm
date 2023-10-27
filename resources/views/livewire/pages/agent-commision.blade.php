@@ -17,7 +17,7 @@
                 @endif
                 <form action="/agent-performance-chart" method="POST">
                     @csrf
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-12 col-md-4">
                             <label for="exampleFormControlInput1" class="form-label">select a agent to view performance</label>
                             <select class="form-select" aria-label="agentId" name="agentId">
@@ -27,7 +27,7 @@
                             @endforeach
                             </select>
                         </div>
-                        <div class="col-6 col-md-3">
+                        <div class="col-12 col-md-4">
                             <label for="exampleFormControlInput1" class="form-label">select start date</label>
                             <input
                                 type="text"
@@ -37,7 +37,7 @@
                             />
                         </div>
                     
-                        <div class="col-6 col-md-3">
+                        <div class="col-12 col-md-4">
                             <label for="exampleFormControlInput1" class="form-label">select end date</label>
                             <input
                                 type="text"
@@ -45,12 +45,11 @@
                                 id="date-range-end"
                                 name="endDate"
                             />
-                        </div>
-
-                        <div class="col-12 col-md-2">
-                            <label for="exampleFormControlInput1" class="form-label"></label>
-                            <button class="btn btn-rounded btn-primary" type="submit">Generate</button>
-                        </div>
+                        </div>                       
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <label for="exampleFormControlInput1" class="form-label"></label>
+                        <button class="btn btn-rounded btn-primary" type="submit">Generate</button>
                     </div>
                 </form>
                 <div class="row">
