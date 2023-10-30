@@ -32,6 +32,7 @@ class OldCrmLeads extends Component
     public $search = '';
     public $filterUserId;
     public $filterStatusID;
+    public $filterCampaignName;
  
     protected $paginationTheme = 'bootstrap';
 
@@ -73,6 +74,8 @@ class OldCrmLeads extends Component
                             $query->where('leads.assign_to', $filterUserId);
                         })->when($this->filterStatusID, function ($query, $filterStatusID) {
                             $query->where('leads.status', $filterStatusID);
+                        })->when($this->filterCampaignName, function ($query, $filterCampaignName) {
+                            $query->where('campaign_name', $filterCampaignName);
                         })                                               
                         ->paginate(5);
 
@@ -96,6 +99,8 @@ class OldCrmLeads extends Component
                                 ->orWhere('leads.campaign_name', 'like', '%'.$this->search.'%');
                         })->when($this->filterStatusID, function ($query, $filterStatusID) {
                             $query->where('leads.status', $filterStatusID);
+                        })->when($this->filterCampaignName, function ($query, $filterCampaignName) {
+                            $query->where('campaign_name', $filterCampaignName);
                         })
                         ->paginate(5);
                         
@@ -105,7 +110,16 @@ class OldCrmLeads extends Component
             'lead_status' => DB::table('lead_statuses')->where('is_active', 1)->get(),
             'users' => DB::table('users')->where(['business_id' => Auth::user()->business_id, 'is_active' => 1])->get(),
             'leads' =>  $leads,
-            'leadTypes' => LeadType::all()
+            'leadTypes' => LeadType::all(),
+            'campaigns' => Lead::select('campaign_name')
+                                ->whereIn('created_by', function ($query){
+                                    $query->select('id')
+                                    ->from('users')
+                                    ->where('business_id', Auth::user()->business_id)
+                                    ->get();
+                                })
+                            ->groupBy('campaign_name')
+                            ->get(),
         ])->layout('layouts.app',[
             'title' => 'old crm leads'
         ]);
