@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <livewire:components.navigator title="active leads"/>
-    <div wire:loading wire:target="changeLeadStatus,changeAgent,bulkAssign,filterUserId,filterStatusID">
+    <div wire:loading wire:target="changeLeadStatus,changeAgent,bulkAssign,filterUserId,filterStatusID,filterCampaignName">
       <livewire:components.progress-loader/>
     </div>
     <div class="row">
@@ -18,17 +18,25 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                   @can('isAdmin', App\Models\User::class)
                   <select class="form-select table-filter" aria-label="filter-user-id" wire:model="filterUserId">
-                    <option selected hidden>Select an Agent to view Assign Leads</option>
+                    <option selected hidden>Select an Agent</option>
                     @foreach ($users as $user)
                       <option value="{{ $user->id }}">{{ $user->name }}</option>
                     @endforeach
                   </select>
                   @endcan 
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
+                  <select class="form-select table-filter" aria-label="filter-status-id" wire:model="filterCampaignName">
+                    <option selected hidden>Select Campaign</option>
+                    @foreach ($campaigns as $campaign)
+                      <option value="{{ $campaign->campaign_name }}">{{ $campaign->campaign_name }}</option>
+                    @endforeach
+                  </select>                 
+                </div>
+                <div class="col-md-3">
                   <select class="form-select table-filter" aria-label="filter-status-id" wire:model="filterStatusID">
                     <option selected hidden>Select Status</option>
                     @foreach ($lead_status as $ls)
@@ -36,7 +44,7 @@
                     @endforeach
                   </select>                 
                 </div>                
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <input class="form-control table-filter" type="text" placeholder="Search Here" wire:model="search">
                 </div>
               </div>

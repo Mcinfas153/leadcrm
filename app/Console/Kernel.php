@@ -23,6 +23,9 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->call(new LeadReshuffle)->hourly();
         $schedule->call(new ScheduleReminder)->everyFifteenMinutes();
+        $schedule->call(function () {
+            Log::info('cron run successfully 15 mins');
+        })->everyFifteenMinutes();
     }
 
     /**
