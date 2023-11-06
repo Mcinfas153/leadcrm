@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <livewire:components.navigator title="all leads"/>
-    <div wire:loading">
+    <div wire:loading>
       <livewire:components.progress-loader/>
     </div>
     <div class="row">

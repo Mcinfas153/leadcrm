@@ -17,7 +17,7 @@ class Dashboard extends Component
 
     public function mount()
     {
-        
+
     }
 
     public function render(DailyLeadsChart $chart, MonthlyLeadsChart $monthlyLeadChart)
@@ -27,9 +27,11 @@ class Dashboard extends Component
 
         $newLeadsCount = Lead::where('created_by', Auth::user()->id)
                         ->where('status', config('custom.LEAD_STATUS_NEW'))
+                        ->where('is_migrate_lead', 0)
                         ->count();
 
         $todayLeadsCount = Lead::where('created_by', Auth::user()->id)
+                            ->where('is_migrate_lead', 0)
                             ->whereDate('created_at', timeZoneChange(config('custom.LOCAL_TIMEZONE'))->toDateString())
                             ->count();
 
@@ -43,7 +45,7 @@ class Dashboard extends Component
                                     ->orWhere('status', config('custom.LEAD_STATUS_MEETING_DONE'))
                                     ->orWhere('status', config('custom.LEAD_STATUS_SITE_VISIT_DONE'))
                                     ->orWhere('status', config('custom.LEAD_STATUS_FOLLOWUP_AFTER_MEETING'));
-                            })                            
+                            })
                             ->count();
 
         $totalLeadsCount = Lead::where('created_by', Auth::user()->id)
@@ -53,6 +55,7 @@ class Dashboard extends Component
                                     ->count();
 
         $latesLeads = Lead::where('created_by', Auth::user()->id)
+                            ->where('is_migrate_lead', 0)
                             ->limit(5)
                             ->latest()
                             ->get();
@@ -61,6 +64,7 @@ class Dashboard extends Component
         } else if(Auth::user()->user_type == config('custom.USER_NORMAL')){
 
             $newLeadsCount = Lead::where('status', config('custom.LEAD_STATUS_NEW'))
+                            ->where('is_migrate_lead', 0)
                             ->where(function($query) {
                             $query->where('created_by', Auth::user()->id)
                                     ->orWhere('assign_to', Auth::user()->id);
@@ -68,6 +72,7 @@ class Dashboard extends Component
                             ->count();
 
             $todayLeadsCount = Lead::whereDate('created_at', timeZoneChange(config('custom.LOCAL_TIMEZONE'))->toDateString())
+                            ->where('is_migrate_lead', 0)
                             ->where(function($query) {
                             $query->where('created_by', Auth::user()->id)
                                   ->orWhere('assign_to', Auth::user()->id);
@@ -87,7 +92,7 @@ class Dashboard extends Component
                         ->orWhere('status', config('custom.LEAD_STATUS_MEETING_DONE'))
                         ->orWhere('status', config('custom.LEAD_STATUS_SITE_VISIT_DONE'))
                         ->orWhere('status', config('custom.LEAD_STATUS_FOLLOWUP_AFTER_MEETING'));
-                })                            
+                })
                 ->count();
 
         $totalLeadsCount = Lead::where(function($query) {
@@ -103,6 +108,7 @@ class Dashboard extends Component
                         $query->where('created_by', Auth::user()->id)
                             ->orWhere('assign_to', Auth::user()->id);
                         })
+                        ->where('is_migrate_lead', 0)
                         ->limit(5)
                         ->latest()
                         ->get();
