@@ -6,8 +6,10 @@ use App\Models\Lead;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
+use PhpOffice\PhpSpreadsheet\Cell\StringValueBinder;
 
-class OldCrmLeadsImport implements ToModel, WithHeadingRow
+class OldCrmLeadsImport extends StringValueBinder implements WithCustomValueBinder, ToModel, WithHeadingRow
 {
     public function __construct(public int $userId, public int $leadType){}
 

@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <livewire:components.navigator title="old crm leads"/>
-    <div wire:loading wire:target="changeLeadStatus,changeAgent,bulkAssign,filterUserId,filterStatusID,filterCampaignName">
+    <div wire:loading>
       <livewire:components.progress-loader/>
     </div>
     <div class="row">
@@ -26,7 +26,7 @@
                       <option value="{{ $user->id }}">{{ $user->name }}</option>
                     @endforeach
                   </select>
-                  @endcan 
+                  @endcan
                 </div>
                 <div class="col-md-3">
                   <select class="form-select table-filter" aria-label="filter-status-id" wire:model="filterCampaignName">
@@ -34,7 +34,7 @@
                     @foreach ($campaigns as $campaign)
                       <option value="{{ $campaign->campaign_name }}">{{ $campaign->campaign_name }}</option>
                     @endforeach
-                  </select>                 
+                  </select>
                 </div>
                 <div class="col-md-3">
                   <select class="form-select table-filter" aria-label="filter-status-id" wire:model="filterStatusID">
@@ -42,13 +42,13 @@
                     @foreach ($lead_status as $ls)
                       <option value="{{ $ls->id }}">{{ $ls->name }}</option>
                     @endforeach
-                  </select>                 
-                </div>                
+                  </select>
+                </div>
                 <div class="col-md-3">
                   <input class="form-control table-filter" type="text" placeholder="Search Here" wire:model="search">
                 </div>
               </div>
-              
+
             <div class="table-responsive tscroll">
                 <table class="table data-table display text-nowrap">
                     <thead>
@@ -62,7 +62,7 @@
                             <th class="text-center">Campaign Name</th>
                             @if (Auth::user()->can('changeAgent', App\Models\Lead::class))
                             <th class="text-center">Assign To</th>
-                            @endif                            
+                            @endif
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -71,8 +71,8 @@
                         <tr>
                           <td colspan="9"><h6 class="text-center">There is No Data Available</h6></td>
                         </tr>
-                      @endif    
-                        @foreach ($leads as $lead)                                  
+                      @endif
+                        @foreach ($leads as $lead)
                         <tr>
                             <td>
                               @can('delete', App\Models\Lead::find($lead->id))
@@ -123,12 +123,12 @@
                                     <a class="dropdown-item d-flex align-items-center text-black" onclick="deleteLead({{ $lead->id }}, '{{ $lead->fullname }}')">
                                     <i class="ti ti-trash me-1 fs-1 text-black"></i>Delete </a>
                                   </li>
-                                  @endif                                                              
+                                  @endif
                                 </ul>
                              </div>
                             </td>
                         </tr>
-                    @endforeach 
+                    @endforeach
                     </tbody>
                     <tfoot>
                         <!-- start row -->
@@ -147,7 +147,7 @@
                         </tr>
                         <!-- end row -->
                       </tfoot>
-                      
+
                 </table>
                 {{ $leads->links() }}
               </div>
@@ -155,7 +155,7 @@
           </div>
         </div>
     </div>
-    
+
     {{-- status change modal --}}
     <div
     class="modal fade"
@@ -290,8 +290,8 @@
                aria-label="Close"
                ></button>
          </div>
-         <div class="modal-body">        
-           
+         <div class="modal-body">
+
             <div class="mb-3">
               <label for="file" class="form-label">File*</label>
               <input class="form-control form-control-sm" id="formFileSm" type="file" name="file">
@@ -319,7 +319,7 @@
               </select>
             </div>
             @endcan
-            
+
             @if ($errors->any())
               <div class="alert alert-danger">
                   <ul>
@@ -329,7 +329,7 @@
                   </ul>
               </div>
             @endif
-            
+
             <div class="alert alert-danger d-flex align-items-center" role="alert">
               <div>
                 <p>In Excel Import File:</p>
@@ -337,7 +337,7 @@
                 <div>Emai is required</div>
                 <div>Phone is required</div>
               </div>
-            </div>                     
+            </div>
          </div>
          <div class="modal-footer">
             <button
