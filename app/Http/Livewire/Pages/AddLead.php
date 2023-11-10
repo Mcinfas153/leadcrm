@@ -123,7 +123,9 @@ class AddLead extends Component
                 }                
             }
 
-            return redirect('/leads')->with([
+            $redirectPath = $lead->type == config('custom.LEAD_TYPE_COLD') ? 'cold/leads': '/leads';
+
+            return redirect($redirectPath)->with([
                 'status' => 'success',
                 'icon' => 'success',
                 'title' => config('message.LEAD_CREATED_SUCCESS')
