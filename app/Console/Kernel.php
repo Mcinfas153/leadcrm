@@ -4,11 +4,10 @@ namespace App\Console;
 
 use App\Classes\Automation\LeadReshuffle;
 use App\Classes\Automation\ScheduleReminder;
-use App\Models\Lead;
+use App\Mail\TestMail;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,7 +23,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(new LeadReshuffle)->hourly();
         $schedule->call(new ScheduleReminder)->everyFifteenMinutes();
         $schedule->call(function () {
-            Log::info('cron run successfully 15 mins');
+            Mail::to('mcinfas9394@gmail.com')->send(new TestMail());
         })->everyFifteenMinutes();
     }
 
