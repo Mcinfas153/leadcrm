@@ -28,6 +28,11 @@ class AccountSettings extends Component
     public $newPassword;
     public $conPassword;
 
+    protected $listeners = [
+        'reportEmail' => 'updatedReportViaEmail',
+        'leadReshuffle' => 'updatedLeadReshuffle',
+    ];
+
     public function mount()
     {
         $organization = Organization::find(Auth::user()->business_id);
@@ -48,19 +53,20 @@ class AccountSettings extends Component
         ]);
     }
 
-    public function updatedReportViaEmail($value)
+    public function updatedReportViaEmail(int $value)
     {
+        
         DB::beginTransaction();
 
         try {
             
             $organization = Organization::find(Auth::user()->business_id);
-            $organization->report_via_email = $value;
+            $organization->report_via_email = !$value;
             $organization->save();
 
             DB::commit();
 
-            $this->reportViaEmail = $value;
+            $this->reportViaEmail = !$value;
             $this->automation = "show";
             $this->security = "";
 
@@ -75,19 +81,19 @@ class AccountSettings extends Component
         }
     }
 
-    public function updatedLeadReshuffle($value)
+    public function updatedLeadReshuffle(int $value)
     {
         DB::beginTransaction();
 
         try {
             
             $organization = Organization::find(Auth::user()->business_id);
-            $organization->lead_reshuffle = $value;
+            $organization->lead_reshuffle = !$value;
             $organization->save();
 
             DB::commit();
 
-            $this->leadReshuffle = $value;
+            $this->leadReshuffle = !$value;
             $this->automation = "show";
             $this->security = "";
 

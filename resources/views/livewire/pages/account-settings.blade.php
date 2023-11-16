@@ -1,5 +1,8 @@
 <div class="container-fluid">
     <livewire:components.navigator title="accout settings"/>
+    <div wire:loading>
+        <livewire:components.progress-loader/>
+      </div>
     <section>
         <div class="row">
             <div class="">
@@ -80,7 +83,7 @@
                                         <div class="d-flex justify-content-between my-3">
                                             <label for="reoprtMail" class="form-check-label">Send reports via mail</label>
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="reoprtMail" size="large" wire:model="reportViaEmail"/>
+                                                <input class="form-check-input" type="checkbox" id="reoprtMail" size="large" onchange="reportMail({{ $reportViaEmail }})" {{ ($reportViaEmail) ? "checked" : "" }}/>
                                             </div>
                                         </div>
 
@@ -104,7 +107,7 @@
                                         <div class="d-flex justify-content-between my-3">
                                             <label for="autoShuffle" class="form-check-label">Auto Reshuffle Mode</label>
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="autoShuffle" size="large" wire:model="leadReshuffle"/>
+                                                <input class="form-check-input" type="checkbox" id="autoShuffle" size="large" onchange="leadReshuffle({{ $leadReshuffle }})" {{ ($leadReshuffle) ? "checked" : "" }}/>
                                             </div>
                                         </div>
 
