@@ -41,7 +41,7 @@ return [
     'ACTION_DELETE_REMINDER' => 22,
     'ACTION_MASS_DELETE' => 23,
     'REMINDER_TYPE_EMAIL' => 1,
-    'IS_MAIL_ON' => 1,
+    'IS_MAIL_ON' => 0,
     'SERVER_TIMEZONE' => env('SERVER_TIMEZONE'),
     'LOCAL_TIMEZONE' => env('LOCAL_TIME_ZONE'),
     'APP_NAME' => 'LEAD CRM',
