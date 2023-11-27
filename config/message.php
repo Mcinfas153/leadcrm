@@ -36,4 +36,7 @@ return [
     'PASSWORD_RESET_CODE_VALID' => 'Your password reset code is valid. Now you can reset your passowrd',
     'PASSWORD_RESET_SUCCESS' => 'Your password reset successfully',
     'NEW_LEAD_RECIEVED' => 'Your have recieved new lead',
+    'TARGET_ADDED_SUCCESS' => 'Target added successfully',
+    'TARGET_UPDATED_SUCCESS' => 'Target updated successfully',
+    'TARGET_DELETED_SUCCESS' => 'Target deleted successfully',
 ];

@@ -7,9 +7,11 @@ use App\Http\Livewire\Pages\ActiveLeadsPage;
 use App\Http\Livewire\Pages\AddLead;
 use App\Http\Livewire\Pages\AddUser;
 use App\Http\Livewire\Pages\AgentCommision;
+use App\Http\Livewire\Pages\AgentTargets;
 use App\Http\Livewire\Pages\AllLeads;
 use App\Http\Livewire\Pages\BusinessInactive;
 use App\Http\Livewire\Pages\CloseDeals;
+use App\Http\Livewire\Pages\CreateTarget;
 use App\Http\Livewire\Pages\DailyUserReport;
 use App\Http\Livewire\Pages\Dashboard;
 use App\Http\Livewire\Pages\DumpLeadsPage;
@@ -27,6 +29,7 @@ use App\Http\Livewire\Pages\Reminders;
 use App\Http\Livewire\Pages\ResetCodeConfirmation;
 use App\Http\Livewire\Pages\ResetPassword;
 use App\Http\Livewire\Pages\UsersList;
+use App\Http\Livewire\Pages\ViewAgentTarget;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,6 +52,9 @@ Route::middleware(['loggedUser'])->group(function () {
             Route::get('/close-lead/{leadId}', CloseDeals::class)->name('close-leads');
             Route::get('/agent-commisions', AgentCommision::class)->name('agent.commsions');
             Route::post('/agent-performance-chart',[ReportController::class, 'agentPerformanceChart']);
+            Route::get('/agent-targets', AgentTargets::class)->name('agent.targets');
+            Route::get('/agent/create-target', CreateTarget::class)->name('agent.create-target');
+            Route::get('/agent/view-target/{id}', ViewAgentTarget::class)->name('agent.view-target');
         });
         Route::get('/', Dashboard::class)->name('dashboard');
         Route::get('/download-leads', FreshLeads::class)->name('fresh.leads');

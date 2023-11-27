@@ -38,11 +38,12 @@
     <link rel="stylesheet" href="{{ asset('dist/libs/select2/dist/css/select2.min.css') }}">
     @endif
 
-    @if ($title == 'agent commisions')
+    @if ($title == 'agent commisions' || 'set target' || 'view agent target')
     <link
       rel="stylesheet"
       href="{{ asset('dist/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}"
     />
+    <link rel="stylesheet" href="{{ asset('dist/libs/select2/dist/css/select2.min.css') }}">
     @endif
 
     <!-- --------------------------------------------------- -->
@@ -169,6 +170,17 @@
     <script src="{{ asset('dist/libs/moment-js/moment.js') }}"></script>
     <script src="{{ asset('dist/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('dist/js/pages/agent-commissions.js') }}"></script>
+    @endif
+
+    @if ($title == 'agent targets')
+    <script src="{{ asset('dist/js/pages/agent-targets.js') }}"></script>
+    @endif
+
+    @if ($title == 'set target' || 'view agent target')
+    <script src="{{ asset('dist/libs/moment-js/moment.js') }}"></script>
+    <script src="{{ asset('dist/libs/select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('dist/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('dist/js/pages/create-target.js') }}"></script>
     @endif
 
     <script>

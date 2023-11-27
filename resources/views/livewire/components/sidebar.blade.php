@@ -197,21 +197,34 @@
                 </li>
               @endcan
 
+              <li class="nav-small-cap">
+                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                <span class="hide-menu">Commisions</span>
+              </li>
+
+                @can('isAdmin', App\Models\User::class)
+                  <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ URL::to('/agent-targets') }}" aria-expanded="false">
+                    <span>
+                        <i class="ti ti-target-arrow"></i>
+                    </span>
+                    <span class="hide-menu">Agent Targets</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ URL::to('/agent-commisions') }}" aria-expanded="false">
+                    <span>
+                        <i class="ti ti-brand-cashapp"></i>
+                    </span>
+                    <span class="hide-menu">Agent Commisions</span>
+                    </a>
+                  </li>
+                @endcan
+
                 <li class="nav-small-cap">
                   <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                   <span class="hide-menu">OTHERS</span>
                 </li>
-
-                @can('isAdmin', App\Models\User::class)
-                <li class="sidebar-item">
-                  <a class="sidebar-link" href="{{ URL::to('/agent-commisions') }}" aria-expanded="false">
-                  <span>
-                      <i class="ti ti-brand-cashapp"></i>
-                  </span>
-                  <span class="hide-menu">Agent Commisions</span>
-                  </a>
-                </li>
-                @endcan
 
                 <li class="sidebar-item">
                   <a class="sidebar-link" href="{{ URL::to('/reminders') }}" aria-expanded="false">
