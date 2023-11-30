@@ -10,6 +10,7 @@ use App\Http\Livewire\Pages\AgentCommision;
 use App\Http\Livewire\Pages\AgentTargets;
 use App\Http\Livewire\Pages\AllLeads;
 use App\Http\Livewire\Pages\BusinessInactive;
+use App\Http\Livewire\Pages\Campaigns;
 use App\Http\Livewire\Pages\CloseDeals;
 use App\Http\Livewire\Pages\CreateTarget;
 use App\Http\Livewire\Pages\DailyUserReport;
@@ -55,6 +56,7 @@ Route::middleware(['loggedUser'])->group(function () {
             Route::get('/agent-targets', AgentTargets::class)->name('agent.targets');
             Route::get('/agent/create-target', CreateTarget::class)->name('agent.create-target');
             Route::get('/agent/view-target/{id}', ViewAgentTarget::class)->name('agent.view-target');
+            Route::get('/campaigns', Campaigns::class)->name('campaigns');
         });
         Route::get('/', Dashboard::class)->name('dashboard');
         Route::get('/download-leads', FreshLeads::class)->name('fresh.leads');

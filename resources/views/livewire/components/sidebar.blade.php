@@ -195,14 +195,15 @@
                         </li>
                     </ul>
                 </li>
-              @endcan
-
-              <li class="nav-small-cap">
-                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">Commisions</span>
-              </li>
+              @endcan              
 
                 @can('isAdmin', App\Models\User::class)
+
+                <li class="nav-small-cap">
+                  <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                  <span class="hide-menu">Commisions</span>
+                </li>
+
                   <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ URL::to('/agent-targets') }}" aria-expanded="false">
                     <span>
@@ -219,6 +220,22 @@
                     <span class="hide-menu">Agent Commisions</span>
                     </a>
                   </li>
+
+                  <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">Marketing</span>
+                  </li>
+
+                  <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ URL::to('/campaigns') }}" aria-expanded="false">
+                    <span>
+                        <i class="ti ti-artboard"></i>
+                    </span>
+                    <span class="hide-menu">Campaigns</span>
+                    </a>
+                  </li>
+
+
                 @endcan
 
                 <li class="nav-small-cap">
