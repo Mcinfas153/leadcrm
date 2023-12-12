@@ -71,7 +71,7 @@ class OldDataLeads extends Component
                                 ->orWhere('leads.email', 'like', '%'.$this->search.'%')
                                 ->orWhere('leads.campaign_name', 'like', '%'.$this->search.'%');
                         })                                               
-                        ->paginate(5);
+                        ->paginate(25);
 
         } else{
 
@@ -91,7 +91,7 @@ class OldDataLeads extends Component
                                 ->orWhere('leads.email', 'like', '%'.$this->search.'%')
                                 ->orWhere('leads.campaign_name', 'like', '%'.$this->search.'%');
                         })
-                        ->paginate(5);
+                        ->paginate(25);
                         
         }
 

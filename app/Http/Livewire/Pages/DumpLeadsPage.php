@@ -73,7 +73,7 @@ class DumpLeadsPage extends Component
                         })->when($this->filterStatusID, function ($query, $filterStatusID) {
                             $query->where('status', $filterStatusID);
                         })                                               
-                        ->paginate(5);
+                        ->paginate(25);
 
         } else{
 
@@ -96,7 +96,7 @@ class DumpLeadsPage extends Component
                         })->when($this->filterStatusID, function ($query, $filterStatusID) {
                             $query->where('status', $filterStatusID);
                         })
-                        ->paginate(5);
+                        ->paginate(25);
                         
         }
 

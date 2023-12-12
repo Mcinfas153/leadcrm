@@ -77,7 +77,7 @@ class OldCrmLeads extends Component
                         })->when($this->filterCampaignName, function ($query, $filterCampaignName) {
                             $query->where('campaign_name', $filterCampaignName);
                         })                                               
-                        ->paginate(5);
+                        ->paginate(25);
 
         } else{
 
@@ -102,7 +102,7 @@ class OldCrmLeads extends Component
                         })->when($this->filterCampaignName, function ($query, $filterCampaignName) {
                             $query->where('campaign_name', $filterCampaignName);
                         })
-                        ->paginate(5);
+                        ->paginate(25);
                         
         }
 
