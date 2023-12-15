@@ -134,6 +134,9 @@ a:hover {
 .my-float {
     margin-top: 22px;
 }
+table {
+    font-size: 13px;
+}
 /* progress loader */
 .loader-wrapper {
     position: fixed;
@@ -167,7 +170,7 @@ a:hover {
 }
 
 @media (min-width: 576px) {
-    .tscroll table td:nth-child(2) {
+    .tscroll table td:nth-child(3) {
         position: sticky;
         left: 0;
         background-color: #f8f9f9;

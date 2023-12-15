@@ -29,3 +29,9 @@ function localTimeConvert(string $desireTimeZone = 'UTC', $dateTime)
     $dt = Carbon::parse($serverTime)->tz($desireTimeZone);
     return $dt;
 }
+
+function getSrNumberForLeads(int $currentPage, int $perPage, $currentCount): int
+{
+    $result = ($currentPage === 1)? $currentCount : ($currentPage - 1) * $perPage + $currentCount;
+    return $result;
+}
