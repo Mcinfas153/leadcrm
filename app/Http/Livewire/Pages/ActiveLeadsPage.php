@@ -32,6 +32,7 @@ class ActiveLeadsPage extends Component
     public $filterUserId;
     public $filterStatusID;
     public $filterCampaignName;
+    public $leadsCount = 0;
  
     protected $paginationTheme = 'bootstrap';
 
@@ -40,6 +41,8 @@ class ActiveLeadsPage extends Component
         'leadAgentIdSelect' => 'leadAgentIdSelect',
         'bulkDelete' => 'bulkDelete',
         'deleteLead' => 'deleteLead',
+        'selectOnlyLeadID' => 'selectOnlyLeadID',
+        'unSelectOnlyLeadID' => 'unSelectOnlyLeadID'
     ];
 
     public function updatingSearch()
@@ -106,10 +109,13 @@ class ActiveLeadsPage extends Component
                         
         }
 
+        $this->leadsCount = count($leads);
+
         return view('livewire.pages.active-leads-page',[
             'lead_status' => DB::table('lead_statuses')->where('is_active', 1)->get(),
             'users' => DB::table('users')->where(['business_id' => Auth::user()->business_id, 'is_active' => 1])->get(),
             'leads' =>  $leads,
+            'leadsCount' => $this->leadsCount,
             'leadTypes' => LeadType::all(),
             'campaigns' => Lead::select('campaign_name')
                                 ->whereIn('created_by', function ($query){
@@ -129,6 +135,16 @@ class ActiveLeadsPage extends Component
     {
         $this->leadId = $leadId;
         $this->statusId = $statusId;
+    }
+
+    public function selectOnlyLeadID($leadId)
+    {
+        $this->selectedLeads[] = $leadId;
+    }
+
+    public function unSelectOnlyLeadID()
+    {
+        $this->selectedLeads = [];
     }
 
     public function leadAgentIdSelect($leadId, $agentId)

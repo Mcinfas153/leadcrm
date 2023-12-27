@@ -117,3 +117,26 @@ function deleteLead(id, name) {
         }
     })
 }
+
+$("#selectAllCheckBox").click(function () {
+    if ($("#selectAllCheckBox").prop('checked')) {
+
+        let x = 1;
+        while (x < currentPageLeadCount + 1) {
+            $('.leadCheckBox' + x).prop("checked", true);
+            let leadId = $('.leadCheckBox' + x).val()
+            Livewire.emit('selectOnlyLeadID', leadId)
+            x++;
+        }
+
+    } else {
+
+        let x = 1;
+        while (x < currentPageLeadCount + 1) {
+            $('.leadCheckBox' + x).prop("checked", false);
+            let leadId = $('.leadCheckBox' + x).val()
+            Livewire.emit('unSelectOnlyLeadID')
+            x++;
+        }
+    }
+});
