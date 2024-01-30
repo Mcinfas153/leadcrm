@@ -10,6 +10,7 @@ function getDateFormat($dateTime, $format = 'YYYY-MM-DD, h:mm a', $timezone = 'U
     return $newDate->isoFormat($format);
 }
 
+//current time change to desire timezone
 function timeZoneChange($desireTimeZone = 'UTC')
 {
     $serverTime =  Carbon::now(config('SERVER_TIMEZONE'));

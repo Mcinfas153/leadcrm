@@ -2,6 +2,14 @@ const statusModal = new bootstrap.Modal(document.getElementById('status-change-m
 const agentModal = new bootstrap.Modal(document.getElementById('agent-change-modal'))
 const bulkAssignModal = new bootstrap.Modal(document.getElementById('bulk-assign-modal'))
 
+// A $( document ).ready() block.
+$(document).ready(function () {
+    $('#date-range').hide()
+    $('#date-range').datepicker({
+        format: 'yyyy/mm/dd',
+    });
+})
+
 function changeStatus(leadId, statusId) {
     statusModal.show()
     Livewire.emit('leadIdSelect', leadId, statusId)
@@ -140,3 +148,13 @@ $("#selectAllCheckBox").click(function () {
         }
     }
 });
+
+function toggleFilter() {
+    $('#date-range').toggle()
+}
+
+function filterDate() {
+    let startDate = $('#startDate').val()
+    let endDate = $('#endDate').val()
+    Livewire.emit('setFilterDate', startDate, endDate)
+}

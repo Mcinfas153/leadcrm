@@ -33,6 +33,8 @@ class AllLeads extends Component
     public $filterUserId;
     public $filterStatusID;
     public $filterCampaignName;
+    public $startDate;
+    public $endDate;
  
     protected $paginationTheme = 'bootstrap';
 
@@ -41,6 +43,7 @@ class AllLeads extends Component
         'leadAgentIdSelect' => 'leadAgentIdSelect',
         'bulkDelete' => 'bulkDelete',
         'deleteLead' => 'deleteLead',
+        'setFilterDate' => 'setFilterDate',
     ];
 
     public function updatingSearch()
@@ -75,7 +78,11 @@ class AllLeads extends Component
                             $query->where('status', $filterStatusID);
                         })->when($this->filterCampaignName, function ($query, $filterCampaignName) {
                             $query->where('campaign_name', $filterCampaignName);
-                        })                                               
+                        })->when($this->startDate, function ($query, $startDate) {
+                            $startdt = new Carbon($startDate);
+                            $enddt = new Carbon($this->endDate);
+                            $query->whereBetween('leads.created_at', [$startdt->startOfDay(), $enddt->endOfDay()]);
+                        })                                           
                         ->paginate(25);
 
         } else{
@@ -100,6 +107,10 @@ class AllLeads extends Component
                             $query->where('status', $filterStatusID);
                         })->when($this->filterCampaignName, function ($query, $filterCampaignName) {
                             $query->where('campaign_name', $filterCampaignName);
+                        })->when($this->startDate, function ($query, $startDate) {
+                            $startdt = new Carbon($startDate);
+                            $enddt = new Carbon($this->endDate);
+                            $query->whereBetween('leads.created_at', [$startdt->startOfDay(), $enddt->endOfDay()]);
                         })
                         ->paginate(25);
                         
@@ -339,5 +350,11 @@ class AllLeads extends Component
 
         }
 
+    }
+
+    public function setFilterDate(string $startDate, string $endDate)
+    {
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
     }
 }

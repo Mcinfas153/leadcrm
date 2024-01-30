@@ -32,6 +32,11 @@
     @if ($title == 'fresh recent leads' || $title == 'all leads')
     <!-- datatable  Js -->
     <link rel="stylesheet" href="{{ asset('dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
+    <!-- boostrap datepicker -->
+    <link
+      rel="stylesheet"
+      href="{{ asset('dist/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}"
+    />
     @endif
 
     @if ($title == 'daily user report')
@@ -127,6 +132,7 @@
 
     @if ($title == 'all leads' || 'old data leads' || 'active leads' || 'dump leads' || 'old crm leads')
     <script src="{{ asset('dist/js/pages/all-leads.js') }}"></script>
+    <script src="{{ asset('dist/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
     @endif
 
     @if ($title == "lead comments & activities")

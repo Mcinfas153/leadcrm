@@ -8,7 +8,7 @@
           <div class="card">
             <div class="card-body">
               <div class="row mb-3">
-                <div class="col-md-12">
+                <div class="col-md-8 col-12">
                   <button type="button" data-bs-toggle="modal" data-bs-target="#import-modal" class="btn btn-primary lead-table-btn">Import Leads</button>
                   <button type="button" onclick="exportLeads('{{ route('export-leads') }}')" class="btn btn-secondary lead-table-btn">Export Leads</button>
                   @if (Auth::user()->can('changeAgent',App\Models\Lead::class))
@@ -16,6 +16,30 @@
                   @endif
                   <button type="button" onclick="bulkDelete()" class="btn btn-danger lead-table-btn" {{ (empty($selectedLeads))? "disabled":"" }}>Bulk Delete</button>
                   <a type="button" onclick="location.reload()" class="btn btn-info lead-table-btn">Reset</a>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="float-md-end">
+                    <a type="button" onclick="toggleFilter()" class="btn btn-warning lead-table-btn mb-1">Filter</a>
+                  </div>                 
+                  <div
+                          class="input-daterange input-group"
+                          id="date-range"
+                        >
+                          <input
+                            type="text"
+                            id="startDate"
+                            class="form-control"
+                            wire.model="startDate"
+                          />
+
+                          <span class="input-group-text bg-info b-0 text-white"
+                            >TO</span
+                          >
+
+                          <input type="text" class="form-control" id="endDate" wire.model="endDate"/>
+                          <button class="btn btn-success" onclick="filterDate()">Submit</button>
+                          
+                    </div>
                 </div>
               </div>
               <div class="row">
