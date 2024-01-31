@@ -99,8 +99,14 @@ class LeadController extends Controller
 
     }
 
-    public function exportLeads($leadType = null){
-        return Excel::download(new ExportLead($leadType), 'leads.xlsx');
+    public function exportLeads(Request $request){
+        $filterUserId = $request->input('filterUserId');
+        $leadType = $request->input('leadType');
+        $filterStatusID = $request->input('filterStatusID');
+        $filterCampaignName = $request->input('filterCampaignName');
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+        return Excel::download(new ExportLead($filterUserId, $leadType, $filterStatusID, $filterCampaignName, $startDate, $endDate), 'leads.xlsx');
     }
 
     public function importOldCrmLeads(Request $request)

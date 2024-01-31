@@ -71,7 +71,7 @@ Route::middleware(['loggedUser'])->group(function () {
         Route::get('/old-leads', OldCrmLeads::class)->name('old.crm.leads');
         Route::post('/import',[LeadController::class,'importLeads'])->name('import.leads');
         Route::post('/import/old-crm-leads',[LeadController::class,'importOldCrmLeads'])->name('import.oldcrm.leads');
-        Route::get('/export-leads/{leadType?}',[LeadController::class,'exportLeads'])->name('export-leads');
+        Route::get('/export-leads',[LeadController::class,'exportLeads'])->name('export-leads');
         Route::get('/account-settings', AccountSettings::class)->name('settings');
         Route::get('/reminders', Reminders::class)->name('reminders');
         Route::get('/lead/{leadId}/entries', LeadEntries::class)->name('lead.entries');
