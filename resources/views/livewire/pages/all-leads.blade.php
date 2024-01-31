@@ -78,6 +78,11 @@
                 <table class="table data-table display text-nowrap">
                     <thead>
                         <tr>
+                            <th>
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="selectAllCheckBox">
+                              </div>
+                            </th>
                             <th>#</th>
                             <th>SR.NO</th>
                             <th class="fixedCol">Name</th>
@@ -106,7 +111,7 @@
                             <td>
                               @can('delete', App\Models\Lead::find($lead->id))
                               <div class="form-check">
-                                <input class="form-check-input" type="checkbox" wire:model="selectedLeads" value="{{ $lead->id }}" id="flexCheckDefault">
+                                <input class="form-check-input leadCheckBox{{ $currentCount }}" type="checkbox" wire:model="selectedLeads" value="{{ $lead->id }}" id="flexCheckDefault">
                               </div>
                               @endcan
                             </td>
@@ -447,5 +452,20 @@ wire:ignore.self
   </div>
 </div>
 
+<script>
+ 
+  let currentPageLeadCount;
+ 
+   document.addEventListener("DOMContentLoaded", () => {
+     Livewire.hook('element.initialized', (el, component) => {
+       currentPageLeadCount = {{ $leadsCount }};
+     })
+     Livewire.hook('message.processed', (el, component) => {
+       let pageLeadCount = @this.leadsCount
+       currentPageLeadCount = pageLeadCount
+     })
+   });
+  
+ </script>
 
 </div>

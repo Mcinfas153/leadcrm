@@ -72,14 +72,6 @@
                       <span class="hide-menu">All Leads</span>
                     </a>
                   </li>
-                  <li class="sidebar-item">
-                    <a href="{{ URL::to('download-leads') }}" class="sidebar-link">
-                      <div class="round-16 d-flex align-items-center justify-content-center">
-                        <i class="ti ti-circle"></i>
-                      </div>
-                      <span class="hide-menu">Dowload Leads</span>
-                    </a>
-                  </li>
                 </ul>
               </li>
 
