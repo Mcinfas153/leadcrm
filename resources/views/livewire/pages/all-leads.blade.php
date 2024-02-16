@@ -83,7 +83,6 @@
                                 <input class="form-check-input" type="checkbox" value="" id="selectAllCheckBox">
                               </div>
                             </th>
-                            <th>#</th>
                             <th>SR.NO</th>
                             <th class="fixedCol">Name</th>
                             <th>Date</th>
